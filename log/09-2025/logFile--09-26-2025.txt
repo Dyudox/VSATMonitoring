@@ -1,0 +1,2 @@
+26/09/2025 12:59:18 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+26/09/2025 12:59:18 : admin | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002820' | 

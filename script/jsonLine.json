@@ -1,0 +1,76 @@
+{
+    "Result": "True",
+    "Raw": [
+        {
+            "UserCreate": null,
+            "Ticket": "Complaint",
+			"Data": [
+				{
+					"JamNya": "08:00",
+					"Jumlah": 1
+				},{
+					"JamNya": "09:00",
+					"Jumlah": 5
+				},{
+					"JamNya": "10:00",
+					"Jumlah": 7
+				}
+			]
+        },{
+            "UserCreate": null,
+            "Ticket": "Request",
+			"Data": [
+				{
+					"JamNya": "08:00",
+					"Jumlah": 2
+				},{
+					"JamNya": "09:00",
+					"Jumlah": 0
+				},{
+					"JamNya": "10:00",
+					"Jumlah": 1
+				}
+			]
+        },{
+			"UserCreate": null,
+            "Ticket": "Inquiry",
+			"Data": [
+				{
+					"JamNya": "08:00",
+					"Jumlah": 6
+				},{
+					"JamNya": "09:00",
+					"Jumlah": 1
+				},{
+					"JamNya": "10:00",
+					"Jumlah": 4
+				}
+			]
+        },{
+			"UserCreate": null,
+            "Ticket": "Handover",
+			"Data": [
+				{
+					"JamNya": "08:00",
+					"Jumlah": 0
+				},{
+					"JamNya": "09:00",
+					"Jumlah": 3
+				},{
+					"JamNya": "10:00",
+					"Jumlah": 2
+				}
+			]
+        }
+    ],
+    "Data1": "Succcess",
+    "Data2": "",
+    "Data3": "",
+    "Data4": "",
+    "Data5": "",
+    "Data6": "",
+    "Data7": "",
+    "Data8": "",
+    "Data9": "",
+    "Data10": ""
+}

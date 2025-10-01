@@ -1,0 +1,65 @@
+{
+    "Result": "True",
+    "Raw": [
+        {
+            "Provinsi": "ACEH",
+            "Progress": 80,
+            "TotalSite": 500
+        },
+		{
+            "Provinsi": "JAWA BARAT",
+            "Progress": 30,
+            "TotalSite": 500
+        },
+		{
+            "Provinsi": "JAWA TENGAH",
+            "Progress": 58,
+            "TotalSite": 500
+        },
+		{
+            "Provinsi": "JAWA TIMUR",
+            "Progress": 98,
+            "TotalSite": 500
+        },
+		{
+            "Provinsi": "BALI",
+            "Progress": 90,
+            "TotalSite": 500
+        },
+		{
+            "Provinsi": "JAKARTA",
+            "Progress": 80,
+            "TotalSite": 500
+        },
+		{
+            "Provinsi": "BANTEN",
+            "Progress": 50,
+            "TotalSite": 500
+        },
+		{
+            "Provinsi": "PALEMBANG",
+            "Progress": 60,
+            "TotalSite": 500
+        },
+		{
+            "Provinsi": "SUMATRA BARAT",
+            "Progress": 23,
+            "TotalSite": 500
+        },
+		{
+            "Provinsi": "SUMATRA SELATAN",
+            "Progress": 45,
+            "TotalSite": 500
+        }
+    ],
+    "Data1": "Succcess",
+    "Data2": "",
+    "Data3": "",
+    "Data4": "",
+    "Data5": "",
+    "Data6": "",
+    "Data7": "",
+    "Data8": "",
+    "Data9": "",
+    "Data10": ""
+}

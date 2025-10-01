@@ -1,0 +1,47 @@
+{
+    "Result": "True",
+    "Raw": [
+        {
+			"NamaTeknisi": "Teknisi 1",
+			"Jumlah": 35
+        },
+		{
+			"NamaTeknisi": "Teknisi 2",
+			"Jumlah": 15
+		},
+		{
+			"NamaTeknisi": "Teknisi 3",
+			"Jumlah": 31
+		},
+		{
+			"NamaTeknisi": "Teknisi 4",
+			"Jumlah": 22
+		},
+		{
+			"NamaTeknisi": "Teknisi 5",
+			"Jumlah": 40
+		},
+		{
+			"NamaTeknisi": "Teknisi 6",
+			"Jumlah": 15
+		},
+		{
+			"NamaTeknisi": "Teknisi 7",
+			"Jumlah": 11
+		},
+		{
+			"NamaTeknisi": "Teknisi 8",
+			"Jumlah": 14
+		}
+    ],
+    "Data1": "Succcess",
+    "Data2": "",
+    "Data3": "",
+    "Data4": "",
+    "Data5": "",
+    "Data6": "",
+    "Data7": "",
+    "Data8": "",
+    "Data9": "",
+    "Data10": ""
+}

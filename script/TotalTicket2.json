@@ -1,0 +1,43 @@
+{
+    "Result": "True",
+    "Raw": [
+        {
+            "Ticket": "Survey",
+            "Value": 50
+        },
+        {
+            "Ticket": "Instalasi",
+            "Value": 35
+        },
+        {
+            "Ticket": "PM",
+            "Value": 55
+        },
+        {
+            "Ticket": "CM",
+            "Value": 65
+        },
+        {
+            "Ticket": "Relokasi",
+            "Value": 80
+        },
+        {
+            "Ticket": "Migrasi",
+            "Value": 90
+        },
+        {
+            "Ticket": "Dismantle",
+            "Value": 40
+        }
+    ],
+    "Data1": "Succcess",
+    "Data2": "",
+    "Data3": "",
+    "Data4": "",
+    "Data5": "",
+    "Data6": "",
+    "Data7": "",
+    "Data8": "",
+    "Data9": "",
+    "Data10": ""
+}
