@@ -1,0 +1,3 @@
+﻿Pengeluaran          | Nominal    | Tanggal     | Note       
+-------------------------------------------------------------
+Tiket Bis Berangkat  | 500,000,-  | 01/01/1900  | di proses  

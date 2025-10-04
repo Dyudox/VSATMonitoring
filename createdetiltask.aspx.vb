@@ -1,12 +1,11 @@
 ﻿Imports System
 Imports System.Data.SqlClient
-Imports DevExpress.Web.ASPxGridView
+Imports DevExpress.Web
 Imports DevExpress.Web.Bootstrap
-Imports DevExpress.Web.BootstrapMode
+'Imports DevExpress.Web.BootstrapMode
 Imports System.Web
 Imports System.Web.UI
 Imports System.Web.UI.WebControls
-Imports DevExpress.Web
 Imports System.Data
 Imports DevExpress.Web.ASPxEdit
 
@@ -378,49 +377,49 @@ Partial Class createdetiltask
         groupstatusadmin.Visible = False
 		strsql = "select * from trDetail_Task where NoListTask=" & Request.QueryString("ID") & ""
         tbldata = clsg.ExecuteQuery(strsql)
-        If tbldata.Rows(0).Item("FlagDataBarang") = True Then
-            groupdatabarangterpasang.Visible = True
-        End If
-        If tbldata.Rows(0).Item("FlagDataInstallasi") = True Then
-            groupinstallasi.Visible = True
-        End If
-        If tbldata.Rows(0).Item("FlagDataLokasi") = True Then
-            groupdatalokasi.Visible = True
-        End If
-        If tbldata.Rows(0).Item("FlagDataSurvey") = True Then
-            groupsurvey.Visible = True
-        End If
-        If tbldata.Rows(0).Item("FlagDataTeknis") = True Then
-            groupdatateknis.Visible = True
-            groupfoto.Visible = True
-            groupstatusperbaikan.Visible = True
-            groupstatusadmin.Visible = True
-        End If
-        If tbldata.Rows(0).Item("FlagGeneralInfo") = True Then
-            groupgeneralinfo.Visible = True
-        End If
-        If tbldata.Rows(0).Item("FlagUploadPhoto") = True Then
-            groupfoto.Visible = True
-        End If
-
-        'If Session("level") = "Teknisi" Then
-        '    Dim strFlagDataTeknis As String = "select * from trDetail_Task where NoListTask=" & Request.QueryString("ID") & ""
-        '    com = New SqlCommand(strFlagDataTeknis, con)
-        '    con.Open()
-        '    dr = com.ExecuteReader()
-        '    If dr.HasRows Then
-        '        dr.Read()
-        '        GetFlagDataTeknis = dr("FlagDataTeknis").ToString
-        '    End If
-        '    dr.Close()
-        '    con.Close()
-
-        '    If GetFlagDataTeknis = True Then
-        '        groupfoto.Visible = True
-        '        groupstatusperbaikan.Visible = True
-        '        groupstatusadmin.Visible = True
-        '    End If
+        'If tbldata.Rows(0).Item("FlagDataBarang") = True Then
+        '    groupdatabarangterpasang.Visible = True
         'End If
+        'If tbldata.Rows(0).Item("FlagDataInstallasi") = True Then
+        '    groupinstallasi.Visible = True
+        'End If
+        'If tbldata.Rows(0).Item("FlagDataLokasi") = True Then
+        '    groupdatalokasi.Visible = True
+        'End If
+        'If tbldata.Rows(0).Item("FlagDataSurvey") = True Then
+        '    groupsurvey.Visible = True
+        'End If
+        'If tbldata.Rows(0).Item("FlagDataTeknis") = True Then
+        '    groupdatateknis.Visible = True
+        '    groupfoto.Visible = True
+        '    groupstatusperbaikan.Visible = True
+        '    groupstatusadmin.Visible = True
+        'End If
+        'If tbldata.Rows(0).Item("FlagGeneralInfo") = True Then
+        '    groupgeneralinfo.Visible = True
+        'End If
+        'If tbldata.Rows(0).Item("FlagUploadPhoto") = True Then
+        '    groupfoto.Visible = True
+        'End If
+
+        If Session("level") = "Teknisi" Then
+            Dim strFlagDataTeknis As String = "select * from trDetail_Task where NoListTask=" & Request.QueryString("ID") & ""
+            com = New SqlCommand(strFlagDataTeknis, con)
+            con.Open()
+            dr = com.ExecuteReader()
+            If dr.HasRows Then
+                dr.Read()
+                GetFlagDataTeknis = dr("FlagDataTeknis").ToString
+            End If
+            dr.Close()
+            con.Close()
+
+            If GetFlagDataTeknis = True Then
+                groupfoto.Visible = False
+                groupstatusperbaikan.Visible = False
+                groupstatusadmin.Visible = False
+            End If
+        End If
     End Sub
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 		'test.Value = Now.AddDays(5)

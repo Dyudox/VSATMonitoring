@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="VB" MasterPageFile="~/site.master" AutoEventWireup="false" CodeFile="createtask.aspx.vb" Inherits="createtask" %>
 
-<%@ Register Assembly="DevExpress.Web.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
-<%@ Register Assembly="DevExpress.Web.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
-    Namespace="DevExpress.Web.ASPxPopupControl" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+    Namespace="DevExpress.Web" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
 
     <script type="text/javascript">
@@ -56,6 +56,13 @@
             var suktest = s.GetValue();
             callbackPanel1.PerformCallback(s.GetValue());
         }
+
+        function OnEndCallbackGridVID(s, e) {
+            if (s.cpRefreshMaster) {
+                delete s.cpRefreshMaster; // reset property
+                grid_koordinator.PerformCallback(); // refresh parent
+            }
+        }
     </script>
 
     <dx:ASPxPopupControl ID="popup" ClientInstanceName="popup" runat="server" AllowDragging="true"
@@ -64,8 +71,8 @@
             <dx:PopupControlContentControl ID="PopupControlContentControl1" runat="server">
                 <div class="panel-tab clearfix">
                     <ul class="tab-bar">
-                        <li id="lihome1" runat="server" class="active"><a href="#home1" onclick="functionlihome()" data-toggle="tab"><i class="fa fa-home"></i>Pilih Lokasi Berdasarkan Provinsi</a></li>
-                        <li id="liprofile1" runat="server"><a href="#profile1" onclick="functionliprofile()" data-toggle="tab"><i class="fa fa-pencil"></i>Pilih Lokasi Terdekat</a></li>
+                        <li id="lihome1" runat="server" class="active"><a href="#home1" onclick="functionlihome()" data-toggle="tab"><i class="fa fa-home"></i> Select Lokasi Berdasarkan Provinsi</a></li>
+                        <li id="liprofile1" runat="server"><a href="#profile1" onclick="functionliprofile()" data-toggle="tab"><i class="fa fa-pencil"></i> Select Lokasi Terdekat</a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
@@ -444,9 +451,9 @@
                                     <h4 class="panel-title">
                                         <b>Lokasi Remote</b>
                                         <div class="pull-right">
-                                            <dx:ASPxHyperLink ID="ASPxHyperLink1" runat="server" ClientSideEvents-Click="OnCustomButtonClick" Text="Pilih Lokasi Remote" Font-Bold="True" Font-Underline="True">
+                                            <dx:ASPxHyperLink ID="ASPxHyperLink1" runat="server" ClientSideEvents-Click="OnCustomButtonClick" Text="Select Lokasi Remote" Font-Bold="True" Font-Underline="True">
                                             </dx:ASPxHyperLink>
-                                            <%--<dx:ASPxButton ID="ASPxButton1" runat="server"  AutoPostBack="false" CssClass="btn btn-md btn-info" Text="Pilih Lokasi Remote"></dx:ASPxButton>--%>
+                                            <%--<dx:ASPxButton ID="ASPxButton1" runat="server"  AutoPostBack="false" CssClass="btn btn-md btn-info" Text="Select Lokasi Remote"></dx:ASPxButton>--%>
                                         </div>
                                     </h4>
 
@@ -648,7 +655,7 @@
                                 <EditFormSettings VisibleIndex="3" Visible="false" Caption="Tgl Pengaduan" />
                                 <PropertiesDateEdit DisplayFormatString="yyyy-MM-dd HH:mm:ss" DisplayFormatInEditMode="True"></PropertiesDateEdit>
                             </dx:GridViewDataDateColumn>
-                            <dx:GridViewDataTextColumn FieldName="NamaTask1" Width="100%">
+                            <dx:GridViewDataTextColumn FieldName="NamaTask" Width="100%">
                                 <%--<DataItemTemplate>
                                     <%# Eval("NamaTask") %> - <%# Eval("IdProvinsi") %>
                                     <%# If(Eval("NamaTask").ToString() <> "", Eval("NamaTask") + " - " + Eval("IdProvinsi"), "") %>
@@ -752,9 +759,9 @@
                                     <h4 class="panel-title">
                                         <b>Lokasi Remote</b>
                                         <div class="pull-right">
-                                            <dx:ASPxHyperLink ID="ASPxHyperLink1" runat="server" ClientSideEvents-Click="OnCustomButtonClick" Text="Pilih Lokasi Remote" Font-Bold="True" Font-Underline="True">
+                                            <dx:ASPxHyperLink ID="ASPxHyperLink1" runat="server" ClientSideEvents-Click="OnCustomButtonClick" Text="Select Lokasi Remote" Font-Bold="True" Font-Underline="True">
                                             </dx:ASPxHyperLink>
-                                            <%--<dx:ASPxButton ID="ASPxButton1" runat="server"  AutoPostBack="false" CssClass="btn btn-md btn-info" Text="Pilih Lokasi Remote"></dx:ASPxButton>--%>
+                                            <%--<dx:ASPxButton ID="ASPxButton1" runat="server"  AutoPostBack="false" CssClass="btn btn-md btn-info" Text="Select Lokasi Remote"></dx:ASPxButton>--%>
                                         </div>
                                     </h4>
 
@@ -774,12 +781,18 @@
                                     <SettingsSearchPanel Visible="True" />
                                     <SettingsEditing Mode="PopupEditForm" EditFormColumnCount="1" />
                                     <SettingsDetail ShowDetailRow="true" />
+                                    <ClientSideEvents EndCallback="OnEndCallbackGridVID" />
                                     <Columns>
                                         <dx:GridViewCommandColumn CellStyle-BackColor="#d6f1ff" Caption="ACTION" HeaderStyle-BackColor="#d6f1ff" HeaderStyle-HorizontalAlign="Center"
                                             ShowDeleteButton="True" ShowEditButton="true" VisibleIndex="10">
                                             <CellStyle BackColor="#d6f1ff">
                                             </CellStyle>
                                         </dx:GridViewCommandColumn>
+                                        <%--<dx:GridViewDataTextColumn FieldName="NoListTask" Visible="true" ReadOnly="true" PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0" 
+                                            HeaderStyle-HorizontalAlign="Center" Caption="No List Task" Width="70px">
+                                            <EditFormSettings VisibleIndex="1" Visible="True" />
+                                            <PropertiesTextEdit Width="500px"></PropertiesTextEdit>
+                                        </dx:GridViewDataTextColumn>--%>
                                         <dx:GridViewDataTextColumn FieldName="NoTask" Visible="false" ReadOnly="true" PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0" 
                                             HeaderStyle-HorizontalAlign="Center" Caption="No. Task" Width="70px">
                                             <EditFormSettings VisibleIndex="2" Visible="True" />
@@ -812,8 +825,8 @@
                                         <%--<dx:GridViewDataTextColumn FieldName="CatatanKoordinator" VisibleIndex="7" HeaderStyle-HorizontalAlign="Center" Caption="Catatan Koordinator" Width="140px">
                                             <EditFormSettings Visible="false" />
                                         </dx:GridViewDataTextColumn>--%>
-                                        <dx:GridViewDataMemoColumn FieldName="CatatanKoordinator" Visible="true" HeaderStyle-Wrap="True" Width="400px">
-                                            <EditFormSettings VisibleIndex="11" Visible="True" Caption="Catatan Koordinator"/>
+                                        <dx:GridViewDataMemoColumn FieldName="CatatanKoordinator" Visible="false" HeaderStyle-Wrap="True" Width="400px" ReadOnly="false">
+                                            <EditFormSettings VisibleIndex="11" Visible="False" Caption="Catatan Koordinator"/>
                                             <Settings AutoFilterCondition="Contains"></Settings>
 								            <PropertiesMemoEdit  ValidationSettings-RequiredField-IsRequired="true" Width="500px" Height="90px" ></PropertiesMemoEdit>
 											<HeaderStyle HorizontalAlign="Center"></HeaderStyle>
@@ -943,7 +956,7 @@
                                 </div>
                                 <dx:ASPxGridView ID="Grid_Validasi" runat="server" ClientInstanceName="Grid_Validasi" KeyFieldName="ID" DataSourceID="dsstatusvalidasi" 
                                     OnRowUpdating="Grid_Validasi_RowUpdating" OnBeforePerformDataSelect="Grid_Validasi_BeforePerformDataSelect" Width="50%" 
-                                    AutoGenerateColumns="false" Theme="MetropolisBlue" OnCellEditorInitialize="grid_CellEditorInitialize" 
+                                    AutoGenerateColumns="false" Theme="MetropolisBlue" OnCellEditorInitialize="grid_CellEditorInitialize" OnCustomColumnDisplayText="Grid_ValidasiColumnDisplayText" 
                                     OnExpandedChanged="Grid_Validasi_ExpandedChanged" AutoCollapse="True" EnableCallBacks="True">
                                     <Settings HorizontalScrollBarMode="Auto" ShowFooter="false" ShowGroupPanel="True" />
                                     <SettingsBehavior ConfirmDelete="True" />
@@ -961,7 +974,11 @@
                                         </dx:GridViewCommandColumn>
                                         <dx:GridViewDataTextColumn FieldName="NoTask" PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0" ReadOnly="true" Caption="No. Task" Width="100%" HeaderStyle-HorizontalAlign="Center" VisibleIndex="0">
                                         </dx:GridViewDataTextColumn>
-                                        <dx:GridViewDataTextColumn FieldName="estimasiBiaya" PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0" ReadOnly="false" Caption="Estimasi Biaya" Width="100%" HeaderStyle-HorizontalAlign="Center" VisibleIndex="0">
+                                        <%--<dx:GridViewDataTextColumn FieldName="estimasiBiaya" PropertiesTextEdit-DisplayFormatString="{0:n0}" PropertiesTextEdit-DisplayFormatInEditMode="true" PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0" ReadOnly="false" Caption="Estimasi Biaya" Width="100%" HeaderStyle-HorizontalAlign="Center" VisibleIndex="0">
+                                            <PropertiesTextEdit DisplayFormatString="c" />
+                                        </dx:GridViewDataTextColumn>--%>
+                                        <dx:GridViewDataTextColumn Caption="Estimasi Biaya" FieldName="estimasiBiaya" Settings-AutoFilterCondition="Contains" HeaderStyle-HorizontalAlign="Center" VisibleIndex="0">
+                                            <PropertiesTextEdit DisplayFormatString="{0:n0}" DisplayFormatInEditMode="true" />
                                         </dx:GridViewDataTextColumn>
                                         <dx:GridViewDataComboBoxColumn FieldName="IdStatusKoordinator" Caption="status" Width="100%">
                                             <EditFormSettings VisibleIndex="10" Visible="True" Caption="status" />
@@ -973,6 +990,7 @@
                                             </PropertiesComboBox>
                                         </dx:GridViewDataComboBoxColumn>
                                     </Columns>
+                                    <SettingsEditing Mode="EditFormAndDisplayRow" />
                                 </dx:ASPxGridView>
                                 <div class="panel-heading">
 
@@ -1044,7 +1062,7 @@
                             </dx:GridViewDataDateColumn>
                             <dx:GridViewDataTextColumn Caption="No. Pengaduan" PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0" ReadOnly="true" VisibleIndex="1"
 							PropertiesTextEdit-DisplayFormatInEditMode="true" PropertiesTextEdit-DisplayFormatString="Auto Increment" HeaderStyle-Wrap="True"
-							HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="Center" FieldName="NomorPengaduan" Settings-AutoFilterCondition="Contains" Width="150px">
+							HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="Center" FieldName="NomorPengaduan" Settings-AutoFilterCondition="Contains" Width="100px">
                                 <EditFormSettings VisibleIndex="0" Visible="false" Caption="No Pengaduan" />
                                 <Settings AutoFilterCondition="Contains"></Settings>								
                             </dx:GridViewDataTextColumn>
@@ -1097,7 +1115,7 @@
                                 <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
                                 <Settings AutoFilterCondition="Contains"></Settings>
                             </dx:GridViewDataComboBoxColumn>
-                            <dx:GridViewDataMemoColumn FieldName="CatatanManager" VisibleIndex="12" Width="100%">
+                            <dx:GridViewDataMemoColumn FieldName="CatatanManager" VisibleIndex="12" Width="200px">
                                 <EditFormSettings VisibleIndex="15" Visible="True" Caption="Catatan Manager" />
                                 <PropertiesMemoEdit  ValidationSettings-RequiredField-IsRequired="true" Width="350px" Height="90px" ></PropertiesMemoEdit>
                                 <Settings AutoFilterCondition="Contains"></Settings>
@@ -1146,9 +1164,9 @@
                                     <h4 class="panel-title">
                                         <b>Lokasi Remote</b>
                                         <div class="pull-right">
-                                            <dx:ASPxHyperLink ID="ASPxHyperLink1" runat="server" ClientSideEvents-Click="OnCustomButtonClick" Text="Pilih Lokasi Remote" Font-Bold="True" Font-Underline="True">
+                                            <dx:ASPxHyperLink ID="ASPxHyperLink1" runat="server" ClientSideEvents-Click="OnCustomButtonClick" Text="Select Lokasi Remote" Font-Bold="True" Font-Underline="True">
                                             </dx:ASPxHyperLink>
-                                            <%--<dx:ASPxButton ID="ASPxButton1" runat="server"  AutoPostBack="false" CssClass="btn btn-md btn-info" Text="Pilih Lokasi Remote"></dx:ASPxButton>--%>
+                                            <%--<dx:ASPxButton ID="ASPxButton1" runat="server"  AutoPostBack="false" CssClass="btn btn-md btn-info" Text="Select Lokasi Remote"></dx:ASPxButton>--%>
                                         </div>
                                     </h4>
 

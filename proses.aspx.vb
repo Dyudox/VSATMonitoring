@@ -86,6 +86,7 @@ Partial Class proses
 
             Else
                 Dim insertIntoTrdetailTask As String = "insert into trDetail_Task (NoTask, VID, NAMAREMOTE, IPLAN, SID, ALAMAT, PROVINSI, KOTA, IdJarkom, IdStatusPerbaikan, PIC, NoHpPic, UserStamp, DateStamp, idJenisTask) VALUES ('" & Session("NoTask") & "', '" & VID & "', '" & NamaRemote & "', '" & IPLAN & "', '" & SID & "', '" & ALamatInstall & "', '" & Provinsi & "', '" & Kota & "', '" & IDJARKOM & "', '1', '" & PIC & "', '" & CustPhone & "', '" & Session("username") & "', GETDATE(), '" & tampungPMSUK & "')"
+                'Dim insertIntoTrdetailTask As String = "insert into trDetail_Task (VID, NAMAREMOTE, IPLAN, SID, ALAMAT, PROVINSI, KOTA, IdJarkom, IdStatusPerbaikan, PIC, NoHpPic, UserStamp, DateStamp, idJenisTask) VALUES ('" & VID & "', '" & NamaRemote & "', '" & IPLAN & "', '" & SID & "', '" & ALamatInstall & "', '" & Provinsi & "', '" & Kota & "', '" & IDJARKOM & "', '1', '" & PIC & "', '" & CustPhone & "', '" & Session("username") & "', GETDATE(), '" & tampungPMSUK & "')"
                 Try
                     cmd = New SqlCommand(insertIntoTrdetailTask, sqlcon)
                     sqlcon.Open()

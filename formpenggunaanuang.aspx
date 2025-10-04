@@ -1,7 +1,7 @@
 ﻿
 <%@ Page Title="" Language="VB" MasterPageFile="~/site.master" AutoEventWireup="false" CodeFile="formpenggunaanuang.aspx.vb" Inherits="formpenggunaanuang" %>
 
-<%@ Register Assembly="DevExpress.Web.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
 
@@ -344,29 +344,16 @@
                     <tbody>
 
                         <asp:Literal ID="ltrisi" runat="server"></asp:Literal>
-                        <%-- <tr>
-                                <td>BRINETCOM</td>
-                                <td>Hotel</td>
-                                <td>Rp. 800.000,-</td>
-                                <td>../BuktiBayar/bonhotel.jpg</td>
-                                <td>25-10-2018</td>
-                                <td><a href="#" class="btn btn-success">Edit</a> &nbsp; &nbsp; <a href="#" class="btn btn-success">Delete</a></td>
-                                <td><a href="#" class="btn btn-danger">Valid</a></td>
-                            </tr>
-                            <tr>
-                                <td>BRINETCOM</td>
-                                <td>Transport</td>
-                                <td>Rp. 800.000,-</td>
-                                <td>../BuktiBayar/bontransport.jpg</td>
-                                <td>25-10-2018</td>
-                                <td><a href="#" class="btn btn-success">Edit</a> &nbsp; &nbsp; <a href="#" class="btn btn-success">Delete</a></td>
-                                <td><a href="#" class="btn btn-danger">Valid</a></td>
-                            </tr>--%>
+                        
                     </tbody>
                 </table>
                 <br />
-                <center>
-                 <asp:Button ID="btnconfirm" class="btn btn-info" OnClientClick="return confirm_click();" runat="server" Text="Konfirmasi Penggunaan Uang" />
+                <div>
+                    <asp:Button ID="btn_exportTxt" class="btn btn-info" runat="server" OnClick="btn_exportTxt_Click" Text="Export To .txt" />
+                </div>                
+                <br />
+                <center>                    
+                    <asp:Button ID="btnconfirm" class="btn btn-info" OnClientClick="return confirm_click();" runat="server" Text="Konfirmasi Penggunaan Uang" />
                 <br />*Apabila sudah di konfirmasi, maka data tidak bisa dirubah dan di hapus
                 </center>
             </div>

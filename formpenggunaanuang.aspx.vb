@@ -1,14 +1,16 @@
 ﻿Imports System
 Imports System.Data.SqlClient
-Imports DevExpress.Web.ASPxGridView
+Imports DevExpress.Web
 Imports DevExpress.Web.Bootstrap
 Imports DevExpress.Web.BootstrapMode
 Imports System.Web
 Imports System.Web.UI
 Imports System.Web.UI.WebControls
-Imports DevExpress.Web
 Imports System.Data
 Imports DevExpress.Web.ASPxEdit
+Imports System.IO
+Imports System.Text
+Imports System.Text.RegularExpressions
 
 Partial Class formpenggunaanuang
     Inherits System.Web.UI.Page
@@ -504,7 +506,7 @@ Partial Class formpenggunaanuang
     End Sub
 
     Protected Sub cb_vid_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cb_vid.SelectedIndexChanged
-        strsql = "select * from trTask a inner join trDetail_Task b " & _
+        strsql = "select * from trTask a inner join trDetail_Task b " &
         "on a.NoTask=b.NoTask where b.NoTask='" & Request.QueryString("notask") & "' and b.VID='" & cb_vid.Value & "'"
         tbldata = clsg.ExecuteQuery(strsql)
         If IsNothing(tbldata) = False Then
@@ -519,7 +521,226 @@ Partial Class formpenggunaanuang
         Else
             clsg.writedata("Formpenggunaanuang.aspx", "Cari VID", Session("Error"), cb_vid.Value, strsql)
         End If
-        
-        
+
+
     End Sub
+
+    Protected Sub btn_exportTxt_Click(sender As Object, e As EventArgs)
+
+        Try
+            ' === Path penyimpanan ===
+            Dim folderPath As String = "D:\OfficeSelindo\Backup server\BackupVsat\Export_Txt\"
+            If Not Directory.Exists(folderPath) Then
+                Directory.CreateDirectory(folderPath)
+            End If
+
+            ' === Nama file export ===
+            Dim fileName As String = "Export_Data_" & DateTime.Now.ToString("yyyyMMdd_HHmmss") & ".txt"
+            Dim filePath As String = Path.Combine(folderPath, fileName)
+
+            ' === Header kolom ===
+            Dim headers() As String = {"Pengeluaran", "Nominal", "Tanggal", "Note"}
+
+            ' === Ambil data dari Literal ===
+            Dim htmlContent As String = ltrisi.Text.Trim()
+            If String.IsNullOrEmpty(htmlContent) Then
+                Response.Write("<script>alert('Tidak ada data untuk diexport');</script>")
+                Exit Sub
+            End If
+
+            ' === Bersihkan HTML ke format teks ===
+            htmlContent = Regex.Replace(htmlContent, "</tr\s*>", vbCrLf, RegexOptions.IgnoreCase)
+            htmlContent = Regex.Replace(htmlContent, "</td\s*>", "|", RegexOptions.IgnoreCase)
+            htmlContent = Regex.Replace(htmlContent, "<.*?>", "")
+            htmlContent = System.Net.WebUtility.HtmlDecode(htmlContent)
+            htmlContent = htmlContent.Replace("&nbsp;", " ").Trim()
+
+            ' === Pisahkan ke baris dan kolom ===
+            Dim lines = htmlContent.Split({vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
+            Dim rows As New List(Of String())
+            For Each line In lines
+                Dim parts = line.Split({"|"}, StringSplitOptions.RemoveEmptyEntries)
+                If parts.Length > 0 Then rows.Add(parts.Select(Function(x) x.Trim()).ToArray())
+            Next
+
+            ' === Hitung lebar kolom ===
+            Dim colWidths(headers.Length - 1) As Integer
+            For i = 0 To headers.Length - 1
+                colWidths(i) = headers(i).Length
+            Next
+            For Each row In rows
+                For i = 0 To Math.Min(row.Length, headers.Length) - 1
+                    colWidths(i) = Math.Max(colWidths(i), row(i).Length)
+                Next
+            Next
+
+            ' === Format teks sejajar ===
+            Dim sb As New StringBuilder()
+            For i = 0 To headers.Length - 1
+                sb.Append(headers(i).PadRight(colWidths(i) + 2))
+                If i < headers.Length - 1 Then sb.Append("| ")
+            Next
+            sb.AppendLine()
+            sb.AppendLine(New String("-"c, sb.Length - 2))
+
+            For Each row In rows
+                For i = 0 To headers.Length - 1
+                    Dim val As String = If(i < row.Length, row(i), "")
+                    sb.Append(val.PadRight(colWidths(i) + 2))
+                    If i < headers.Length - 1 Then sb.Append("| ")
+                Next
+                sb.AppendLine()
+            Next
+
+            ' === Simpan file TXT ===
+            File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8)
+
+            ' === Simpan log export ===
+            Dim logFolder As String = Path.Combine(folderPath, "Logs")
+            If Not Directory.Exists(logFolder) Then
+                Directory.CreateDirectory(logFolder)
+            End If
+
+            Dim logPath As String = Path.Combine(logFolder, "export_log_" & DateTime.Now.ToString("yyyyMM") & ".log")
+            ' aman ambil username dari session (fallback ke "Unknown" kalau kosong)
+            Dim userName As String = "Unknown"
+            If Session IsNot Nothing AndAlso Session("username") IsNot Nothing Then
+                userName = Session("username").ToString()
+            ElseIf HttpContext.Current IsNot Nothing AndAlso HttpContext.Current.User IsNot Nothing AndAlso HttpContext.Current.User.Identity IsNot Nothing AndAlso HttpContext.Current.User.Identity.Name IsNot Nothing Then
+                userName = HttpContext.Current.User.Identity.Name
+            End If
+
+            Dim logText As String = String.Format("{0} | User: {1} | File: {2} | Rows: {3}{4}",
+                                              DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                                              userName,
+                                              fileName,
+                                              rows.Count,
+                                              Environment.NewLine)
+
+            File.AppendAllText(logPath, logText, Encoding.UTF8)
+
+            ' === Redirect ke handler download (handler harus ada: DownloadTxt.ashx) ===
+            Dim downloadUrl As String = "DownloadTxt.ashx?file=" & HttpUtility.UrlEncode(fileName)
+            Response.Redirect(downloadUrl, False)
+            HttpContext.Current.ApplicationInstance.CompleteRequest()
+
+        Catch ex As Exception
+            Response.Write("<script>alert('Gagal export: " & ex.Message.Replace("'", "") & "');</script>")
+        End Try
+
+        'Try
+        '    ' === Path penyimpanan ===
+        '    Dim folderPath As String = "D:\OfficeSelindo\Backup server\BackupVsat\Export_Txt\"
+        '    If Not Directory.Exists(folderPath) Then
+        '        Directory.CreateDirectory(folderPath)
+        '    End If
+
+        '    ' === Nama file export ===
+        '    Dim fileName As String = "Export_Data_" & DateTime.Now.ToString("yyyyMMdd_HHmmss") & ".txt"
+        '    Dim filePath As String = Path.Combine(folderPath, fileName)
+
+        '    ' === Header kolom ===
+        '    Dim headers() As String = {"Pengeluaran", "Nominal", "Tanggal", "Note"}
+
+        '    ' === Ambil data dari Literal ===
+        '    Dim htmlContent As String = ltrisi.Text.Trim()
+        '    If String.IsNullOrEmpty(htmlContent) Then
+        '        Response.Write("<script>alert('Tidak ada data untuk diexport');</script>")
+        '        Exit Sub
+        '    End If
+
+        '    ' === Bersihkan HTML ke format teks ===
+        '    htmlContent = Regex.Replace(htmlContent, "</tr\s*>", vbCrLf, RegexOptions.IgnoreCase)
+        '    htmlContent = Regex.Replace(htmlContent, "</td\s*>", "|", RegexOptions.IgnoreCase)
+        '    htmlContent = Regex.Replace(htmlContent, "<.*?>", "")
+        '    htmlContent = System.Net.WebUtility.HtmlDecode(htmlContent)
+        '    htmlContent = htmlContent.Replace("&nbsp;", " ").Trim()
+
+        '    ' === Pisahkan ke baris dan kolom ===
+        '    Dim lines = htmlContent.Split({vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
+        '    Dim rows As New List(Of String())
+        '    For Each line In lines
+        '        Dim parts = line.Split({"|"}, StringSplitOptions.RemoveEmptyEntries)
+        '        If parts.Length > 0 Then rows.Add(parts.Select(Function(x) x.Trim()).ToArray())
+        '    Next
+
+        '    ' === Hitung lebar kolom ===
+        '    Dim colWidths(headers.Length - 1) As Integer
+        '    For i = 0 To headers.Length - 1
+        '        colWidths(i) = headers(i).Length
+        '    Next
+        '    For Each row In rows
+        '        For i = 0 To Math.Min(row.Length, headers.Length) - 1
+        '            colWidths(i) = Math.Max(colWidths(i), row(i).Length)
+        '        Next
+        '    Next
+
+        '    ' === Format teks sejajar ===
+        '    Dim sb As New StringBuilder()
+        '    For i = 0 To headers.Length - 1
+        '        sb.Append(headers(i).PadRight(colWidths(i) + 2))
+        '        If i < headers.Length - 1 Then sb.Append("| ")
+        '    Next
+        '    sb.AppendLine()
+        '    sb.AppendLine(New String("-"c, sb.Length - 2))
+
+        '    For Each row In rows
+        '        For i = 0 To headers.Length - 1
+        '            Dim val As String = If(i < row.Length, row(i), "")
+        '            sb.Append(val.PadRight(colWidths(i) + 2))
+        '            If i < headers.Length - 1 Then sb.Append("| ")
+        '        Next
+        '        sb.AppendLine()
+        '    Next
+
+        '    ' === Simpan file ===
+        '    File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8)
+
+        '    ' === Redirect ke handler download ===
+        '    Dim downloadUrl As String = "DownloadTxt.ashx?file=" & fileName
+        '    Response.Redirect(downloadUrl, False)
+        '    HttpContext.Current.ApplicationInstance.CompleteRequest()
+
+        'Catch ex As Exception
+        '    Response.Write("<script>alert('Gagal export: " & ex.Message.Replace("'", "") & "');</script>")
+        'End Try
+
+    End Sub
+
+
+    'Protected Sub btn_exportTxt_Click(sender As Object, e As EventArgs)
+    '    ' Ambil isi literal
+    '    Dim content As String = ltrisi.Text.Trim()
+
+    '    If String.IsNullOrEmpty(content) Then
+    '        ClientScript.RegisterStartupScript(Me.GetType(), "alert", "alert('Tidak ada data untuk diexport.');", True)
+    '        Exit Sub
+    '    End If
+
+    '    ' Ubah HTML <td> dan <tr> jadi teks biasa
+    '    Dim plainText As String = content
+    '    plainText = plainText.Replace("<tr>", "").Replace("</tr>", vbCrLf)
+    '    plainText = plainText.Replace("<td>", "").Replace("</td>", " | ")
+    '    plainText = plainText.Replace("&nbsp;", " ")
+
+    '    ' Simpan ke file sementara di folder Temp
+    '    Dim fileName As String = "DataPengeluaran_" & DateTime.Now.ToString("yyyyMMdd_HHmmss") & ".txt"
+    '    Dim folderPath As String = Server.MapPath("~/Temp/")
+
+    '    If Not Directory.Exists(folderPath) Then
+    '        Directory.CreateDirectory(folderPath)
+    '    End If
+
+    '    Dim filePath As String = Path.Combine(folderPath, fileName)
+    '    File.WriteAllText(filePath, plainText, Encoding.UTF8)
+
+    '    ' Kirim ke browser
+    '    Response.Clear()
+    '    Response.ContentType = "text/plain"
+    '    Response.AddHeader("Content-Disposition", "attachment; filename=" & fileName)
+    '    Response.TransmitFile(filePath)
+    '    Response.Flush()
+    '    HttpContext.Current.ApplicationInstance.CompleteRequest()
+    'End Sub
+
 End Class

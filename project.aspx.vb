@@ -1,13 +1,12 @@
 ﻿Imports System
 Imports System.Data.SqlClient
-Imports DevExpress.Web.ASPxGridView
+Imports DevExpress.Web
 Imports DevExpress.Web.Bootstrap
 Imports DevExpress.Web.BootstrapMode
 Imports System.Web
 Imports System.Web.UI
 Imports System.Web.UI.WebControls
 Imports System.Data.OleDb
-Imports DevExpress.Web
 Imports System.Data
 Imports DevExpress.Web.ASPxEdit
 Imports System.IO
@@ -1080,6 +1079,54 @@ Partial Class project
     '        lblMessage.Text = "Rollback Gagal! " & ex.Message
     '    End Try
     'End Sub
+
+    'Protected Sub btn_template_Click(sender As Object, e As EventArgs)
+    '    Dim filePath As String = "D:\OfficeSelindo\Backup server\BackupVsat\masterTemplate\DataLokasi.xlsx"
+    '    Dim fileName As String = Path.GetFileName(filePath)
+
+    '    If File.Exists(filePath) Then
+    '        Response.Clear()
+    '        Response.Buffer = True
+    '        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    '        Response.AddHeader("Content-Disposition", "attachment; filename=" & fileName)
+    '        Response.WriteFile(filePath)
+    '        Response.Flush()
+    '        HttpContext.Current.ApplicationInstance.CompleteRequest()
+    '    Else
+    '        ' Bisa kasih notifikasi kalau file tidak ada
+    '        Response.Write("<script>alert('File tidak ditemukan');</script>")
+    '    End If
+    'End Sub
+
+    Protected Sub btn_template_ServerClick(sender As Object, e As EventArgs)
+        Dim filePath As String = "D:\OfficeSelindo\Backup server\BackupVsat\masterTemplate\DataLokasi.xlsx"
+        Dim fileName As String = Path.GetFileName(filePath)
+
+        If File.Exists(filePath) Then
+            Response.Clear()
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            Response.AddHeader("Content-Disposition", "attachment; filename=" & fileName)
+            Response.TransmitFile(filePath)
+            Response.End()
+        Else
+            ClientScript.RegisterStartupScript(Me.GetType(), "alert", "alert('File tidak ditemukan');", True)
+        End If
+    End Sub
+
+    Protected Sub btn_Download_ServerClick(sender As Object, e As EventArgs)
+        Dim filePath As String = "D:\OfficeSelindo\Backup server\BackupVsat\masterTemplate\PenyelesaianTask.xlsx"
+        Dim fileName As String = Path.GetFileName(filePath)
+
+        If File.Exists(filePath) Then
+            Response.Clear()
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            Response.AddHeader("Content-Disposition", "attachment; filename=" & fileName)
+            Response.TransmitFile(filePath)
+            Response.End()
+        Else
+            ClientScript.RegisterStartupScript(Me.GetType(), "alert", "alert('File tidak ditemukan');", True)
+        End If
+    End Sub
 
     Protected Sub cb_JenisTask_CheckedChanged(sender As Object, e As EventArgs) Handles cb_JenisTask.CheckedChanged
         If cb_JenisTask.Checked = True Then

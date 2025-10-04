@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="VB" MasterPageFile="~/site.master" AutoEventWireup="false" CodeFile="tasklistBootsraps.aspx.vb" Inherits="tasklistBootsraps" %>
 
-<%@ Register Assembly="DevExpress.Web.Bootstrap.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.Bootstrap" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.Bootstrap.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.Bootstrap" TagPrefix="dx" %>
 
-<%@ Register Assembly="DevExpress.Web.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
 
@@ -242,7 +242,7 @@
                                 </a>
                             </DataItemTemplate>
                         </dx:GridViewDataTextColumn>
-                        <dx:GridViewDataTextColumn Caption="No. Task" HeaderStyle-HorizontalAlign="Center" VisibleIndex="1" FieldName="NoTask">                              
+                        <dx:GridViewDataTextColumn Caption="No. Task" HeaderStyle-HorizontalAlign="Center" VisibleIndex="1" FieldName="NoTask" Visible="false">                              
                             <HeaderStyle HorizontalAlign="Center"></HeaderStyle>                          
                         </dx:GridViewDataTextColumn>
                         <dx:GridViewDataTextColumn Caption="VID" FieldName="VID" HeaderStyle-HorizontalAlign="Center" Width="200px" VisibleIndex="2">

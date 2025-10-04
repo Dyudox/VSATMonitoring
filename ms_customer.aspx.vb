@@ -1,8 +1,7 @@
 ﻿Imports System
 Imports System.Data.SqlClient
-Imports DevExpress.Web.ASPxGridView
-Imports System.Web
 Imports DevExpress.Web
+Imports System.Web
 
 Partial Class ms_customer
     Inherits System.Web.UI.Page

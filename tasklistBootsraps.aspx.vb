@@ -1,12 +1,11 @@
 ﻿Imports System
 Imports System.Data.SqlClient
-Imports DevExpress.Web.ASPxGridView
+Imports DevExpress.Web
 Imports DevExpress.Web.Bootstrap
 Imports DevExpress.Web.BootstrapMode
 Imports System.Web
 Imports System.Web.UI
 Imports System.Web.UI.WebControls
-Imports DevExpress.Web
 Imports System.Data
 Imports DevExpress.Web.ASPxEdit
 Partial Class tasklistBootsraps
@@ -181,10 +180,33 @@ Partial Class tasklistBootsraps
             con.Close()
 
             If Request.QueryString("status") = "open" Then
+
+                'dstask.SelectCommand = "SELECT " &
+                '                            "t.NoTask, " &
+                '                            "CONVERT(datetime, t.TanggalTask) AS TanggalTask, " &
+                '                            "t.NamaKoordinator, " &
+                '                            "t.NamaTeknisi, " &
+                '                            "d.VID, " &
+                '                            "d.NoListTask as ID, " &
+                '                            "d.PROVINSI, " &
+                '                            "d.NAMAREMOTE, " &
+                '                            "d.idJenisTask, " &
+                '                            "s.Status AS StatusTask " &
+                '                        "FROM trTask t " &
+                '                        "OUTER APPLY ( " &
+                '                            "SELECT TOP 1 d2.* FROM trDetail_Task d2 " &
+                '                            "WHERE d2.NoTask = t.NoTask And d2.VID <> '' " &
+                '                            "ORDER BY d2.NoListTask ASC ) d " &
+                '                        "LEFT JOIN msStatus s ON d.IdStatusPerbaikan = s.ID " &
+                '                        "WHERE t.IdStatusManager = 'Valid' " &
+                '                          "AND s.Status = 'Open' " &
+                '                        "ORDER BY t.TanggalTask DESC"
+
                 dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(datetime,trTask.TanggalTask) as TanggalTask, " &
                                         "trDetail_Task.PROVINSI,trDetail_Task.NAMAREMOTE, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                         "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open' and trDetail_Task.VID <> '' order by trTask.TanggalTask desc"
+
                 'and (trTask.IdKoordinator = '" & Session("username") & "' or trTask.NamaKoordinator = '" & Session("username") & "') 
                 gridtask.DataBind()
                 '    Dim open As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _

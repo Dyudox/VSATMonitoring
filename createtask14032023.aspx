@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="VB" MasterPageFile="~/site.master" AutoEventWireup="false" CodeFile="createtask.aspx.vb" Inherits="createtask" %>
 
-<%@ Register Assembly="DevExpress.Web.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
-<%@ Register Assembly="DevExpress.Web.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
-    Namespace="DevExpress.Web.ASPxPopupControl" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+    Namespace="DevExpress.Web" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
 
     <script type="text/javascript">
@@ -464,7 +464,7 @@
                                         <dx:GridViewCommandColumn CellStyle-BackColor="#d6f1ff" Caption="ACTION" HeaderStyle-BackColor="#d6f1ff" ShowDeleteButton="True" ShowEditButton="True" VisibleIndex="10">
                                             <CellStyle BackColor="#d6f1ff">
                                             </CellStyle>
-                                        </dx:GridViewCommandColumn>
+                                        </dx:GridViewCommandColumn>                                        
                                         <dx:GridViewDataTextColumn FieldName="NoTask" Visible="false" ReadOnly="true" PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0" HeaderStyle-HorizontalAlign="Center" Caption="No. Task" Width="70px">
                                             <EditFormSettings VisibleIndex="2" Visible="True" />
                                         </dx:GridViewDataTextColumn>

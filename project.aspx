@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="VB" MasterPageFile="~/site.master" AutoEventWireup="false" CodeFile="project.aspx.vb" Inherits="project" %>
 
-<%@ Register Assembly="DevExpress.Web.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">    
     <script>        
@@ -330,7 +330,7 @@
                             OnRowDeleting="gv_detilproject_RowDeleting" OnRowInserting="gv_detilproject_RowInserting" OnRowUpdating="gv_detilproject_RowUpdating" 
                             AutoGenerateColumns="False" DataSourceID="dsdetilproject" KeyFieldName="ID">
                             <Settings ShowFooter="false" ShowGroupPanel="True" HorizontalScrollBarMode="Auto" />
-                            <SettingsBehavior ConfirmDelete="True" />
+                            <SettingsBehavior ConfirmDelete="True" AllowSelectByRowClick="true" />
                             <SettingsPager>
                                 <PageSizeItemSettings Visible="true" Items="10, 15, 20" ShowAllItem="true" />
                             </SettingsPager>
@@ -470,7 +470,13 @@
                                             <asp:FileUpload ID="fl_upload" runat="server" Visible="true" CssClass="upload-demo" onchange="get_filename(this);" />
                                             <span id="fileNameLabel" data-title="No file selected..."></span>
                                         </label>                                        
-                                    </div>                                    
+                                    </div>         
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <asp:Label ID="Label1" runat="server" Text="*Replace data, The file name must be DataLocation.xlsx" ForeColor="#a94442" Font-Bold="true"/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -487,6 +493,14 @@
                                                 </button>
                                                 <button id="btn_rollback" style="background-color: #F65058;" runat="server" class="btn btn-danger" type="submit" onclick="if (!UserCustomerConfirmation()) return false;">
                                                     <i class="fa fa-arrow-circle-o-up"></i>&nbsp;Rollback Data
+                                                </button>
+                                                <%--<dx:ASPxButton ID="btn_template" runat="server" style="background-color: #F65058;" class="btn btn-danger"
+                                                    Text="Download Template"
+                                                    AutoPostBack="True" 
+                                                    OnClick="btn_template_Click">
+                                                </dx:ASPxButton>--%>
+                                                <button id="btn_template" style="background-color: #F65058;" class="btn btn-danger" runat="server" onserverclick="btn_template_ServerClick">
+                                                    <i class="fa fa-arrow-circle-o-up"></i>&nbsp;Download Template
                                                 </button>
                                             </div>
                                         </div>
@@ -518,10 +532,13 @@
                                     <div class="upload-file">
                                         <%--<input id="upload-demo" class="upload-demo" type="file">--%>
                                         <label data-title="Select file" for="upload-demo">
-                                            <asp:FileUpload ID="upload_penyelesaian" runat="server" Visible="true" CssClass="upload-demo" onchange="get_filename(this);" />
+                                            <asp:FileUpload ID="upload_penyelesaian" runat="server" Width="100px" Visible="true" CssClass="upload-demo" onchange="get_filename(this);" />
                                             <span data-title="No file selected..."></span>
                                         </label>
                                     </div>
+                                </div>                                
+                                <div class="form-group">
+                                    <asp:Label ID="Label2" runat="server" Text="*Replace data, The file name must be PenyelesaianTask.xlsx" ForeColor="#a94442" Font-Bold="true"/>
                                 </div>
                                 <div class="form-group">
                                     <asp:Label ID="lblPenyelesaianTask" runat="server" ForeColor="Green" Font-Bold="true"/>
@@ -540,9 +557,9 @@
                                     </Triggers>
                                     <ContentTemplate>
                                         <div class="row">
-                                            <div class="col-md-12 border">                                
+                                            <div class="col-md-10 border">                                
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-8">
                                                         <dx:ASPxCheckBox ID="cb_JenisTask" runat="server" ClientInstanceName="chkSelAll" 
                                                             Text="Select All" Font-Bold="true" AutoPostBack="true">                                            
                                                         </dx:ASPxCheckBox>
@@ -564,15 +581,18 @@
                                 <div class="seperator"></div>
                             </div>          
                             <div class="col-md-3">
-                                <div class="pull-left text-right">
+                                <div class="pull-left">
                                     <div class="row">
                                         <div class="form-group">
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-16">
                                                 <button id="btnuploadpenyelesaiantask" style="background-color: #F65058;" runat="server" visible="true" class="btn btn-danger" type="submit" onclick="if (!UserCustomerConfirmation()) return false;">
                                                     <i class="fa fa-save"></i>&nbsp;Import
                                                 </button>
                                                 <button id="btncancelpenyelesaian" style="background-color: #F65058;" runat="server" class="btn btn-danger" type="submit" onclick="if (!UserCustomerConfirmation()) return false;">
                                                     <i class="fa fa-arrow-circle-o-up"></i>&nbsp;Cancel
+                                                </button>
+                                                <button id="btn_Download" style="background-color: #F65058;" class="btn btn-danger" runat="server" onserverclick="btn_Download_ServerClick">
+                                                    <i class="fa fa-arrow-circle-o-up"></i>&nbsp;Download
                                                 </button>
                                             </div>
                                         </div>

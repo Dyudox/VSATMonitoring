@@ -1,12 +1,11 @@
 ﻿Imports System
 Imports System.Data.SqlClient
-Imports DevExpress.Web.ASPxGridView
+Imports DevExpress.Web
 Imports DevExpress.Web.Bootstrap
-Imports DevExpress.Web.BootstrapMode
+'Imports DevExpress.Web.BootstrapMode
 Imports System.Web
 Imports System.Web.UI
 Imports System.Web.UI.WebControls
-Imports DevExpress.Web
 Imports System.Data
 Imports DevExpress.Web.ASPxEdit
 Imports System.Net
@@ -28,7 +27,21 @@ Partial Class createtask
     Dim clsg As New cls_global
     Dim tbldata As DataTable
 
+    Protected Sub Grid_ValidasiColumnDisplayText(sender As Object, e As DevExpress.Web.ASPxGridViewColumnDisplayTextEventArgs) Handles grid_koordinator.CustomColumnDisplayText
+        If e.Column.FieldName = "estimasiBiaya" AndAlso Not String.IsNullOrEmpty(e.Value) Then
+            Dim nilai As Decimal
+            If Decimal.TryParse(e.Value.ToString(), nilai) Then
+                'e.DisplayText = "Rp " & nilai.ToString("N0")
+                e.DisplayText = nilai.ToString("n0")
+            End If
+        End If
+    End Sub
+
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        'If IsPostBack Then
+        '    BindGrid()
+        'End If
 
         If Session("username") = "admin" Then
             'dsmanager.SelectCommand = "select * from trtask where trtask.IdStatusKoordinator = 'Valid' order by TanggalTask desc"
@@ -38,16 +51,34 @@ Partial Class createtask
             '                            "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
             '                            "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
 
-            dsmanager.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
-                                        "a.CatatanManager,a.IdStatusKoordinator, a.IdStatusManager, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, a.TglStatusManager, " &
-                                        "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
-                                        "a.TglStatusTask, a.IdProject, " &
-                                        "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
-                                        "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            'dsmanager.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
+            '                            "a.CatatanManager,a.IdStatusKoordinator, a.IdStatusManager, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, a.TglStatusManager, " &
+            '                            "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
+            '                            "a.TglStatusTask, a.IdProject, " &
+            '                            "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+            '                            "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            '                            "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
+            '                            "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
+            '                            "left join trDetail_Task d on a.NoTask=d.NoTask " &
+            '                            "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+
+            dsmanager.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, " &
+                                           "a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, a.CatatanManager, " &
+                                           "a.IdStatusKoordinator, a.IdStatusManager, a.NamaTeknisi, a.IdJenisTask, " &
+                                           "a.TglMulai, a.TglSelesai, a.TglStatusManager, " &
+                                           "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, " &
+                                           "a.IdStatusKoordinator, a.TglStatusTask, a.IdProject, a.IdStatusTask, " &
+                                           "a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+                                           "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask " &
+                                        "FROM trTask a  " &
                                         "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
                                         "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
-                                        "left join trDetail_Task d on a.NoTask=d.NoTask " &
-                                        "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+                                        "OUTER APPLY ( " &
+                                            "SELECT TOP 1 NAMAREMOTE, PROVINSI " &
+                                            "FROM trDetail_Task dt " &
+                                            "WHERE dt.NoTask = a.NoTask " &
+                                            "ORDER BY dt.NAMAREMOTE)d " &
+                                        "ORDER BY a.TanggalTask DESC, a.NomorPengaduan DESC ,a.id DESC,a.IdStatusKoordinator DESC"
         Else
             'dsmanager.SelectCommand = "select * from trtask where trtask.IdStatusKoordinator = 'Valid' and (IdUserManager is null or IdUserManager='" & Session("username") & "') order by TanggalTask desc"
             'dsmanager.SelectCommand = "select a.IdUserManager, a.IdUserKoordinator, b.NIK, b.EmployeeType, * from trTask a LEFT OUTER JOIN msEmployee b ON b.NIK = a.IdUserManager " &
@@ -61,16 +92,35 @@ Partial Class createtask
             '                        "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
             '                        "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
 
-            dsmanager.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
-                                        "a.CatatanManager,a.IdStatusKoordinator, a.IdStatusManager, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, a.TglStatusManager, " &
-                                        "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
-                                        "a.TglStatusTask, a.IdProject, " &
-                                        "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
-                                        "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            'dsmanager.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
+            '                            "a.CatatanManager,a.IdStatusKoordinator, a.IdStatusManager, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, a.TglStatusManager, " &
+            '                            "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
+            '                            "a.TglStatusTask, a.IdProject, " &
+            '                            "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+            '                            "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            '                            "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
+            '                            "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
+            '                            "left join trDetail_Task d on a.NoTask=d.NoTask " &
+            '                            "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+
+            dsmanager.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, " &
+                                           "a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, a.CatatanManager, " &
+                                           "a.IdStatusKoordinator, a.IdStatusManager, a.NamaTeknisi, a.IdJenisTask, " &
+                                           "a.TglMulai, a.TglSelesai, a.TglStatusManager, " &
+                                           "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, " &
+                                           "a.IdStatusKoordinator, a.TglStatusTask, a.IdProject, a.IdStatusTask, " &
+                                           "a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+                                           "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask " &
+                                        "FROM trTask a  " &
                                         "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
                                         "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
-                                        "left join trDetail_Task d on a.NoTask=d.NoTask " &
-                                        "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+                                        "OUTER APPLY ( " &
+                                            "SELECT TOP 1 NAMAREMOTE, PROVINSI " &
+                                            "FROM trDetail_Task dt " &
+                                            "WHERE dt.NoTask = a.NoTask " &
+                                            "ORDER BY dt.NAMAREMOTE)d " &
+                                        "ORDER BY a.TanggalTask DESC, a.NomorPengaduan DESC ,a.id DESC,a.IdStatusKoordinator DESC"
+
         End If
         'clsg.writedata(Session("UserName"), "Data", "Foto", dsmanager.SelectCommand, "")
         grid_manager.DataBind()
@@ -85,17 +135,35 @@ Partial Class createtask
             '                           "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota where IdKoordinator='" & Session("username") & "' or NamaKoordinator is null " &
             '                           "order by a.TanggalTask desc,a.NomorPengaduan desc,a.id DESC,a.IdStatusKoordinator desc"
 
-            dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
-                                        "a.IdStatusKoordinator, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, " &
-                                        "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
-                                        "a.TglStatusTask, a.IdProject, " &
-                                        "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
-                                        "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            'dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
+            '                            "a.IdStatusKoordinator, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, " &
+            '                            "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
+            '                            "a.TglStatusTask, a.IdProject, " &
+            '                            "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+            '                            "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            '                            "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
+            '                            "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
+            '                            "left join trDetail_Task d on a.NoTask=d.NoTask " &
+            '                            "where IdKoordinator='" & Session("username") & "' or NamaKoordinator is null " &
+            '                            "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+
+            dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, " &
+                                           "a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, a.CatatanManager, " &
+                                           "a.IdStatusKoordinator, a.IdStatusManager, a.NamaTeknisi, a.IdJenisTask, " &
+                                           "a.TglMulai, a.TglSelesai, a.TglStatusManager, " &
+                                           "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, " &
+                                           "a.IdStatusKoordinator, a.TglStatusTask, a.IdProject, a.IdStatusTask, " &
+                                           "a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+                                           "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask " &
+                                        "FROM trTask a  " &
                                         "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
                                         "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
-                                        "left join trDetail_Task d on a.NoTask=d.NoTask " &
-                                        "where IdKoordinator='" & Session("username") & "' or NamaKoordinator is null " &
-                                        "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+                                        "OUTER APPLY ( " &
+                                            "SELECT TOP 1 NAMAREMOTE, PROVINSI " &
+                                            "FROM trDetail_Task dt " &
+                                            "WHERE dt.NoTask = a.NoTask " &
+                                            "ORDER BY dt.NAMAREMOTE)d " &
+                                        "ORDER BY a.TanggalTask DESC, a.NomorPengaduan DESC ,a.id DESC,a.IdStatusKoordinator DESC"
 
             grid_koordinator.DataBind()
         ElseIf Session("level") = "Manager" Then
@@ -108,16 +176,33 @@ Partial Class createtask
             '                            "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
             '                            "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
 
-            dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
-                                        "a.IdStatusKoordinator, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, " &
-                                        "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
-                                        "a.TglStatusTask, a.IdProject, " &
-                                        "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
-                                        "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            'dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
+            '                            "a.IdStatusKoordinator, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, " &
+            '                            "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
+            '                            "a.TglStatusTask, a.IdProject, " &
+            '                            "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+            '                            "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            '                            "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
+            '                            "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
+            '                            "left join trDetail_Task d on a.NoTask=d.NoTask " &
+            '                            "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+            dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, " &
+                                           "a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, a.CatatanManager, " &
+                                           "a.IdStatusKoordinator, a.IdStatusManager, a.NamaTeknisi, a.IdJenisTask, " &
+                                           "a.TglMulai, a.TglSelesai, a.TglStatusManager, " &
+                                           "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, " &
+                                           "a.IdStatusKoordinator, a.TglStatusTask, a.IdProject, a.IdStatusTask, " &
+                                           "a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+                                           "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask " &
+                                        "FROM trTask a  " &
                                         "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
                                         "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
-                                        "left join trDetail_Task d on a.NoTask=d.NoTask " &
-                                        "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+                                        "OUTER APPLY ( " &
+                                            "SELECT TOP 1 NAMAREMOTE, PROVINSI " &
+                                            "FROM trDetail_Task dt " &
+                                            "WHERE dt.NoTask = a.NoTask " &
+                                            "ORDER BY dt.NAMAREMOTE)d " &
+                                        "ORDER BY a.TanggalTask DESC, a.NomorPengaduan DESC ,a.id DESC,a.IdStatusKoordinator DESC"
 
         ElseIf Session("Level") = "Helpdesk" Then
             panelmanager.Visible = False
@@ -129,16 +214,34 @@ Partial Class createtask
             '                            "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
             '                            "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
 
-            dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
-                                        "a.IdStatusKoordinator, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, " &
-                                        "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
-                                        "a.TglStatusTask, a.IdProject, " &
-                                        "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
-                                        "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            'dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
+            '                            "a.IdStatusKoordinator, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, " &
+            '                            "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
+            '                            "a.TglStatusTask, a.IdProject, " &
+            '                            "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+            '                            "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            '                            "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
+            '                            "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
+            '                            "left join trDetail_Task d on a.NoTask=d.NoTask " &
+            '                            "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+
+            dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, " &
+                                           "a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, a.CatatanManager, " &
+                                           "a.IdStatusKoordinator, a.IdStatusManager, a.NamaTeknisi, a.IdJenisTask, " &
+                                           "a.TglMulai, a.TglSelesai, a.TglStatusManager, " &
+                                           "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, " &
+                                           "a.IdStatusKoordinator, a.TglStatusTask, a.IdProject, a.IdStatusTask, " &
+                                           "a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+                                           "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask " &
+                                        "FROM trTask a  " &
                                         "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
                                         "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
-                                        "left join trDetail_Task d on a.NoTask=d.NoTask " &
-                                        "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+                                        "OUTER APPLY ( " &
+                                            "SELECT TOP 1 NAMAREMOTE, PROVINSI " &
+                                            "FROM trDetail_Task dt " &
+                                            "WHERE dt.NoTask = a.NoTask " &
+                                            "ORDER BY dt.NAMAREMOTE)d " &
+                                        "ORDER BY a.TanggalTask DESC, a.NomorPengaduan DESC ,a.id DESC,a.IdStatusKoordinator DESC"
 
         Else
 
@@ -148,16 +251,34 @@ Partial Class createtask
             '                           "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
             '                           "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
 
-            dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
-                                        "a.IdStatusKoordinator, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, " &
-                                        "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
-                                        "a.TglStatusTask, a.IdProject, " &
-                                        "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
-                                        "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            'dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, " &
+            '                            "a.IdStatusKoordinator, a.NamaTeknisi, a.IdJenisTask, a.TglMulai, a.TglSelesai, " &
+            '                            "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, a.IdStatusKoordinator, " &
+            '                            "a.TglStatusTask, a.IdProject, " &
+            '                            "a.IdStatusTask, a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+            '                            "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask FROM trTask a " &
+            '                            "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
+            '                            "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
+            '                            "left join trDetail_Task d on a.NoTask=d.NoTask " &
+            '                            "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+
+            dstaskcoor.SelectCommand = "SELECT a.ID, a.NoTask, a.NomorPengaduan, a.TanggalTask, " &
+                                           "a.NamaTask as NamaTask, a.IdKoordinator,a.NamaKoordinator, a.CatatanManager, " &
+                                           "a.IdStatusKoordinator, a.IdStatusManager, a.NamaTeknisi, a.IdJenisTask, " &
+                                           "a.TglMulai, a.TglSelesai, a.TglStatusManager, " &
+                                           "b.Provinsi as IdProvinsi, c.Kota as IdCity, a.CatatanKoordinator, " &
+                                           "a.IdStatusKoordinator, a.TglStatusTask, a.IdProject, a.IdStatusTask, " &
+                                           "a.AlamatPengaduan, a.DeskripsiPermasalahan, " &
+                                           "d.NAMAREMOTE+' - ' + d.PROVINSI as NamaTask " &
+                                        "FROM trTask a  " &
                                         "LEFT OUTER JOIN msProvinsi b ON a.IdProvinsi = b.IdProvinsi " &
                                         "LEFT OUTER JOIN msKota c ON a.IdCity = c.idKota " &
-                                        "left join trDetail_Task d on a.NoTask=d.NoTask " &
-                                        "order by a.TanggalTask desc,a.NomorPengaduan desc ,a.id DESC,a.IdStatusKoordinator desc"
+                                        "OUTER APPLY ( " &
+                                            "SELECT TOP 1 NAMAREMOTE, PROVINSI " &
+                                            "FROM trDetail_Task dt " &
+                                            "WHERE dt.NoTask = a.NoTask " &
+                                            "ORDER BY dt.NAMAREMOTE)d " &
+                                        "ORDER BY a.TanggalTask DESC, a.NomorPengaduan DESC ,a.id DESC,a.IdStatusKoordinator DESC"
 
         End If
 
@@ -804,28 +925,28 @@ Partial Class createtask
             con.Close()
 
             '=== jika update berhasil, kirim email ===
-            Try
-                Dim mail As New System.Net.Mail.MailMessage()
-                mail.From = New System.Net.Mail.MailAddress("harynurcahyo797@gmail.com")
-                mail.To.Add("yudoharwendo@gmail.com")
-                mail.Subject = "Update Task - " & e.OldValues("NoTask").ToString()
-                mail.Body = "Task dengan NoTask " & e.OldValues("NoTask").ToString() & " telah diperbarui oleh Manager: " & Session("username").ToString() &
-                            vbCrLf & "Status: " & e.NewValues("IdStatusTask") &
-                            vbCrLf & "Nama Teknisi: " & e.NewValues("NamaTeknisi") &
-                            vbCrLf & "Tanggal Mulai: " & e.NewValues("TglMulai") &
-                            vbCrLf & "Tanggal Selesai: " & e.NewValues("TglSelesai")
+            'Try
+            '    Dim mail As New System.Net.Mail.MailMessage()
+            '    mail.From = New System.Net.Mail.MailAddress("harynurcahyo797@gmail.com")
+            '    mail.To.Add("yudoharwendo@gmail.com")
+            '    mail.Subject = "Update Task - " & e.OldValues("NoTask").ToString()
+            '    mail.Body = "Task dengan NoTask " & e.OldValues("NoTask").ToString() & " telah diperbarui oleh Manager: " & Session("username").ToString() &
+            '                vbCrLf & "Status: " & e.NewValues("IdStatusTask") &
+            '                vbCrLf & "Nama Teknisi: " & e.NewValues("NamaTeknisi") &
+            '                vbCrLf & "Tanggal Mulai: " & e.NewValues("TglMulai") &
+            '                vbCrLf & "Tanggal Selesai: " & e.NewValues("TglSelesai")
 
-                Dim smtp As New System.Net.Mail.SmtpClient("smtp.gmail.com")
-                smtp.Port = 587
-                smtp.EnableSsl = True
-                smtp.UseDefaultCredentials = False
-                smtp.Credentials = New System.Net.NetworkCredential("harynurcahyo797@gmail.com", "260684") ' <- pakai App Password
-                smtp.Send(mail)
+            '    Dim smtp As New System.Net.Mail.SmtpClient("smtp.gmail.com")
+            '    smtp.Port = 587
+            '    smtp.EnableSsl = True
+            '    smtp.UseDefaultCredentials = False
+            '    smtp.Credentials = New System.Net.NetworkCredential("harynurcahyo797@gmail.com", "260684") ' <- pakai App Password
+            '    smtp.Send(mail)
 
-            Catch ex As Exception
-                ' log error biar tahu detail
-                clsg.writedata("Error", "Send Mail", "Manager", ex.Message, "")
-            End Try
+            'Catch ex As Exception
+            '    ' log error biar tahu detail
+            '    clsg.writedata("Error", "Send Mail", "Manager", ex.Message, "")
+            'End Try
 
 
             'Body &= "<p>Good luck and thank you</p>" &
@@ -989,11 +1110,68 @@ Partial Class createtask
         com.ExecuteNonQuery()
         con.Close()
 
-        dsdetailtask.InsertCommand = "insert into trDetail_Task (PIC, NoHpPic, NoTask, VID, NAMAREMOTE, IPLAN, SID, ALAMAT, PROVINSI, KOTA, IdJarkom, IdStatusPerbaikan, " & _
-		"idJenisTask, UserStamp, DateStamp) VALUES ('" & PIC & "', '" & CustPhone & "' ,'" & tampung & "', '" & VID & "', '" & NamaRemote & "', '" & IPLAN & "', " & _
-		"'" & SID & "', '" & ALamatInstall & "', '" & Provinsi & "', '" & Kota & "', '" & IDJARKOM & "', '" & tampungstatus & "', @idJenisTask, '" & Session("username") & "', GETDATE())"
+        dsdetailtask.InsertCommand = "insert into trDetail_Task (PIC, NoHpPic, NoTask, VID, NAMAREMOTE, IPLAN, SID, ALAMAT, PROVINSI, KOTA, IdJarkom, IdStatusPerbaikan, " &
+        "idJenisTask, UserStamp, DateStamp) VALUES ('" & PIC & "', '" & CustPhone & "' ,'" & tampung & "', '" & VID & "', '" & NamaRemote & "', '" & IPLAN & "', " &
+        "'" & SID & "', '" & ALamatInstall & "', '" & Provinsi & "', '" & Kota & "', '" & IDJARKOM & "', '" & tampungstatus & "', @idJenisTask, '" & Session("username") & "', GETDATE())"
 
     End Sub
+
+    'Protected Sub grid_VID_RowUpdating(sender As Object, e As DevExpress.Web.Data.ASPxDataUpdatingEventArgs)
+    '    dsdetailtask.UpdateCommand = "update trDetail_Task set IdStatusPerbaikan=@IdStatusPerbaikan where NoListTask = @NoListTask"
+    '    strsql = "select NoTask,max(bykFinish) bfinish,max(bykOpen) [bopen] from ( " &
+    '    "Select NoTask,count(NoTask)bykFinish,0 bykOpen,idJenisTask as idJenisTaskNew from trDetail_Task where IdStatusPerbaikan=4 and NoTask='" & e.OldValues("NoTask") & "' " &
+    '    "group by NoTask, idJenisTask " &
+    '    "union " &
+    '    "select NoTask,0 bykFinish,count(NoTask) bykOpen,idJenisTask as idJenisTaskNew from trDetail_Task where IdStatusPerbaikan<>4 and NoTask='" & e.OldValues("NoTask") & "' " &
+    '    "group by NoTask, idJenisTask " &
+    '    ") a group by NoTask, idJenisTaskNew"
+    '    tbldata = clsg.ExecuteQuery(strsql)
+    '    If tbldata.Rows(0).Item("bfinish") = tbldata.Rows(0).Item("bopen") Then
+    '        strsql = "update trTask SET IdStatusTask=4 where NoTask = '" & e.OldValues("NoTask").ToString & "'"
+    '    Else
+    '        strsql = "update trTask SET IdStatusTask=1 where NoTask = '" & e.OldValues("NoTask").ToString & "'"
+    '    End If
+    '    clsg.ExecuteNonQuery(strsql)
+    '    grid_manager.DataBind()
+    '    'Exit Sub
+
+    '    Dim tampungVID As String = e.NewValues("VID")
+    '    Dim tampungold As String = e.OldValues("VID")
+    '    Dim tampungTaskOld As String = e.OldValues("NoTask")
+    '    Dim tampungstatus As String = e.NewValues("IdStatusPerbaikan")
+    '    'Dim CttnKoordinatorOld As String = e.OldValues("CatatanKoordinator")
+    '    Dim CttnKoordinatorNew As String = e.NewValues("CatatanKoordinator")
+    '    'Dim idJenisTaskOld As String = e.OldValues("idJenisTask")
+    '    Dim idJenisTaskNew As String = e.NewValues("idJenisTaskNew")
+
+
+    '    Dim getdetiltask As String = "select * from trRemoteSite where VID = '" & tampungVID & "'"
+    '    com = New SqlCommand(getdetiltask, con)
+    '    con.Open()
+    '    dr = com.ExecuteReader()
+    '    dr.Read()
+    '    VID = dr("VID").ToString
+    '    NamaRemote = dr("NAMAREMOTE").ToString
+    '    IPLAN = dr("IPLAN").ToString
+    '    SID = dr("SID").ToString
+    '    ALamatInstall = dr("AlamatInstall").ToString
+    '    Provinsi = dr("PROVINSI").ToString
+    '    Kota = dr("KOTA").ToString
+    '    IDJARKOM = dr("idjarkom").ToString
+    '    PIC = dr("PIC").ToString
+    '    CustPhone = dr("CustPhone").ToString
+    '    dr.Close()
+    '    con.Close()
+
+    '    Dim updatestatus As String = "Update TrTask set IdStatusTask = '" & tampungstatus & "' where NoTask = '" & tampungTaskOld & "'"
+    '    com = New SqlCommand(updatestatus, con)
+    '    con.Open()
+    '    com.ExecuteNonQuery()
+    '    con.Close()
+
+    '    dsdetailtask.UpdateCommand = "UPDATE trDetail_Task SET PIC = '" & PIC & "', NoHpPic = '" & CustPhone & "', VID ='" & VID & "', NAMAREMOTE = '" & NamaRemote & "', IPLAN = '" & IPLAN & "', SID = '" & SID & "', ALAMAT = '" & ALamatInstall & "', PROVINSI ='" & Provinsi & "', KOTA = '" & Kota & "', IdJarkom = '" & IDJARKOM & "', IdStatusPerbaikan = '" & tampungstatus & "', idJenisTask = @idJenisTask , UserStamp = '" & Session("username") & "', DateStamp = GETDATE(), CatatanKoordinator = '" & CttnKoordinatorNew & "' where NoTask = '" & tampungTaskOld & "' and VID = '" & tampungold & "'"
+
+    'End Sub
 
     Protected Sub grid_VID_RowUpdating(sender As Object, e As DevExpress.Web.Data.ASPxDataUpdatingEventArgs)
         dsdetailtask.UpdateCommand = "update trDetail_Task set IdStatusPerbaikan=@IdStatusPerbaikan where NoListTask = @NoListTask"
@@ -1012,16 +1190,18 @@ Partial Class createtask
         End If
         clsg.ExecuteNonQuery(strsql)
         grid_manager.DataBind()
+
         'Exit Sub
 
+        Dim getNoListTask As String = e.NewValues("NoListTask")
         Dim tampungVID As String = e.NewValues("VID")
         Dim tampungold As String = e.OldValues("VID")
         Dim tampungTaskOld As String = e.OldValues("NoTask")
         Dim tampungstatus As String = e.NewValues("IdStatusPerbaikan")
         'Dim CttnKoordinatorOld As String = e.OldValues("CatatanKoordinator")
-        Dim CttnKoordinatorNew As String = e.NewValues("CatatanKoordinator")
-        'Dim idJenisTaskOld As String = e.OldValues("idJenisTask")
-        Dim idJenisTaskNew As String = e.NewValues("idJenisTaskNew")
+        'Dim CttnKoordinatorNew As String = e.NewValues("CatatanKoordinator")
+        Dim idJenisTaskOld As String = e.OldValues("idJenisTask")
+        Dim idJenisTaskNew As String = e.NewValues("idJenisTask")
 
 
         Dim getdetiltask As String = "select * from trRemoteSite where VID = '" & tampungVID & "'"
@@ -1048,8 +1228,70 @@ Partial Class createtask
         com.ExecuteNonQuery()
         con.Close()
 
-        dsdetailtask.UpdateCommand = "UPDATE trDetail_Task SET PIC = '" & PIC & "', NoHpPic = '" & CustPhone & "', VID ='" & VID & "', NAMAREMOTE = '" & NamaRemote & "', IPLAN = '" & IPLAN & "', SID = '" & SID & "', ALAMAT = '" & ALamatInstall & "', PROVINSI ='" & Provinsi & "', KOTA = '" & Kota & "', IdJarkom = '" & IDJARKOM & "', IdStatusPerbaikan = '" & tampungstatus & "', idJenisTask = @idJenisTask , UserStamp = '" & Session("username") & "', DateStamp = GETDATE(), CatatanKoordinator = '" & CttnKoordinatorNew & "' where NoTask = '" & tampungTaskOld & "' and VID = '" & tampungold & "'"
+        'dsdetailtask.UpdateCommand = "UPDATE trDetail_Task SET PIC = '" & PIC & "', NoHpPic = '" & CustPhone & "', VID ='" & VID & "', NAMAREMOTE = '" & NamaRemote & "', IPLAN = '" & IPLAN & "', SID = '" & SID & "', ALAMAT = '" & ALamatInstall & "', PROVINSI ='" & Provinsi & "', KOTA = '" & Kota & "', IdJarkom = '" & IDJARKOM & "', IdStatusPerbaikan = '" & tampungstatus & "', idJenisTask = '" & idJenisTaskNew & "' , UserStamp = '" & Session("username") & "', DateStamp = GETDATE(), CatatanKoordinator = '" & CttnKoordinatorNew & "' where NoTask = '" & tampungTaskOld & "' and VID = '" & tampungold & "'" &
+        '                             "UPDATE trTask SET CatatanKoordinator = '" & CttnKoordinatorNew & "' where NoTask = '" & tampungTaskOld & "'"
 
+        ' Update detail task
+        'Dim sql1 As String = "UPDATE trDetail_Task SET PIC=@PIC, NoHpPic=@NoHpPic, VID=@VID, " &
+        '             "NAMAREMOTE=@NAMAREMOTE, IPLAN=@IPLAN, SID=@SID, ALAMAT=@ALAMAT, " &
+        '             "PROVINSI=@Provinsi, KOTA=@Kota, IdJarkom=@IdJarkom, IdStatusPerbaikan=@IdStatus, " &
+        '             "idJenisTask=@IdJenisTask, UserStamp=@UserStamp, DateStamp=GETDATE(), " &
+        '             "CatatanKoordinator=@CatatanKoordinator " &
+        '             "Where NoTask='" & tampungTaskOld & "' AND VID='" & tampungold & "'"
+
+        Dim sql1 As String = "UPDATE trDetail_Task SET PIC=@PIC, NoHpPic=@NoHpPic, VID=@VID, " &
+                     "NAMAREMOTE=@NAMAREMOTE, IPLAN=@IPLAN, SID=@SID, ALAMAT=@ALAMAT, " &
+                     "PROVINSI=@Provinsi, KOTA=@Kota, IdJarkom=@IdJarkom, IdStatusPerbaikan=@IdStatus, " &
+                     "idJenisTask=@IdJenisTask, UserStamp=@UserStamp, DateStamp=GETDATE() " &
+                     "Where NoTask='" & tampungTaskOld & "' AND VID='" & tampungold & "'"
+
+        '"WHERE NoListTask=@NoListTask"
+
+        Dim cmd1 As New SqlCommand(sql1, con)
+        cmd1.Parameters.AddWithValue("@PIC", PIC)
+        cmd1.Parameters.AddWithValue("@NoHpPic", CustPhone)
+        'cmd1.Parameters.AddWithValue("@VID", tampungVID)
+        cmd1.Parameters.AddWithValue("@VID", tampungold)
+        cmd1.Parameters.AddWithValue("@NAMAREMOTE", NamaRemote)
+        cmd1.Parameters.AddWithValue("@IPLAN", IPLAN)
+        cmd1.Parameters.AddWithValue("@SID", SID)
+        cmd1.Parameters.AddWithValue("@ALAMAT", ALamatInstall)
+        cmd1.Parameters.AddWithValue("@Provinsi", Provinsi)
+        cmd1.Parameters.AddWithValue("@Kota", Kota)
+        cmd1.Parameters.AddWithValue("@IdJarkom", IDJARKOM)
+        cmd1.Parameters.AddWithValue("@IdStatus", tampungstatus)
+        cmd1.Parameters.AddWithValue("@IdJenisTask", idJenisTaskNew)
+        cmd1.Parameters.AddWithValue("@UserStamp", Session("username"))
+        'cmd1.Parameters.AddWithValue("@CatatanKoordinator", CttnKoordinatorNew)
+        cmd1.Parameters.AddWithValue("@NoTask", tampungTaskOld)
+
+        con.Open()
+        cmd1.ExecuteNonQuery()
+        con.Close()
+
+        '' Update task (kedua)
+        'Dim sql2 As String = "UPDATE trTask SET CatatanKoordinator=@CatatanKoordinator WHERE NoTask=@NoTask"
+        'Dim cmd2 As New SqlCommand(sql2, con)
+        'cmd2.Parameters.AddWithValue("@CatatanKoordinator", CttnKoordinatorNew)
+        'cmd2.Parameters.AddWithValue("@NoTask", tampungTaskOld)
+
+        'con.Open()
+        'cmd2.ExecuteNonQuery()
+        'con.Close()
+
+        e.Cancel = True
+        CType(sender, DevExpress.Web.ASPxGridView).CancelEdit()
+
+        ' kasih sinyal ke client lewat JSProperties
+        CType(sender, DevExpress.Web.ASPxGridView).JSProperties("cpRefreshMaster") = True
+
+        '' === refresh Grid1 setelah Grid2 update ===
+        'grid_koordinator.DataBind()
+
+        '' === agar Grid2 tidak error setelah update ===
+        'e.Cancel = True
+        ''dsdetailtask.can()
+        ''dsdetailtask.DataBind()
     End Sub
 
     Protected Sub grid_VID_BeforePerformDataSelect(sender As Object, e As EventArgs)
@@ -1072,8 +1314,8 @@ Partial Class createtask
         End If
         dr.Close()
         con.Close()
-        dsdetailtask.SelectCommand = "select * from trDetail_Task where NoTask = '" & tampung & "' order by NoListTask desc"
-        'dsdetailtask.SelectCommand = "select a.NoListTask,b.ID,b.NoTask,a.NoTask,b.CatatanKoordinator, a.SID, a.VID, a.IPLAN, a.NAMAREMOTE, a.ALAMAT, a.IdStatusPerbaikan, a.idJenisTask from trDetail_Task a LEFT OUTER JOIN trTask b On b.NoTask = a.NoTask where a.NoTask = '" & tampung & "' order by NoListTask desc"
+        'dsdetailtask.SelectCommand = "select * from trDetail_Task where NoTask = '" & tampung & "' order by NoListTask desc"
+        dsdetailtask.SelectCommand = "select a.NoListTask,b.ID,b.NoTask,a.NoTask,b.CatatanKoordinator, a.SID, a.VID, a.IPLAN, a.NAMAREMOTE, a.ALAMAT, a.IdStatusPerbaikan, a.idJenisTask from trDetail_Task a LEFT OUTER JOIN trTask b On b.NoTask = a.NoTask where a.NoTask = '" & tampung & "' order by NoListTask desc"
     End Sub
 
 
