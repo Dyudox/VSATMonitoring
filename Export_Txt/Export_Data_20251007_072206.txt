@@ -1,0 +1,4 @@
+﻿Pengeluaran               | Nominal    | Tanggal     | Note                   
+------------------------------------------------------------------------------
+Tiket Bis Berangkat       | 350,000,-  | 10/07/2025  | ticket bus berangkat   
+Transport Ojek Berangkat  | 50,000,-   | 07/10/2025  | ongkos ojol ke lokasi  

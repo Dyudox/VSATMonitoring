@@ -61,7 +61,8 @@ Partial Class formpenggunaanuang
                 If dr("flagconfirm").ToString = True Then
                     btnsimpan.Visible = False
                     btnupdate.Visible = False
-                    btnconfirm.Visible = False
+                    'btnconfirm.Enabled = False
+                    btnconfirm.CssClass = "btn btn-info disabled"
                     cbjenispengeluaran.Attributes.Add("Readonly", "True")
                     txtcatatantransaksi.Attributes.Add("Readonly", "True")
                     txtnominal.Attributes.Add("Readonly", "True")
@@ -192,13 +193,17 @@ Partial Class formpenggunaanuang
         While dr.Read
             If dr.HasRows Then
                 If dr("flagconfirm").ToString = True Then
-                    tampungan &= "<tr>" & _
-                                "<td style='width:200px'>" & dr("JenisBiaya").ToString & "</td>" & _
-                                "<td style='width:200px'>" & dr("fNominal").ToString & ",-</td>" & _
-                                "<td style='width:200px'>" & dr("aa").ToString & "</td>" & _
-                                "<td style='width:250px'>" & dr("CatatanTransaksi").ToString & "</td>" & _
-                                "<td></td>" & _
-                             "</tr>"
+                    tampungan &= "<tr>" &
+                                    "<td style='width:200px'>" & dr("JenisBiaya").ToString & "</td>" &
+                                    "<td style='width:200px'>" & dr("fNominal").ToString & ",-</td>" &
+                                    "<td style='width:200px'>" & dr("aa").ToString & "</td>" &
+                                    "<td style='width:250px'>" & dr("CatatanTransaksi").ToString & "</td>" &
+                                    "<td>" &
+                                        "<a id='btnedit' runat='server' class='btn btn-success disabled' " &
+                                        "href='#' style='text-align:center; pointer-events:none; opacity:0.5;'>Edit</a>&nbsp;&nbsp;" &
+                                        "<a class='btn btn-danger disabled' href='#' style='text-align:center; pointer-events:none; opacity:0.5;'>Delete</a>" &
+                                    "</td>" &
+                                "</tr>"
                 Else
                     tampungan &= "<tr>" & _
                                 "<td style='width:200px'>" & dr("JenisBiaya").ToString & "</td>" & _
@@ -207,16 +212,16 @@ Partial Class formpenggunaanuang
                                 "<td style='width:250px'>" & dr("CatatanTransaksi").ToString & "</td>" & _
                                 "<td>"
                     If Request.QueryString("order") = "new" Then
-                        tampungan &= "<a id='btnedit' runat='server' style='align:center' href='formpenggunaanuang.aspx?order=edit&VID=" & cb_vid.Value & "&notask=" & Request.QueryString("notask") & "&status=edit&ID=" & dr("ID").ToString & "' class='btn btn-success'>Edit</a> &nbsp; &nbsp; " & _
-                                "<a href='formpenggunaanuang.aspx?order=new&VID=" & cb_vid.Value & "&notask=" & Request.QueryString("notask") & "&status=delete&ID=" & dr("ID").ToString & "&jenpeng=" & dr("JenisBiaya").ToString & "' style='align:center' class='btn btn-success' onclick='confirm_click();'>Delete</a></td>" & _
+                        tampungan &= "<a id='btnedit' runat='server' style='align:center' href='formpenggunaanuang.aspx?order=edit&VID=" & cb_vid.Value & "&notask=" & Request.QueryString("notask") & "&status=edit&ID=" & dr("ID").ToString & "' class='btn btn-success'>Edit</a> &nbsp; &nbsp; " &
+                                "<a href='formpenggunaanuang.aspx?order=new&VID=" & cb_vid.Value & "&notask=" & Request.QueryString("notask") & "&status=delete&ID=" & dr("ID").ToString & "&jenpeng=" & dr("JenisBiaya").ToString & "' style='align:center' class='btn btn-success' onclick='confirm_click();'>Delete</a></td>" &
                              "</tr>"
                     ElseIf Request.QueryString("order") = "edit" Then
-                        tampungan &= "<a id='btnedit' runat='server' style='align:center' href='formpenggunaanuang.aspx?order=edit&VID=" & Request.QueryString("VID") & "&notask=" & Request.QueryString("notask") & "&status=edit&ID=" & dr("ID").ToString & "' class='btn btn-success'>Edit</a> &nbsp; &nbsp; " & _
-                                "<a href='formpenggunaanuang.aspx?order=edit&VID=" & Request.QueryString("VID") & "&notask=" & Request.QueryString("notask") & "&status=delete&ID=" & dr("ID").ToString & "&jenpeng=" & dr("JenisBiaya").ToString & "' style='align:center' class='btn btn-success' onclick='confirm_click();'>Delete</a></td>" & _
+                        tampungan &= "<a id='btnedit' runat='server' style='align:center' href='formpenggunaanuang.aspx?order=edit&VID=" & Request.QueryString("VID") & "&notask=" & Request.QueryString("notask") & "&status=edit&ID=" & dr("ID").ToString & "' class='btn btn-success'>Edit</a> &nbsp; &nbsp; " &
+                                "<a href='formpenggunaanuang.aspx?order=edit&VID=" & Request.QueryString("VID") & "&notask=" & Request.QueryString("notask") & "&status=delete&ID=" & dr("ID").ToString & "&jenpeng=" & dr("JenisBiaya").ToString & "' style='align:center' class='btn btn-success' onclick='confirm_click();'>Delete</a></td>" &
                              "</tr>"
                     Else
-                        tampungan &= "<a id='btnedit' runat='server' style='align:center' href='formpenggunaanuang.aspx?VID=" & Request.QueryString("VID") & "&notask=" & Request.QueryString("notask") & "&status=edit&ID=" & dr("ID").ToString & "' class='btn btn-success'>Edit</a> &nbsp; &nbsp; " & _
-                                "<a href='formpenggunaanuang.aspx?VID=" & Request.QueryString("VID") & "&notask=" & Request.QueryString("notask") & "&status=delete&ID=" & dr("ID").ToString & "&jenpeng=" & dr("JenisBiaya").ToString & "' style='align:center' class='btn btn-success' onclick='confirm_click();'>Delete</a></td>" & _
+                        tampungan &= "<a id='btnedit' runat='server' style='align:center' href='formpenggunaanuang.aspx?VID=" & Request.QueryString("VID") & "&notask=" & Request.QueryString("notask") & "&status=edit&ID=" & dr("ID").ToString & "' class='btn btn-success'>Edit</a> &nbsp; &nbsp; " &
+                                "<a href='formpenggunaanuang.aspx?VID=" & Request.QueryString("VID") & "&notask=" & Request.QueryString("notask") & "&status=delete&ID=" & dr("ID").ToString & "&jenpeng=" & dr("JenisBiaya").ToString & "' style='align:center' class='btn btn-success' onclick='confirm_click();'>Delete</a></td>" &
                              "</tr>"
                     End If
                 End If

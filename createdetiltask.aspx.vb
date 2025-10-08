@@ -402,24 +402,65 @@ Partial Class createdetiltask
         '    groupfoto.Visible = True
         'End If
 
-        If Session("level") = "Teknisi" Then
-            Dim strFlagDataTeknis As String = "select * from trDetail_Task where NoListTask=" & Request.QueryString("ID") & ""
-            com = New SqlCommand(strFlagDataTeknis, con)
-            con.Open()
-            dr = com.ExecuteReader()
-            If dr.HasRows Then
-                dr.Read()
-                GetFlagDataTeknis = dr("FlagDataTeknis").ToString
-            End If
-            dr.Close()
-            con.Close()
+        'If Session("level") = "Teknisi" Then
+        '    Dim strFlagDataTeknis As String = "select * from trDetail_Task where NoListTask=" & Request.QueryString("ID") & ""
+        '    com = New SqlCommand(strFlagDataTeknis, con)
+        '    con.Open()
+        '    dr = com.ExecuteReader()
+        '    If dr.HasRows Then
+        '        dr.Read()
+        '        GetFlagDataTeknis = Convert.ToBoolean(dr("FlagDataTeknis"))
+        '    End If
+        '    dr.Close()
+        '    con.Close()
 
-            If GetFlagDataTeknis = True Then
-                groupfoto.Visible = False
-                groupstatusperbaikan.Visible = False
-                groupstatusadmin.Visible = False
-            End If
+        '    If GetFlagDataTeknis = True Then
+        '        groupfoto.Visible = False
+        '        groupstatusperbaikan.Visible = False
+        '        groupstatusadmin.Visible = False
+        '    Else
+        '        groupfoto.Visible = False
+        '        groupstatusperbaikan.Visible = False
+        '        groupstatusadmin.Visible = False
+        '    End If
+        'End If
+
+        If Session("level") = "Teknisi" Then
+            Dim strFlagDataTeknis As String = "SELECT FlagDataTeknis FROM trDetail_Task WHERE NoListTask = @NoListTask"
+            com = New SqlCommand(strFlagDataTeknis, con)
+
+            Using com As New SqlCommand(strFlagDataTeknis, con)
+                Dim noListTask As Integer
+                If Integer.TryParse(Request.QueryString("ID"), noListTask) Then
+                    com.Parameters.AddWithValue("@NoListTask", noListTask)
+                Else
+                    Exit Sub
+                End If
+
+                con.Open()
+                Dim result As Object = com.ExecuteScalar()
+                con.Close()
+
+                ' 🛠️ Cek NULL atau kosong dulu
+                If result IsNot Nothing AndAlso Not IsDBNull(result) AndAlso Not String.IsNullOrEmpty(result.ToString()) Then
+                    GetFlagDataTeknis = Convert.ToBoolean(result)
+                Else
+                    GetFlagDataTeknis = False ' default jika NULL / kosong
+                End If
+
+                ' === Kontrol tampilan ===
+                If GetFlagDataTeknis = True Then
+                    groupfoto.Visible = False
+                    groupstatusperbaikan.Visible = False
+                    groupstatusadmin.Visible = False
+                Else
+                    groupfoto.Visible = False
+                    groupstatusperbaikan.Visible = False
+                    groupstatusadmin.Visible = False
+                End If
+            End Using
         End If
+
     End Sub
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 		'test.Value = Now.AddDays(5)

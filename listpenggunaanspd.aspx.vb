@@ -14,12 +14,26 @@ Partial Class listpenggunaanspd
     Protected Sub gv_detilpengajuan_BeforePerformDataSelect(sender As Object, e As EventArgs)
         Session("ID") = (TryCast(sender, ASPxGridView)).GetMasterRowKeyValue()
         Dim tampungan As String = Session("ID")
-        dsdetilpengajuan.SelectCommand = "SELECT trDetail_Task.NoTask, trDetail_Task.IPLAN, trDetail_Task.NAMAREMOTE, trDetail_Task.VID, SUM(try_convert(numeric(38, 0),  tr_penggunaanSPD.Nominal)) as TotalPengeluaran " & _
-                                        "FROM trDetail_Task LEFT OUTER JOIN tr_penggunaanSPD ON trDetail_Task.VID = tr_penggunaanSPD.VID and trDetail_Task.NoTask = tr_penggunaanSPD.NoTask " & _
+        dsdetilpengajuan.SelectCommand = "SELECT trDetail_Task.NoTask, trDetail_Task.IPLAN, trDetail_Task.NAMAREMOTE, trDetail_Task.VID, SUM(try_convert(numeric(38, 0),  tr_penggunaanSPD.Nominal)) as TotalPengeluaran " &
+                                        "FROM trDetail_Task LEFT OUTER JOIN tr_penggunaanSPD ON trDetail_Task.VID = tr_penggunaanSPD.VID and trDetail_Task.NoTask = tr_penggunaanSPD.NoTask " &
                                         "where trDetail_Task.NoTask = '" & tampungan & "' group by trDetail_Task.NoTask, trDetail_Task.VID, trDetail_Task.IPLAN, trDetail_Task.NAMAREMOTE "
         'dsdetilpengajuan.SelectCommand = "Select VID, SUM(try_convert(numeric(38, 0), Nominal)) as TotalPengeluaran, NoTask from tr_penggunaanSPD where NoTask = '" & tampungan & "' group by VID, NoTask"
     End Sub
+    Protected Sub gv_subDetilpengajuan_BeforePerformDataSelect(sender As Object, e As EventArgs)
+        Session("ID") = (TryCast(sender, ASPxGridView)).GetMasterRowKeyValue()
+        Dim tampungan As String = Session("ID")
+        dsSubdetilpengajuan.SelectCommand = "select convert(varchar,TglInputBiaya,103) as TglInputBiaya,format(convert(int,Nominal),'##,###') as Nominal, TRX_FILE.file_url,* from tr_penggunaanSPD " &
+                                            "left outer JOIN TRX_FILE ON tr_penggunaanSPD.DocNo = TRX_FILE.DocNo " &
+                                            "where tr_penggunaanSPD.VID = '" & tampungan & "'"
 
+        'dsSubdetilpengajuan.SelectCommand = "SELECT TRX_FILE.file_url, TRX_FILE.Description, tr_penggunaanSPD.CatatanApproval, tr_penggunaanSPD.NamaTeknisi, " &
+        '                                "tr_penggunaanSPD.JenisBiaya, CONVERT(numeric(38, 0), tr_penggunaanSPD.Nominal) as Nominal, CONVERT(numeric(38, 0), " &
+        '                                "tr_penggunaanSPD.ApprovalNominal) as ApprovalNominal, tr_penggunaanSPD.NamaAdmin, convert(date,tr_penggunaanSPD.TglInputBiaya) TglInputBiaya, " &
+        '                                "tr_penggunaanSPD.TglApproveBiaya, * FROM trDetail_Task " &
+        '                                "inner join tr_penggunaanSPD on trDetail_Task.VID = tr_penggunaanSPD.VID " &
+        '                                "left outer JOIN TRX_FILE ON tr_penggunaanSPD.DocNo = TRX_FILE.DocNo " &
+        '                                "where trDetail_Task.notask = '" & tampungan & "'"
+    End Sub
     Protected Sub gridpengajuanuang_Load(sender As Object, e As EventArgs) Handles gridpengajuanuang.Load
         If Session("username") = "admin" Then
             dspengajuanuang.SelectCommand = "SELECT NoTask, NamaTeknisi, IdTeknisi, TypeTeknisi, total, approve, TanggalTask, SUM(try_convert(numeric(38, 0), TotalPengeluaran)) as totalsuk, (total - approve) as sisa  from ( " & _

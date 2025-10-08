@@ -28,11 +28,15 @@ Partial Class createtask
     Dim tbldata As DataTable
 
     Protected Sub Grid_ValidasiColumnDisplayText(sender As Object, e As DevExpress.Web.ASPxGridViewColumnDisplayTextEventArgs) Handles grid_koordinator.CustomColumnDisplayText
-        If e.Column.FieldName = "estimasiBiaya" AndAlso Not String.IsNullOrEmpty(e.Value) Then
-            Dim nilai As Decimal
-            If Decimal.TryParse(e.Value.ToString(), nilai) Then
-                'e.DisplayText = "Rp " & nilai.ToString("N0")
-                e.DisplayText = nilai.ToString("n0")
+        If e.Column.FieldName = "estimasiBiaya" Then
+            ' Cek apakah nilainya null atau kosong
+            If e.Value IsNot Nothing AndAlso Not IsDBNull(e.Value) Then
+                Dim nilai As Decimal
+                If Decimal.TryParse(e.Value.ToString(), nilai) Then
+                    e.DisplayText = nilai.ToString("n0") ' format angka dengan ribuan
+                End If
+            Else
+                e.DisplayText = "-" ' tampilkan tanda strip kalau null
             End If
         End If
     End Sub

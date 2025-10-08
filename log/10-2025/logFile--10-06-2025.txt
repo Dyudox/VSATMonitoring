@@ -1,0 +1,49 @@
+06/10/2025 07:12:00 : 233019505 | Update | Task Manager | UPDATE trTask SET IdProject=@IdProject, TanggalTask=@TanggalTask, NamaTask=@NamaTask, NamaTeknisi=@NamaTeknisi, TglMulai=@TglMulai, TglSelesai=@TglSelesai, DeskripsiPermasalahan=@DeskripsiPermasalahan, IdStatusTask=@IdStatusTask, IdUserManager='233019505', CatatanKoordinator='tolong Dismantle shell', CatatanManager='gasss yah', NamaKoordinator='Yan Supriyatna', IdStatusManager=@IdStatusManager, TglStatusManager=GETDATE(), AlamatPengaduan='jl sumut 5' WHERE NoTask=@NoTask | 
+06/10/2025 07:12:42 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:12:42 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001204' | 
+06/10/2025 07:21:04 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:21:04 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 07:21:08 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='BRI HUB 2' | 
+06/10/2025 07:21:08 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001203' | 
+06/10/2025 07:21:13 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:21:13 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001204' | 
+06/10/2025 07:21:22 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:21:22 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001204' | 
+06/10/2025 07:21:59 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:21:59 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001204' | 
+06/10/2025 07:25:20 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:25:20 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001204' | 
+06/10/2025 07:25:35 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:25:35 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 07:25:48 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='BRI HUB 2' | 
+06/10/2025 07:25:48 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001203' | 
+06/10/2025 07:26:02 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:26:02 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001204' | 
+06/10/2025 07:26:09 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:26:10 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 07:27:05 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:27:05 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 07:43:08 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:43:08 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 07:45:21 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 07:45:21 : 233030302 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 08:42:57 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 08:42:57 : 235311104 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 08:43:07 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 08:43:07 : 235311104 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 08:44:32 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 08:44:32 : 235311104 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 08:44:43 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 08:44:43 : 235311104 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 08:45:24 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 08:45:24 : 233030302 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 08:46:55 : 233030302 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 08:47:19 : 233030302 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 08:47:19 : General Info | Createdetailtask.aspx | Update | Update trDetail_Task set FlagGeneralInfo=1,IdATM = '12312312', IPLAN = '10.1.113.50', TglBerangkat = '2025-10-6', TglSelesaiKerjaan =  '2025-10-6', TglPulang = '2025-10-6', TglStatusPerbaikan = '2025-10-6', UserUpdate = '233030302', DateUpdate = GETDATE() where NoListTask = '43466' | 
+06/10/2025 08:47:33 : 233030302 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 
+06/10/2025 08:48:46 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 08:48:46 : 233030302 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001204' | 
+06/10/2025 08:49:00 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+06/10/2025 08:49:00 : 233030302 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001204' | 
+06/10/2025 08:51:45 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='BRI HUB 1' | 
+06/10/2025 08:51:45 : 235311104 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030002300' | 

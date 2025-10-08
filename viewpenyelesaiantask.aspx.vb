@@ -2,7 +2,7 @@
 Imports System.Data.SqlClient
 Imports DevExpress.Web
 Imports DevExpress.Web.Bootstrap
-Imports DevExpress.Web.BootstrapMode
+'Imports DevExpress.Web.BootstrapMode
 Imports System.Web
 Imports System.Web.UI
 Imports System.Web.UI.WebControls

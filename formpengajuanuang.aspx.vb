@@ -82,6 +82,15 @@ Partial Class formpengajuanuang
         End If
     End Sub
 
+    Protected Sub gv_subDetilpengajuan_BeforePerformDataSelect(sender As Object, e As EventArgs)
+        Session("ID") = (TryCast(sender, ASPxGridView)).GetMasterRowKeyValue()
+        Dim tampungan As String = Session("ID")
+        dsSubdetilpengajuan.SelectCommand = "select convert(varchar,TglInputBiaya,103) as TglInputBiaya,format(convert(int,Nominal),'##,###') as Nominal, TRX_FILE.file_url,* from tr_penggunaanSPD " &
+                                            "left outer JOIN TRX_FILE ON tr_penggunaanSPD.DocNo = TRX_FILE.DocNo " &
+                                            "where tr_penggunaanSPD.VID = '" & tampungan & "'"
+
+    End Sub
+
     Protected Sub gridlokasi_BeforePerformDataSelect(sender As Object, e As EventArgs)
         Session("ID") = (TryCast(sender, ASPxGridView)).GetMasterRowKeyValue()
         Dim tampungan As String = Session("ID")

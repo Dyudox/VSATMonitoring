@@ -2,7 +2,7 @@
 Imports System.Data.SqlClient
 Imports DevExpress.Web
 Imports DevExpress.Web.Bootstrap
-Imports DevExpress.Web.BootstrapMode
+'Imports DevExpress.Web.BootstrapMode
 Imports System.Web
 Imports System.Web.UI
 Imports System.Web.UI.WebControls
@@ -22,13 +22,48 @@ Partial Class DetilPantauSPD
     Protected Sub gridpengajuanuang_Load(sender As Object, e As EventArgs) Handles gridpengajuanuang.Load
         'dspengajuanuang.SelectCommand = "SELECT trTask.NoTask, trTask.TanggalTask, trTask.NamaTask, tr_permintaanSPD.Provider, tr_permintaanSPD.NamaTeknisi " & _
         '                                "FROM trTask INNER JOIN tr_permintaanSPD ON trTask.NoTask = tr_permintaanSPD.NoTask"
-        dspengajuanuang.SelectCommand = "SELECT NoTask, NamaTeknisi, total, NamaTask, approve, Provider, TanggalTask, SUM(try_convert(numeric(38, 0), TotalPengeluaran)) as totalsuk, (total - approve) as sisa  from ( " & _
-                                        "select tr_permintaanSPD.NoTask, tr_permintaanSPD.NamaTeknisi, approve, tr_permintaanSPD.Provider, total, trTask.TanggalTask, trTask.NamaTask, TotalPengeluaran from tr_permintaanSPD " & _
-                                        "LEFT OUTER JOIN (select SUM(try_convert(numeric(38, 0), jumlahtrf)) as total, NoTask from trDetail_permintaanSPD where statustrf = 'DONE' group by notask) a on tr_permintaanSPD.NoTask = a.NoTask " & _
-                                        "LEFT OUTER JOIN (select SUM(try_convert(numeric(38, 0), Nominal)) as TotalPengeluaran, NoTask, VID from tr_penggunaanSPD group by NoTask, VID) b on tr_permintaanSPD.NoTask = b.NoTask " & _
-                                        "LEFT OUTER JOIN (select SUM(try_convert(numeric(38, 0), ApprovalNominal)) as approve, notask as notaskapp from tr_penggunaanSPD where Status = 'Approve' group by notask) c on tr_permintaanSPD.NoTask = c.notaskapp " & _
-                                        "LEFT OUTER JOIN trTask on tr_permintaanSPD.NoTask = trTask.NoTask) a " & _
-                                        "group by NoTask, NamaTask, Provider, NamaTeknisi, total, TanggalTask, approve"
+        'dspengajuanuang.SelectCommand = "SELECT NoTask, NamaTeknisi, total, NamaTask, approve, Provider, TanggalTask, IdStatusManager, IdStatusPegawai, SUM(try_convert(numeric(38, 0), Pagu)) as pagu, SUM(try_convert(numeric(38, 0), TotalPengeluaran)) as totalsuk, (total - approve) as sisa  from ( " &
+        '                                "select tr_permintaanSPD.NoTask, tr_permintaanSPD.NamaTeknisi, approve, tr_permintaanSPD.Provider, total, trTask.TanggalTask, trTask.NamaTask, trTask.IdStatusManager, msEmployee.IdStatusPegawai, ms_Pagu.Pagu, TotalPengeluaran from tr_permintaanSPD " &
+        '                                "LEFT OUTER JOIN (select SUM(try_convert(numeric(38, 0), jumlahtrf)) as total, NoTask from trDetail_permintaanSPD where statustrf = 'DONE' group by notask) a on tr_permintaanSPD.NoTask = a.NoTask " &
+        '                                "LEFT OUTER JOIN (select SUM(try_convert(numeric(38, 0), Nominal)) as TotalPengeluaran, NoTask, VID from tr_penggunaanSPD group by NoTask, VID) b on tr_permintaanSPD.NoTask = b.NoTask " &
+        '                                "LEFT OUTER JOIN (select SUM(try_convert(numeric(38, 0), ApprovalNominal)) as approve, notask as notaskapp from tr_penggunaanSPD where Status = 'Approve' group by notask) c on tr_permintaanSPD.NoTask = c.notaskapp " &
+        '                                "LEFT OUTER JOIN trTask on tr_permintaanSPD.NoTask = trTask.NoTask " &
+        '                                "LEFT OUTER JOIN msEmployee on trTask.NamaTeknisi = msEmployee.Nama " &
+        '                                "LEFT OUTER JOIN ms_pagu on msEmployee.IdStatusPegawai = ms_Pagu.TypeKaryawan) a  " &
+        '                                "group by NoTask, NamaTask, Provider, NamaTeknisi, total, TanggalTask, approve, IdStatusManager, IdStatusPegawai, Pagu"
+
+        dspengajuanuang.SelectCommand = "SELECT NoTask, NamaTeknisi, total, NamaTask, approve, Provider, TanggalTask, IdStatusManager, IdStatusPegawai, a.totalPengajuan, " &
+                                            "SUM(TRY_CONVERT(NUMERIC(38, 0), Pagu)) AS pagu, status, SUM(TRY_CONVERT(NUMERIC(38, 0), TotalPengeluaran)) AS totalsuk, (total - approve) AS sisa " &
+                                        "FROM ( " &
+                                            "SELECT tr_permintaanSPD.NoTask, tr_permintaanSPD.NamaTeknisi, approve, tr_permintaanSPD.Provider, total, trTask.TanggalTask, " &
+                                                "trTask.NamaTask, TotalPengeluaran, trTask.IdStatusManager, msEmployee.IdStatusPegawai, ms_Pagu.Pagu, trTask.status, a.totalPengajuan " &
+                                            "From tr_permintaanSPD " &
+                                            "LEFT OUTER JOIN ( " &
+                                                "SELECT " &
+                                                    "SUM(TRY_CONVERT(NUMERIC(38, 0), jumlahtrf)) AS total, SUM(try_convert(numeric(38, 0), jumlahpengajuan)) AS totalPengajuan, " &
+                                                    "NoTask " &
+                                                "FROM trDetail_permintaanSPD " &
+                                                "WHERE statustrf = 'DONE' " &
+                                                "GROUP BY NoTask) a ON tr_permintaanSPD.NoTask = a.NoTask " &
+                                            "LEFT OUTER JOIN ( " &
+                                                "SELECT " &
+                                                    "SUM(TRY_CONVERT(NUMERIC(38, 0), Nominal)) AS TotalPengeluaran, " &
+                                                    "NoTask, VID " &
+                                                "FROM tr_penggunaanSPD " &
+                                                "GROUP BY NoTask, VID) b ON tr_permintaanSPD.NoTask = b.NoTask " &
+                                            "LEFT OUTER JOIN ( " &
+                                                "SELECT " &
+                                                    "SUM(TRY_CONVERT(NUMERIC(38, 0), ApprovalNominal)) AS approve, " &
+                                                    "NoTask AS notaskapp " &
+                                                "FROM tr_penggunaanSPD " &
+                                                "WHERE Status = 'Approve' " &
+                                                "GROUP BY NoTask) c ON tr_permintaanSPD.NoTask = c.notaskapp " &
+                                            "LEFT OUTER JOIN trTask ON tr_permintaanSPD.NoTask = trTask.NoTask " &
+                                            "LEFT OUTER JOIN trDetail_Task on trTask.NoTask = trDetail_Task.NoTask " &
+                                            "LEFT OUTER JOIN msEmployee ON trTask.NamaTeknisi = msEmployee.Nama " &
+                                            "LEFT OUTER JOIN ms_Pagu ON msEmployee.IdStatusPegawai = ms_Pagu.TypeKaryawan) a " &
+                                        "WHERE a.IdStatusManager = 'Valid' " &
+                                        "GROUP BY NoTask, NamaTask, Provider, NamaTeknisi, total, TanggalTask, approve, IdStatusManager, IdStatusPegawai, status, totalPengajuan"
     End Sub
    
     Protected Sub gv_detailpenggunaanSPD_BeforePerformDataSelect(sender As Object, e As EventArgs)
@@ -45,9 +80,52 @@ Partial Class DetilPantauSPD
     End Sub
 
     Protected Sub gv_detailpenggunaanSPD_RowUpdating(sender As Object, e As DevExpress.Web.Data.ASPxDataUpdatingEventArgs)
-        dspenggunaanSPD.UpdateCommand = "update tr_penggunaanSPD set ApprovalNominal = @ApprovalNominal, TglApproveBiaya = GETDATE(), Status = @Status, CatatanApproval = @CatatanApproval where ID = @ID"
-        dspenggunaanSPD.DataBind()
+        Try
+
+            Dim approvalNominal As Decimal = Convert.ToDecimal(e.NewValues("ApprovalNominal"))
+            Dim nominal As Decimal = Convert.ToDecimal(e.OldValues("Nominal")) ' ambil dari data lama (Nominal pengajuan)
+
+            '=== Validasi ===
+            If approvalNominal > nominal Then
+                Dim grid As ASPxGridView = CType(sender, ASPxGridView)
+                grid.JSProperties("cpWarning") = "Jumlah transfer tidak boleh lebih besar dari jumlah pengajuan!"
+                e.Cancel = True
+                grid.CancelEdit()
+                Exit Sub
+            End If
+
+            Dim strsql As String = "UPDATE tr_penggunaanSPD " &
+                               "SET ApprovalNominal = @ApprovalNominal, " &
+                               "TglApproveBiaya = GETDATE(), " &
+                               "Status = @Status, " &
+                               "CatatanApproval = @CatatanApproval " &
+                               "WHERE ID = @ID"
+
+            dspenggunaanSPD.UpdateCommand = strsql
+
+            '=== Set parameter ===
+            dspenggunaanSPD.UpdateParameters.Clear()
+            dspenggunaanSPD.UpdateParameters.Add("ApprovalNominal", e.NewValues("ApprovalNominal"))
+            dspenggunaanSPD.UpdateParameters.Add("Status", e.NewValues("Status"))
+            dspenggunaanSPD.UpdateParameters.Add("CatatanApproval", e.NewValues("CatatanApproval"))
+            dspenggunaanSPD.UpdateParameters.Add("ID", e.Keys("ID"))
+
+            '=== Eksekusi update ===
+            dspenggunaanSPD.Update()
+            e.Cancel = True
+            CType(sender, ASPxGridView).CancelEdit()
+
+        Catch ex As Exception
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertError", "alert('Terjadi kesalahan: " & ex.Message.Replace("'", "\'") & "');", True)
+        End Try
     End Sub
+
+
+    'Protected Sub gv_detailpenggunaanSPD_RowUpdating(sender As Object, e As DevExpress.Web.Data.ASPxDataUpdatingEventArgs)
+
+    '    dspenggunaanSPD.UpdateCommand = "update tr_penggunaanSPD set ApprovalNominal = @ApprovalNominal, TglApproveBiaya = GETDATE(), Status = @Status, CatatanApproval = @CatatanApproval where ID = @ID"
+    '    dspenggunaanSPD.DataBind()
+    'End Sub
 
     Protected Sub gv_detailpenggunaanSPD_RowDeleting(sender As Object, e As DevExpress.Web.Data.ASPxDataDeletingEventArgs)
         dspenggunaanSPD.DeleteCommand = "delete from tr_penggunaanSPD where ID = @ID"

@@ -474,7 +474,7 @@
                                     <br />
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <asp:Label ID="Label1" runat="server" Text="*Replace data, The file name must be DataLocation.xlsx" ForeColor="#a94442" Font-Bold="true"/>
+                                            <asp:Label ID="Label1" runat="server" Text="*Replace data, The file name must be DataLokasi.xlsx" ForeColor="#a94442" Font-Bold="true"/>
                                         </div>
                                     </div>
                                 </div>
@@ -500,7 +500,7 @@
                                                     OnClick="btn_template_Click">
                                                 </dx:ASPxButton>--%>
                                                 <button id="btn_template" style="background-color: #F65058;" class="btn btn-danger" runat="server" onserverclick="btn_template_ServerClick">
-                                                    <i class="fa fa-arrow-circle-o-up"></i>&nbsp;Download Template
+                                                    <i class="fa fa-arrow-circle-o-up"></i>&nbsp;Download
                                                 </button>
                                             </div>
                                         </div>

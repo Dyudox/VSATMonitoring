@@ -1,0 +1,9 @@
+04/10/2025 19:16:05 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='' | 
+04/10/2025 19:16:05 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001204' | 
+04/10/2025 19:16:18 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='BRI HUB 2' | 
+04/10/2025 19:16:18 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001203' | 
+04/10/2025 19:16:24 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001203' | 
+04/10/2025 19:16:27 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001203' | 
+04/10/2025 19:16:27 : General Info | Createdetailtask.aspx | Update | Update trDetail_Task set FlagGeneralInfo=1,IdATM = '12312312', IPLAN = '55.234.144.1', TglBerangkat = '2025-10-4', TglSelesaiKerjaan =  '2025-10-7', TglPulang = '2025-10-8', TglStatusPerbaikan = '2025-10-3', UserUpdate = '233019505', DateUpdate = GETDATE() where NoListTask = '43464' | 
+04/10/2025 19:16:31 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001203' | 
+04/10/2025 20:47:58 : System | Uplaod | Excel | PenyelesainTask$ |  | The ConnectionString property has not been initialized.

@@ -48,13 +48,15 @@
                                 <b>Input SPD per VID</b>
                             </h4>
                         </div>
-                        <dx:ASPxGridView ID="gv_detilpengajuan" ClientInstanceName="gv_detilpengajuan" runat="server" EnableTheming="True" Theme="MetropolisBlue" Width="100%" OnBeforePerformDataSelect="gv_detilpengajuan_BeforePerformDataSelect" AutoGenerateColumns="False" DataSourceID="dsdetilpengajuan" KeyFieldName="ID">
+                        <dx:ASPxGridView ID="gv_detilpengajuan" ClientInstanceName="gv_detilpengajuan" runat="server" EnableTheming="True" Theme="MetropolisBlue" Width="100%" 
+                            OnBeforePerformDataSelect="gv_detilpengajuan_BeforePerformDataSelect" AutoGenerateColumns="False" DataSourceID="dsdetilpengajuan" KeyFieldName="VID">
                             <Settings ShowFooter="false" ShowGroupPanel="True" />
                             <SettingsBehavior ConfirmDelete="True" />
                             <SettingsPager>
                                 <PageSizeItemSettings Visible="true" Items="10, 15, 20" ShowAllItem="true" />
                             </SettingsPager>
                             <SettingsDataSecurity AllowDelete="True" AllowEdit="True" AllowInsert="True" />
+                            <SettingsDetail ShowDetailButtons="true" ShowDetailRow="true" />
                             <Columns>
                                 <dx:GridViewDataTextColumn Caption="VID" PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0" HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="Center" ReadOnly="true" Settings-AutoFilterCondition="Contains">
                                     <DataItemTemplate>
@@ -72,12 +74,92 @@
                                 </dx:GridViewDataTextColumn>
                             </Columns>
                             <SettingsEditing Mode="EditFormAndDisplayRow" />
+                            <Templates>
+                                <DetailRow>
+                                    <dx:ASPxGridView ID="gv_subDetilpengajuan" ClientInstanceName="gv_subDetilpengajuan" runat="server" EnableTheming="True" Theme="MetropolisBlue" Width="100%" 
+                                        OnBeforePerformDataSelect="gv_subDetilpengajuan_BeforePerformDataSelect" AutoGenerateColumns="False" DataSourceID="dsSubdetilpengajuan" KeyFieldName="VID">
+                                        <Settings ShowFooter="false" ShowGroupPanel="True" />
+                                        <SettingsBehavior ConfirmDelete="True" />
+                                        <SettingsPager>
+                                            <PageSizeItemSettings Visible="true" Items="10, 15, 20" ShowAllItem="true" />
+                                        </SettingsPager>
+                                        <SettingsDataSecurity AllowDelete="True" AllowEdit="True" AllowInsert="True" />
+                                        <%--<SettingsDetail ShowDetailButtons="true" ShowDetailRow="true" />--%>
+                                        <Columns>                                            
+                                            <dx:GridViewDataTextColumn Caption="Description Pengeluaran" PropertiesTextEdit-DisplayFormatString="{0:n0}" PropertiesTextEdit-DisplayFormatInEditMode="true" 
+                                                FieldName="JenisBiaya" Settings-AutoFilterCondition="Contains">
+                                                <Settings AutoFilterCondition="Contains"></Settings>
+                                            </dx:GridViewDataTextColumn> 
+                                            <dx:GridViewDataTextColumn Caption="Nominal" PropertiesTextEdit-DisplayFormatString="{0:n0}" PropertiesTextEdit-DisplayFormatInEditMode="true" 
+                                                FieldName="Nominal" Settings-AutoFilterCondition="Contains">
+                                                <Settings AutoFilterCondition="Contains"></Settings>
+                                            </dx:GridViewDataTextColumn>                                            
+                                            <dx:GridViewDataTextColumn Caption="Tanggal" FieldName="TglInputBiaya" Settings-AutoFilterCondition="Contains">
+                                                <Settings AutoFilterCondition="Contains"></Settings>
+                                            </dx:GridViewDataTextColumn>
+                                            <dx:GridViewDataTextColumn Caption="Note" FieldName="CatatanTransaksi" Settings-AutoFilterCondition="Contains">
+                                                <Settings AutoFilterCondition="Contains"></Settings>
+                                            </dx:GridViewDataTextColumn>
+                                            <dx:GridViewDataTextColumn Caption="Foto Bukti" FieldName="file_url" ReadOnly="true"
+                                                PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0"
+                                                Settings-AutoFilterCondition="Contains">
+                                                <HeaderStyle HorizontalAlign="Center" />
+                                                <CellStyle HorizontalAlign="Center" />
+                                                <DataItemTemplate>
+                                                    <img src='<%# ResolveUrl(Eval("file_url").ToString()) %>' 
+                                                         alt="Foto Bukti" 
+                                                         style="width:60px; height:60px; object-fit:cover; border-radius:6px; cursor:pointer;"
+                                                         onclick="showImagePopup('<%# ResolveUrl(Eval("file_url").ToString()) %>')" />
+                                                </DataItemTemplate>
+                                                <EditItemTemplate>
+                                                    <div style="display:flex; align-items:center; gap:10px;">
+                                                        <!-- Thumbnail foto -->
+                                                        <img src='<%# ResolveUrl(Eval("file_url").ToString()) %>'
+                                                             alt="Foto" 
+                                                             style="width:60px; height:60px; object-fit:cover; border-radius:6px; cursor:pointer;"
+                                                             onclick="showImagePopup('<%# ResolveUrl(Eval("file_url").ToString()) %>')" />
+            
+                                                        <!-- URL text (jika kamu mau tampilkan path-nya) -->
+                                                        <%--<asp:TextBox ID="txtFileUrl" runat="server" 
+                                                                     Text='<%# Bind("file_url") %>' 
+                                                                     Width="250px" ReadOnly="true"
+                                                                     CssClass="form-control" />--%>
+                                                    </div>
+                                                </EditItemTemplate>
+                                            </dx:GridViewDataTextColumn>
+                                        </Columns>
+                                        <SettingsEditing Mode="EditFormAndDisplayRow" />
+                                        <%--<Templates>
+                                            <DetailRow>
+
+                                            </DetailRow>
+                                        </Templates>--%>
+                                    </dx:ASPxGridView>
+                                </DetailRow>
+                            </Templates>
                         </dx:ASPxGridView>
+                        <dx:ASPxPopupControl ID="popupImage" runat="server" 
+                            ClientInstanceName="popupImage"
+                            Width="800px" 
+                            Height="600px"
+                            CloseAction="CloseButton"
+                            HeaderText="Foto Bukti"
+                            PopupHorizontalAlign="WindowCenter"
+                            PopupVerticalAlign="WindowCenter"
+                            AllowDragging="True"
+                            Modal="True">
+                            <ContentCollection>
+                                <dx:PopupControlContentControl runat="server">
+                                    <iframe id="imageFrame" src="" style="width:100%; height:550px; border:none;"></iframe>
+                                </dx:PopupControlContentControl>
+                            </ContentCollection>
+                        </dx:ASPxPopupControl>
                     </DetailRow>
                 </Templates>
             </dx:ASPxGridView>
             <asp:SqlDataSource ID="dspengajuanuang" runat="server" ConnectionString="<%$ ConnectionStrings:dbVsatConnectionString %>"></asp:SqlDataSource>
             <asp:SqlDataSource ID="dsdetilpengajuan" runat="server" ConnectionString="<%$ ConnectionStrings:dbVsatConnectionString %>"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="dsSubdetilpengajuan" runat="server" ConnectionString="<%$ ConnectionStrings:dbVsatConnectionString %>"></asp:SqlDataSource>
             <asp:SqlDataSource ID="dsgridlokasi" runat="server" ConnectionString="<%$ ConnectionStrings:dbVsatConnectionString %>"></asp:SqlDataSource>
         </div>
     </div>
@@ -145,5 +227,13 @@
             </table>
         </div>
     </div>--%>
+
+    <script type="text/javascript">
+        function showImagePopup(url) {
+            var frame = document.getElementById("imageFrame");
+            frame.src = url; // set URL gambar
+            popupImage.Show(); // tampilkan popup DevExpress
+        }
+    </script>
 </asp:Content>
 

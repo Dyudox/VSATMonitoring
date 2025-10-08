@@ -62,7 +62,7 @@ Public Class cls_global
         Return str
     End Function
 
-    Public Function ExecuteQuery(ByVal Query As String) As DataTable
+    Public Function ExecuteQuery(ByVal Query As String, ParamArray parameters() As SqlParameter) As DataTable
         BukaKoneksi()
         If Session("Error") <> "" Then Exit Function
         Try
@@ -83,7 +83,7 @@ Public Class cls_global
             Session("Error") = Nothing
         End Try
     End Function
-    Public Function ExecuteNonQuery(ByVal Query As String)
+    Public Function ExecuteNonQuery(ByVal Query As String, Optional parameters As SqlParameter() = Nothing)
         BukaKoneksi()
         If Session("Error") <> "" Then Exit Function
         Try
@@ -96,6 +96,17 @@ Public Class cls_global
             Session("Error") = Nothing
         End Try
     End Function
+
+    'Public Sub ExecuteNonQuery(query As String, Optional parameters As SqlParameter() = Nothing)
+    '    Using cmd As New SqlCommand(query, sqlcon)
+    '        If parameters IsNot Nothing AndAlso parameters.Length > 0 Then
+    '            cmd.Parameters.AddRange(parameters)
+    '        End If
+    '        If sqlcon.State <> ConnectionState.Open Then sqlcon.Open()
+    '        cmd.ExecuteNonQuery()
+    '        sqlcon.Close()
+    '    End Using
+    'End Sub
 
     Public Sub writedata(ByVal id_user As String, ByVal action As String, ByVal keterangan As String, ByVal query As String, ByVal ChName As String)
         Dim strdata As String = id_user & " | " & action & " | " & keterangan & " | " & query & " | " & ChName

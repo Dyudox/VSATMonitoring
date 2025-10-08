@@ -1,0 +1,11 @@
+08/10/2025 07:18:10 : System | Uplaod | Excel | PenyelesainTask$ |  | The ConnectionString property has not been initialized.
+08/10/2025 07:18:10 : System | Uplaod | Excel | TaskInstalasi$ |  | The ConnectionString property has not been initialized.
+10/8/2025 7:28:49 AM : System | Uplaod | Excel | PenyelesainTask$ |  | The ConnectionString property has not been initialized.
+08/10/2025 07:39:53 : System | Uplaod | Excel | PenyelesainTask$ |  | The ConnectionString property has not been initialized.
+10/8/2025 7:52:38 AM : System | Upload | Excel | PenyelesainTask$ | (no-strsql) | The ConnectionString property has not been initialized.
+10/8/2025 7:55:02 AM : System | Upload | Excel | PenyelesainTask$ | (no-strsql) | The ConnectionString property has not been initialized.
+10/8/2025 8:04:14 AM : System | Upload | Excel | PenyelesainTask$ | (no-strsql) | The ConnectionString property has not been initialized.
+10/8/2025 8:50:19 AM : System | Uplaod | Excel | PenyelesainTask$ |  | The ConnectionString property has not been initialized.
+10/8/2025 1:28:06 PM : System | ExecuteQuery | Must declare the scalar variable "@nama". | SELECT idHub FROM msHub WHERE namaHub=@nama | 
+08/10/2025 21:09:36 : System | ExecuteQuery | Error converting data type varchar to numeric. | select * from mshub where id='BRI HUB 2' | 
+08/10/2025 21:09:36 : 233019505 | Upload Foto | <ul style='left: 0px; top: 0px;'></ul> | select * from trx_file where VID='SCM2018000100030001203' | 
