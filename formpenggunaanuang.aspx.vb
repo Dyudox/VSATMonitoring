@@ -495,7 +495,7 @@ Partial Class formpenggunaanuang
         If dr("flagconfirm").ToString = True Then
             btnsimpan.Visible = False
             btnupdate.Visible = False
-            btnconfirm.Visible = False
+            btnconfirm.Enabled = False
             cbjenispengeluaran.Attributes.Add("Readonly", "True")
             txtcatatantransaksi.Attributes.Add("Readonly", "True")
             txtnominal.Attributes.Add("Readonly", "True")
@@ -503,7 +503,7 @@ Partial Class formpenggunaanuang
         Else
             btnsimpan.Visible = True
             'btnupdate.Visible = True
-            btnconfirm.Visible = True
+            btnconfirm.Enabled = True
         End If
         dr.Close()
         con.Close()
@@ -534,7 +534,7 @@ Partial Class formpenggunaanuang
 
         Try
             ' === Path penyimpanan ===
-            Dim folderPath As String = "D:\OfficeSelindo\Backup server\BackupVsat\Export_Txt\"
+            Dim folderPath As String = "~/Export_Txt/"
             If Not Directory.Exists(folderPath) Then
                 Directory.CreateDirectory(folderPath)
             End If
