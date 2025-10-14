@@ -9,7 +9,7 @@ Public Class DownloadTxt
     Implements IHttpHandler
 
     ' ====== Pengaturan umum ======
-    Private Const DELETE_DELAY_MINUTES As Integer = 10 ' waktu tunda sebelum file dihapus otomatis
+    Private Const DELETE_DELAY_MINUTES As Integer = 1  ' waktu tunda sebelum file dihapus otomatis
     Private Const EXPORT_FOLDER As String = "~/Export_Txt/"
 
     Public Sub ProcessRequest(ByVal context As HttpContext) Implements IHttpHandler.ProcessRequest

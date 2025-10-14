@@ -1,13 +1,10 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/site.master" AutoEventWireup="false" CodeFile="createdetiltask.aspx.vb" Inherits="createdetiltask" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/site.master" AutoEventWireup="false" CodeFile="createdetiltask - Copy.aspx.vb" Inherits="createdetiltask" %>
 <%--<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="createdetiltask.aspx.vb" Inherits="BackupVsat.createdetiltask" %>--%>
 
 <%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
-    <!-- Bootstrap CSS -->
-    <%--<link href="css/bootstrap.min.css" rel="stylesheet" />
-    <script src="assets/js/bootstrap.bundle.min.js"></script>--%>
-    
+    <%--rizal--%>
     <script>
         function UserCustomerConfirmation() {
             if (confirm("what do you want to process?"))
@@ -1029,7 +1026,9 @@
                 <asp:AsyncPostBackTrigger ControlID="btnstatusdokumentasi" />
             </Triggers>
         </asp:UpdatePanel>  
-        <%--<dx:ASPxPopupControl ID="popupEmailEndless" runat="server"
+        
+
+        <dx:ASPxPopupControl ID="popupEmailEndless" runat="server" 
                 ClientInstanceName="popupEmailEndless"
                 AllowDragging="True"
                 PopupHorizontalAlign="WindowCenter"
@@ -1054,27 +1053,28 @@
                             <div style="padding:20px; background:#fdfdfd; border-bottom:1px solid #e5e5e5;">
                                 <div class="form-group">
                                     <label><b>Kepada (To):</b></label>
-                                    <input type="text" id="txtToEmail" runat="server" class="form-control"
-                                           value="helpdesk@selindo.co.id" />
+                                    <asp:TextBox ID="txtToEmail" runat="server" CssClass="form-control" 
+                                                 Text="helpdesk@selindo.co.id" />
                                 </div>
                                 <div class="form-group">
                                     <label><b>CC:</b></label>
-                                    <input type="text" id="txtCcEmail" runat="server" class="form-control"
-                                           value="supervisor@selindo.co.id" />
+                                    <asp:TextBox ID="txtCcEmail" runat="server" CssClass="form-control" 
+                                                 Text="supervisor@selindo.co.id" />
                                 </div>
                                 <div class="form-group">
                                     <label><b>Subjek:</b></label>
-                                    <input type="text" id="txtSubjectEmail" runat="server" class="form-control" />
+                                    <asp:TextBox ID="txtSubjectEmail" runat="server" CssClass="form-control" />
                                 </div>
                                 <div class="form-group">
                                     <label><b>Body Email:</b></label>
-                                    <textarea id="txtBodyEmail" runat="server" class="form-control" rows="15" style="font-family:Consolas;"></textarea>
+                                    <asp:TextBox ID="txtBodyEmail" runat="server" CssClass="form-control"
+                                                 TextMode="MultiLine" Rows="15" Font-Names="Consolas" />
                                 </div>
                             </div>
 
                             <!-- Footer -->
                             <div style="background:#f5f7fa; padding:12px 20px; text-align:right;">
-                                <asp:Button ID="btnSendEmail" runat="server" CssClass="btn btn-primary"
+                                <asp:Button ID="btnSendEmail" runat="server" CssClass="btn btn-primary" 
                                             Text="Kirim Email" OnClick="btnSendEmail_Click" />
                                 <button type="button" class="btn btn-secondary" onclick="popupEmailEndless.Hide();">Batal</button>
                             </div>
@@ -1082,8 +1082,7 @@
                         </div>
                     </dx:PopupControlContentControl>
                 </ContentCollection>
-            </dx:ASPxPopupControl>--%>
-
+            </dx:ASPxPopupControl>
 
         <%--<dx:ASPxPopupControl ID="ASPxPopupControl1" runat="server" ClientInstanceName="popupEndless"
             HeaderText="Berhasil!" ShowFooter="False"
@@ -1097,155 +1096,19 @@
         </dx:ASPxPopupControl>--%>
     </div>
     <br />
-    <%--<asp:UpdatePanel ID="updModal" runat="server">
+    <asp:UpdatePanel ID="updModal" runat="server">
         <ContentTemplate>
             <asp:Button ID="Button1" runat="server" Text="Tes Modal" CssClass="btn btn-primary" OnClick="btn_testModal_Click" />
         </ContentTemplate>
-    </asp:UpdatePanel>    --%>
+    </asp:UpdatePanel>    
 
     <div class="col-md-12" style="padding: 20px 0 0 0;">
         <div class="panel-heading">
-            <asp:button id="btn_detailexporttxt" runat="server" cssclass="btn btn-success" text="convert to .txt" OnClick="btn_detailexporttxt_Click"/> 
-            <%--<asp:Button ID="btn_testModal" runat="server" CssClass="btn btn-info" Text="Test Modal" OnClick="btn_testModal_Click" />--%>
+            <asp:button id="btn_detailexporttxt" runat="server" cssclass="btn btn-success" text="convert to .txt" OnClick="btn_detailexporttxt_Click"/>    
+            <asp:Button ID="btn_testModal" runat="server" CssClass="btn btn-info" Text="Test Modal" OnClick="btn_testModal_Click" />
             <asp:Button ID="Button2" runat="server" Text="Tes Modal" CssClass="btn btn-primary" OnClientClick="popupEmailEndless.Show(); return false;" />
         </div>
     </div>   
-
-    <asp:UpdatePanel ID="updExport" runat="server" UpdateMode="Conditional">
-        <ContentTemplate>
-            <asp:Button ID="Button1" runat="server"
-                CssClass="btn btn-danger btn-small"
-                Text="Convert to .txt"
-                OnClick="btn_detailexporttxt_Click" />
-        </ContentTemplate>
-    </asp:UpdatePanel>
-    <asp:Panel runat="server">
-        <!-- POPUP EMAIL (Bootstrap modal style) -->
-        <div class="modal fade" id="popupEmailEndless" tabindex="-1" role="dialog" aria-labelledby="popupEmailLabel" style="background: none;">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="popupEmailLabel">Kirim Email Laporan Task</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-
-                    <div class="modal-body">
-                    <div class="form-group">
-                        <label>To:</label>
-                        <input type="text" id="txtToEmail" runat="server" class="form-control" placeholder="Alamat email penerima (pisahkan dengan ;)" />
-                    </div>
-
-                    <div class="form-group">
-                        <label>Cc:</label>
-                        <input type="text" id="txtCcEmail" runat="server" class="form-control" placeholder="Alamat CC (opsional)" />
-                    </div>
-
-                    <div class="form-group">
-                        <label>Bcc:</label>
-                        <input type="text" id="txtBccEmail" runat="server" class="form-control" placeholder="Alamat BCC (opsional)" />
-                    </div>
-
-                    <div class="form-group">
-                        <label>Subject:</label>
-                        <input type="text" id="txtSubjectEmail" runat="server" class="form-control" />
-                    </div>
-
-                    <div class="form-group">
-                        <label>Body:</label>
-                        <textarea id="txtBodyEmail" runat="server" class="form-control" rows="8"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Attachment:</label>
-                        <input type="text" id="txtAttachmentEmail" runat="server" class="form-control" readonly />
-                    </div>
-                    </div>
-
-                    <div class="modal-footer">
-                    <button type="button" id="btnSendEmail" runat="server" onserverclick="btnSendEmail_ServerClick" class="btn btn-success">
-                        <i class="fa fa-paper-plane"></i> Kirim Email
-                    </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closePopupEmail();">Tutup</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </asp:Panel>    
-
-    <script type="text/javascript">
-        function showPopupAndDownload(fileUrl, subject, body, toEsc, ccEsc, bccEsc) {
-            try {
-                // Isi field popup sesuai id masing-masing
-                document.getElementById("<%= txtSubjectEmail.ClientID %>").value = subject || "";
-                document.getElementById("<%= txtBodyEmail.ClientID %>").value = body || "";
-                document.getElementById("<%= txtAttachmentEmail.ClientID %>").value = fileUrl || "";
-                document.getElementById("<%= txtToEmail.ClientID %>").value = toEsc || "";
-                document.getElementById("<%= txtCcEmail.ClientID %>").value = ccEsc || "";
-                document.getElementById("<%= txtBccEmail.ClientID %>").value = bccEsc || "";
-
-            } catch (e) {
-                console.error('Gagal isi field popup:', e);
-            }
-
-            //// Tampilkan modal tanpa mengunci background
-            //const modalEl = document.getElementById('popupEmailEndless');
-            //const modal = new bootstrap.Modal(modalEl, {
-            //    backdrop: false,  // halaman tidak dikunci
-            //    keyboard: true
-            //});
-            //modal.show();
-
-            // Tampilkan popup Bootstrap tanpa lock halaman
-            $('#popupEmailEndless').modal({
-                backdrop: false,
-                keyboard: true
-            });
-
-            //$('.modal-backdrop').remove();
-
-            // Trigger download otomatis
-            var link = document.createElement('a');
-            link.href = fileUrl;
-            link.target = '_blank';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function closePopupEmail() {
-            const modalEl = document.getElementById('popupEmailEndless');
-            const modal = bootstrap.Modal.getInstance(modalEl);
-            if (modal) modal.hide();
-        }
-    </script>
-
-    <script>
-        function showPopupAndDownload2(downloadUrl, subject, body, toEmail, ccEmail, bccEmail, attachment) {
-            // Isi field popup
-            document.getElementById('<%= txtSubjectEmail.ClientID %>').value = subject || '';
-            document.getElementById('<%= txtBodyEmail.ClientID %>').value = body || '';
-            document.getElementById('<%= txtToEmail.ClientID %>').value = toEmail || '';
-            document.getElementById('<%= txtCcEmail.ClientID %>').value = ccEmail || '';
-            document.getElementById('<%= txtBccEmail.ClientID %>').value = bccEmail || '';
-            document.getElementById('<%= txtAttachmentEmail.ClientID %>').value = attachment || '';
-
-            // Buat instance modal tanpa lock halaman
-            const modalElement = document.getElementById('popupEmailEndless');
-            const modal = new bootstrap.Modal(modalElement, {
-                backdrop: false,   // <– halaman tidak dikunci
-                keyboard: true
-            });
-
-            modal.show();
-
-            // Jalankan download file di tab baru
-            window.open(downloadUrl, '_blank');
-        }
-    </script>
 
     <script type="text/javascript">
         function showDevPopup(title, message, iconClass) {
@@ -1256,17 +1119,6 @@
         }
     </script>
 
-    <style>
-        #popupEmailEndless.modal-backdrop {
-            display: none !important;
-            background: none;
-        }
-
-        .modal-backdrop {
-            display: none !important;
-            background: none;
-        }
-    </style>
 
 </asp:Content>
 

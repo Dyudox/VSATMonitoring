@@ -1047,238 +1047,6 @@ Partial Class createdetiltask
     End Sub
 
     'Protected Sub btn_detailexporttxt_Click(sender As Object, e As EventArgs) Handles btn_detailexporttxt.Click
-    'Protected Sub btn_detailexporttxt_Click(sender As Object, e As EventArgs)
-    '    Try
-    '        '=== 1. Siapkan folder export ===
-    '        Dim exportFolder As String = Server.MapPath("~/Export_Txt/")
-    '        If Not Directory.Exists(exportFolder) Then
-    '            Directory.CreateDirectory(exportFolder)
-    '        End If
-
-    '        '=== 2. Nama file berdasarkan waktu ===
-    '        Dim fileName As String = "DetailTask_" & DateTime.Now.ToString("yyyyMMdd_HHmmss") & ".txt"
-    '        Dim filePath As String = Path.Combine(exportFolder, fileName)
-
-    '        '=== 3. Buat StringBuilder untuk isi file ===
-    '        Dim sb As New StringBuilder()
-
-    '        '====================================================================
-    '        sb.AppendLine("==================================================")
-    '        sb.AppendLine("DATA LOKASI")
-    '        sb.AppendLine("==================================================")
-    '        sb.AppendLine("Nama Remote       : " & txtnamaremote.Value)
-    '        sb.AppendLine("Alamat Sekarang   : " & txtalamatsekarang.Value)
-    '        sb.AppendLine("Alamat Instalasi  : " & txtalamat.Value)
-    '        sb.AppendLine("Provinsi          : " & txtprovinsi.Value)
-    '        sb.AppendLine("Kota / Kabupaten  : " & txtkota.Value)
-    '        sb.AppendLine("Kanwil            : " & txtkanwil.Value)
-    '        sb.AppendLine("Kanca Induk/Area  : " & txtkancainduk.Value)
-    '        sb.AppendLine("Nama PIC          : " & txtPIC.Value)
-    '        sb.AppendLine("Phone PIC         : " & txtphonepic.Value)
-    '        sb.AppendLine("--------------------------------------------------")
-    '        sb.AppendLine("ID Jarkom         : " & txtidjarkom.Value)
-    '        sb.AppendLine("ID Satelit        : " & txtsatelit.Value)
-    '        sb.AppendLine("Hub               : " & cbhub.Value)
-    '        sb.AppendLine("Latitude          : " & txtlatitude.Value)
-    '        sb.AppendLine("Longitude         : " & txtlongitude.Value)
-    '        sb.AppendLine("Tanggal Berangkat : " & txttglberangkat.Text)
-    '        sb.AppendLine("Tanggal Selesai   : " & txttglselesai.Text)
-    '        sb.AppendLine("Tanggal Pulang    : " & txttglpulang.Text)
-    '        sb.AppendLine("Catatan           : " & txtcatatanlokasi.Value)
-    '        sb.AppendLine()
-
-    '        '====================================================================
-    '        sb.AppendLine("==================================================")
-    '        sb.AppendLine("DATA TEKNIS")
-    '        sb.AppendLine("==================================================")
-    '        sb.AppendLine("Hardware Rusak    : " & txtfailHW.Value)
-    '        sb.AppendLine("SQF               : " & txtSQF.Value)
-    '        sb.AppendLine("Initial Esno      : " & txtinitialesno.Value)
-    '        sb.AppendLine("CPI               : " & txtCPI.Value)
-    '        sb.AppendLine("C/N               : " & txtcarriertonotice.Value)
-    '        sb.AppendLine("ASI               : " & txthasilxpoll.Value)
-    '        sb.AppendLine("Operator Satelit  : " & txtoperatorsatelit.Value)
-    '        sb.AppendLine("Operator Helpdesk : " & txtoperatorhelpdesk.Value)
-    '        sb.AppendLine("Out PLN           : " & txtoutpln.Value)
-    '        sb.AppendLine("Aktifitas Solusi  : " & txtaktifitassolusi.Value)
-    '        sb.AppendLine("--------------------------------------------------")
-    '        sb.AppendLine("Out UPS           : " & txtoutups.Value)
-    '        sb.AppendLine("UPS For Backup    : " & cbupsforbackup.Value)
-    '        sb.AppendLine("Suhu Ruangan      : " & txtsuhuruangan.Value)
-    '        sb.AppendLine("Type Mounting     : " & txttypemounting.Value)
-    '        sb.AppendLine("Panjang Kabel     : " & txtpanjangkabel.Value)
-    '        sb.AppendLine("Letak Antena      : " & txtletakantena.Value)
-    '        sb.AppendLine("Letak Modem       : " & txtletakmodem.Value)
-    '        sb.AppendLine("Letak Antena Ke Satelit : " & txtkondisibangunan.Value)
-    '        sb.AppendLine("Analisa Problem   : " & txtanalisaproblem.Value)
-    '        sb.AppendLine()
-
-    '        '====================================================================
-    '        sb.AppendLine("==================================================")
-    '        sb.AppendLine("UPLOAD FOTO")
-    '        sb.AppendLine("==================================================")
-
-    '        Dim imgHtml As String = ltr_image_room.Text
-    '        'Dim sb As New StringBuilder()
-
-    '        ' Ambil semua blok gambar berdasarkan pola <a>..<label>..<p>
-    '        Dim pattern As String = "(<a[^>]*><img[^>]*></a>.*?<label[^>]*>.*?</label>.*?<p[^>]*>.*?</p>)"
-    '        Dim matches As MatchCollection = Regex.Matches(imgHtml, pattern, RegexOptions.Singleline Or RegexOptions.IgnoreCase)
-
-    '        If matches.Count > 0 Then
-    '            Dim i As Integer = 1
-    '            For Each m As Match In matches
-    '                Dim block As String = m.Value
-
-    '                ' Ambil URL gambar
-    '                Dim imgMatch As Match = Regex.Match(block, "<img[^>]*src=['""]?([^'""> ]+)['""]?", RegexOptions.IgnoreCase)
-    '                Dim imgUrl As String = If(imgMatch.Success, imgMatch.Groups(1).Value, "-")
-
-    '                ' Ambil nama file dari URL
-    '                Dim fileNameOnly As String = If(imgUrl <> "-", Path.GetFileName(imgUrl), "-")
-
-    '                ' Ambil Deskripsi
-    '                Dim descMatch As Match = Regex.Match(block, "<label[^>]*><b>(.*?)</b></label>", RegexOptions.IgnoreCase)
-    '                Dim desc As String = If(descMatch.Success, descMatch.Groups(1).Value.Trim(), "-")
-
-    '                ' Ambil Keterangan
-    '                Dim ketMatch As Match = Regex.Match(block, "<p[^>]*>(.*?)</p>", RegexOptions.IgnoreCase)
-    '                Dim ket As String = If(ketMatch.Success, ketMatch.Groups(1).Value.Trim(), "-")
-
-    '                ' Tambahkan ke hasil teks
-    '                sb.AppendLine(i.ToString() & ". Deskripsi : " & desc)
-    '                sb.AppendLine("   Keterangan : " & ket)
-    '                sb.AppendLine("   URL : " & imgUrl)
-    '                sb.AppendLine("   Nama File : " & fileNameOnly)
-    '                sb.AppendLine()
-    '                i += 1
-    '            Next
-    '        Else
-    '            sb.AppendLine("Tidak ada foto diunggah.")
-    '        End If
-
-    '        sb.AppendLine()
-
-    '        '====================================================================
-    '        sb.AppendLine("==================================================")
-    '        sb.AppendLine("STATUS")
-    '        sb.AppendLine("==================================================")
-    '        sb.AppendLine("Status Pekerjaan   : " & cbstatusperbaikan.Text)
-    '        sb.AppendLine("Status Dokumentasi : " & cbstatusdokumentasi.Text)
-
-    '        '=== 5. Simpan ke file ===
-    '        File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8)
-
-    '        Dim bodyHtml As New StringBuilder()
-
-    '        '=== Header email ===
-    '        bodyHtml.AppendLine("<html><body style='font-family:Arial; font-size:13px;'>")
-    '        bodyHtml.AppendLine("<h2 style='color:#004080;'>LAPORAN TASK VSAT</h2>")
-
-    '        '=== DATA LOKASI ===
-    '        bodyHtml.AppendLine("<h3 style='background:#f0f0f0; padding:5px;'>DATA LOKASI</h3>")
-    '        bodyHtml.AppendLine("<table border='1' cellpadding='5' cellspacing='0' style='border-collapse:collapse; width:100%;'>")
-    '        bodyHtml.AppendLine("<tr><td><b>Nama Remote</b></td><td>" & txtnamaremote.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Alamat Sekarang</b></td><td>" & txtalamatsekarang.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Alamat Instalasi</b></td><td>" & txtalamat.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Provinsi</b></td><td>" & txtprovinsi.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Kota / Kabupaten</b></td><td>" & txtkota.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Kanwil</b></td><td>" & txtkanwil.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Kanca Induk/Area</b></td><td>" & txtkancainduk.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Nama PIC</b></td><td>" & txtPIC.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Phone PIC</b></td><td>" & txtphonepic.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>ID Jarkom</b></td><td>" & txtidjarkom.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>ID Satelit</b></td><td>" & txtsatelit.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Hub</b></td><td>" & cbhub.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Latitude</b></td><td>" & txtlatitude.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Longitude</b></td><td>" & txtlongitude.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Tanggal Berangkat</b></td><td>" & txttglberangkat.Text & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Tanggal Selesai</b></td><td>" & txttglselesai.Text & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Tanggal Pulang</b></td><td>" & txttglpulang.Text & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Catatan</b></td><td>" & txtcatatanlokasi.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("</table><br>")
-
-    '        '=== DATA TEKNIS ===
-    '        bodyHtml.AppendLine("<h3 style='background:#f0f0f0; padding:5px;'>DATA TEKNIS</h3>")
-    '        bodyHtml.AppendLine("<table border='1' cellpadding='5' cellspacing='0' style='border-collapse:collapse; width:100%;'>")
-    '        bodyHtml.AppendLine("<tr><td><b>Hardware Rusak</b></td><td>" & txtfailHW.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>SQF</b></td><td>" & txtSQF.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Initial Esno</b></td><td>" & txtinitialesno.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>CPI</b></td><td>" & txtCPI.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>C/N</b></td><td>" & txtcarriertonotice.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>ASI</b></td><td>" & txthasilxpoll.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Operator Satelit</b></td><td>" & txtoperatorsatelit.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Operator Helpdesk</b></td><td>" & txtoperatorhelpdesk.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Out PLN</b></td><td>" & txtoutpln.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Aktifitas Solusi</b></td><td>" & txtaktifitassolusi.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Out UPS</b></td><td>" & txtoutups.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>UPS For Backup</b></td><td>" & cbupsforbackup.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Suhu Ruangan</b></td><td>" & txtsuhuruangan.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Type Mounting</b></td><td>" & txttypemounting.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Panjang Kabel</b></td><td>" & txtpanjangkabel.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Letak Antena</b></td><td>" & txtletakantena.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Letak Modem</b></td><td>" & txtletakmodem.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Letak Antena Ke Satelit</b></td><td>" & txtkondisibangunan.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("<tr><td><b>Analisa Problem</b></td><td>" & txtanalisaproblem.Value & "</td></tr>")
-    '        bodyHtml.AppendLine("</table><br>")
-
-    '        '=== Footer ===
-    '        bodyHtml.AppendLine("<p style='color:#666; font-size:12px;'>Email ini dikirim otomatis oleh sistem VSAT Monitoring.</p>")
-    '        'bodyHtml.AppendLine("</body></html>")
-
-
-    '        '=== Tambahkan link foto ===
-    '        bodyHtml.AppendLine("<h3>FOTO DOKUMENTASI</h3>")
-    '        bodyHtml.AppendLine(ltr_image_room.Text)
-    '        bodyHtml.AppendLine("<br/><hr/><i>Email ini dikirim otomatis oleh sistem VSAT Monitoring.</i>")
-    '        bodyHtml.AppendLine("</body></html>")
-
-    '        '=== 4. Buat URL file download ===
-    '        Dim downloadUrl As String = ResolveUrl("~/DownloadTxt.ashx?file=" & fileName)
-    '        Dim safeUrl As String = HttpUtility.JavaScriptStringEncode(downloadUrl)
-
-    '        '=== 6. Isi otomatis form email di popup ===
-    '        Dim subject As String = "Laporan Task - " & txtnamaremote.Value
-    '        Dim body As String =
-    '        "==================================================" & vbCrLf &
-    '        "DATA LOKASI" & vbCrLf &
-    '        "==================================================" & vbCrLf &
-    '        "Nama Remote : " & txtnamaremote.Value & vbCrLf &
-    '        "Alamat : " & txtalamat.Value & vbCrLf &
-    '        "Provinsi : " & txtprovinsi.Value & vbCrLf &
-    '        "Kota : " & txtkota.Value & vbCrLf &
-    '        "..." & vbCrLf &
-    '        "==================================================" & vbCrLf &
-    '        "DATA TEKNIS" & vbCrLf &
-    '        "==================================================" & vbCrLf &
-    '        "SQF : " & txtSQF.Value & vbCrLf &
-    '        "Hardware Rusak : " & txtfailHW.Value & vbCrLf &
-    '        "CPI : " & txtCPI.Value & vbCrLf &
-    '        vbCrLf & "=== File Lampiran ===" & vbCrLf &
-    '        "~/Export_Txt/" & fileName
-
-    '        '=== 7. Escape agar aman di JavaScript ===
-    '        Dim subjectEsc As String = HttpUtility.JavaScriptStringEncode(subject)
-    '        Dim bodyEsc As String = HttpUtility.JavaScriptStringEncode(body)
-
-    '        '=== 8. Buat script show popup dan download ===
-    '        Dim script As New StringBuilder()
-    '        script.Append("showPopupAndDownload(")
-    '        script.Append("'" & safeUrl.Replace("'", "\'") & "',")
-    '        script.Append("'" & subjectEsc.Replace("'", "\'") & "',")
-    '        script.Append("'" & bodyEsc.Replace("'", "\'") & "');")
-
-    '        '=== 9. Jalankan popup di browser ===
-    '        ScriptManager.RegisterStartupScript(Me, Me.GetType(), "ShowPopupAndDownload", script.ToString(), True)
-
-
-
-    '        openTab()
-    '    Catch ex As Exception
-    '        System.Diagnostics.Debug.WriteLine("Error Export TXT: " & ex.Message)
-    '    End Try
-    'End Sub
-
     Protected Sub btn_detailexporttxt_Click(sender As Object, e As EventArgs)
         Try
             '=== 1. Siapkan folder export ===
@@ -1465,56 +1233,28 @@ Partial Class createdetiltask
             bodyHtml.AppendLine("<br/><hr/><i>Email ini dikirim otomatis oleh sistem VSAT Monitoring.</i>")
             bodyHtml.AppendLine("</body></html>")
 
-            '=== 5. Buat URL file download ===
-            Dim downloadUrl As String = ResolveUrl("~/DownloadTxt.ashx?file=" & fileName)
-            Dim safeUrl As String = HttpUtility.JavaScriptStringEncode(downloadUrl)
+            '=== 6. Siapkan daftar attachment (bisa lebih dari 1) ===
+            Dim attachments As New List(Of String)
+            attachments.Add("~/Export_Txt/" & fileName)
 
-            '=== 6. Isi otomatis form email di popup ===
-            Dim subject As String = "Laporan Task - " & txtnamaremote.Value
-            Dim body As String =
-            "==================================================" & vbCrLf &
-            "DATA LOKASI" & vbCrLf &
-            "==================================================" & vbCrLf &
-            "Nama Remote : " & txtnamaremote.Value & vbCrLf &
-            "Alamat : " & txtalamat.Value & vbCrLf &
-            "Provinsi : " & txtprovinsi.Value & vbCrLf &
-            "Kota : " & txtkota.Value & vbCrLf &
-            "..." & vbCrLf &
-            "==================================================" & vbCrLf &
-            "DATA TEKNIS" & vbCrLf &
-            "==================================================" & vbCrLf &
-            "SQF : " & txtSQF.Value & vbCrLf &
-            "Hardware Rusak : " & txtfailHW.Value & vbCrLf &
-            "CPI : " & txtCPI.Value & vbCrLf &
-            vbCrLf & "=== File Lampiran ===" & vbCrLf &
-            "~/Export_Txt/" & fileName
+            '=== 7. Kirim ke tabel ICC_EMAIL_OUT ===
+            KirimEmailOutboxMulti(
+            toList:={"teknisi@selindo.co.id", "support@selindo.co.id"},
+            ccList:={"supervisor@selindo.co.id"},
+            bccList:={},
+            subject:="Laporan Task VSAT - " & txtnamaremote.Value,
+            bodyHtml:=bodyHtml.ToString(),
+            attachments:=attachments)
 
-            '=== 7. Escape agar aman di JavaScript ===
-            Dim subjectEsc As String = HttpUtility.JavaScriptStringEncode(subject)
-            Dim bodyEsc As String = HttpUtility.JavaScriptStringEncode(body)
-            Dim toEsc As String = HttpUtility.JavaScriptStringEncode("helpdesk@selindo.co.id")
-            Dim ccEsc As String = HttpUtility.JavaScriptStringEncode("supervisor@selindo.co.id")
-            Dim bccEsc As String = HttpUtility.JavaScriptStringEncode("")
-
-            '=== 8. Buat script show popup dan download ===
-            '=== 8. Buat script show popup dan download (semua parameter dalam 1 pemanggilan) ===
-            Dim script As String = "showPopupAndDownload('" & safeUrl.Replace("'", "\'") & "', " &
-                                                       "'" & subjectEsc.Replace("'", "\'") & "', " &
-                                                       "'" & bodyEsc.Replace("'", "\'") & "', " &
-                                                       "'" & toEsc.Replace("'", "\'") & "', " &
-                                                       "'" & ccEsc.Replace("'", "\'") & "', " &
-                                                       "'" & bccEsc.Replace("'", "\'") & "');"
-
-            '=== 9. Jalankan popup di browser ===
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), "ShowPopupAndDownload", script.ToString(), True)
-
-
+            '=== 8. Redirect ke handler download ===
+            Response.Redirect("~/DownloadTxt.ashx?file=" & fileName, False)
 
             openTab()
         Catch ex As Exception
             System.Diagnostics.Debug.WriteLine("Error Export TXT: " & ex.Message)
         End Try
     End Sub
+
     Sub openTab()
         groupdatateknis.Visible = True
         groupfoto.Visible = True
@@ -1550,8 +1290,7 @@ Partial Class createdetiltask
                 Dim toStr As String = String.Join(";", toList)
                 Dim ccStr As String = String.Join(";", ccList)
                 Dim bccStr As String = String.Join(";", bccList)
-                'Dim attachStr As String = String.Join(";", attachments)
-                Dim relativePath As String = "~/Export_Txt/" & Path.GetFileName(attachments.FirstOrDefault())
+                Dim attachStr As String = String.Join(";", attachments)
 
                 Dim sql As String = "INSERT INTO ICC_EMAIL_OUT " &
                 "(EMAIL_ID, DIRECTION, EFROM, ETO, ECC, EBCC, ESUBJECT, EBODY_HTML, ROUTED, HANDLED, Email_Date, Flag, UserID, Path, ATTACHMENT_ID, JENIS_EMAIL) " &
@@ -1572,8 +1311,8 @@ Partial Class createdetiltask
                     cmd.Parameters.AddWithValue("@Email_Date", DateTime.Now)
                     cmd.Parameters.AddWithValue("@Flag", "N")
                     cmd.Parameters.AddWithValue("@UserID", Session("UserName"))
-                    cmd.Parameters.AddWithValue("@Path", relativePath)
-                    cmd.Parameters.AddWithValue("@ATTACHMENT_ID", relativePath)
+                    cmd.Parameters.AddWithValue("@Path", attachments.FirstOrDefault())
+                    cmd.Parameters.AddWithValue("@ATTACHMENT_ID", attachStr)
                     cmd.Parameters.AddWithValue("@JENIS_EMAIL", "LAPORAN TASK")
 
                     cmd.ExecuteNonQuery()
@@ -1588,72 +1327,26 @@ Partial Class createdetiltask
     Protected Sub btn_testModal_Click(sender As Object, e As EventArgs)
 
         'lblMessage.Text = "Data lokasi berhasil disimpan!"
-        'ScriptManager.RegisterStartupScript(Me, Me.GetType(), "ShowPopup", "popupEmailEndless.Show();", True)
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), "ShowPopup", "popupEmailEndless.Show();", True)
     End Sub
-    Protected Sub btnSendEmail_ServerClick(sender As Object, e As EventArgs)
+    Protected Sub btnSendEmail_Click(sender As Object, e As EventArgs)
         Try
-            '=== Ambil nilai dari popup ===
-            Dim toList As New List(Of String)
-            Dim ccList As New List(Of String)
-            Dim bccList As New List(Of String)
+            Dim toList As New List(Of String)(txtToEmail.Text.Split(";"c))
+            Dim ccList As New List(Of String)(txtCcEmail.Text.Split(";"c))
             Dim attachments As New List(Of String)
+            Dim subject As String = txtSubjectEmail.Text
+            Dim bodyHtml As String = txtBodyEmail.Text.Replace(vbCrLf, "<br>")
 
-            '=== Ambil alamat email ===
-            If Not String.IsNullOrWhiteSpace(txtToEmail.Value) Then
-                toList = txtToEmail.Value.Split(";", ","c).Select(Function(x) x.Trim()).Where(Function(x) x <> "").ToList()
-            End If
+            KirimEmailOutboxMulti(toList, ccList, New List(Of String), subject, bodyHtml, attachments)
 
-            If Not String.IsNullOrWhiteSpace(txtCcEmail.Value) Then
-                ccList = txtCcEmail.Value.Split(";", ","c).Select(Function(x) x.Trim()).Where(Function(x) x <> "").ToList()
-            End If
-
-            '=== Ambil file hasil export ===
-            Dim exportFolder As String = Server.MapPath("~/Export_Txt/")
-            Dim fileName As String = TryCast(ViewState("ExportedFileName"), String)
-            Dim fullPath As String = Path.Combine(exportFolder, fileName)
-
-            If File.Exists(fullPath) Then
-                attachments.Add(fullPath)
-            End If
-
-            '=== Kirim ke fungsi KirimEmailOutboxMulti ===
-            KirimEmailOutboxMulti(
-                toList,
-                ccList,
-                bccList,
-                txtSubjectEmail.Value,
-                txtBodyEmail.Value,
-                attachments
-            )
-
-            '=== Beri notifikasi sukses ===
-            ScriptManager.RegisterStartupScript(Me, Me.GetType(), "successEmail",
-                "alert('Email laporan task berhasil dikirim ke outbox.'); popupEmailEndless.Hide();", True)
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), "success",
+            "popupEmailEndless.Hide(); alert('Email berhasil dikirim ke Helpdesk!');", True)
 
         Catch ex As Exception
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), "error",
             "alert('Gagal kirim email: " & ex.Message.Replace("'", "") & "');", True)
         End Try
     End Sub
-
-    'Protected Sub btnSendEmail_Click(sender As Object, e As EventArgs)
-    '    Try
-    '        Dim toList As New List(Of String)(txtToEmail.Text.Split(";"c))
-    '        Dim ccList As New List(Of String)(txtCcEmail.Text.Split(";"c))
-    '        Dim attachments As New List(Of String)
-    '        Dim subject As String = txtSubjectEmail.Text
-    '        Dim bodyHtml As String = txtBodyEmail.Text.Replace(vbCrLf, "<br>")
-
-    '        KirimEmailOutboxMulti(toList, ccList, New List(Of String), subject, bodyHtml, attachments)
-
-    '        ScriptManager.RegisterStartupScript(Me, Me.GetType(), "success",
-    '        "popupEmailEndless.Hide(); alert('Email berhasil dikirim ke Helpdesk!');", True)
-
-    '    Catch ex As Exception
-    '        ScriptManager.RegisterStartupScript(Me, Me.GetType(), "error",
-    '        "alert('Gagal kirim email: " & ex.Message.Replace("'", "") & "');", True)
-    '    End Try
-    'End Sub
 
 
     'Protected Sub btn_exportTxt_Click(sender As Object, e As EventArgs) Handles btn_exportTxt.Click
