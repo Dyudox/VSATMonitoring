@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/site.master" AutoEventWireup="false" CodeFile="createdetiltask.aspx.vb" Inherits="createdetiltask" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/site.master" AutoEventWireup="false" CodeFile="createdetiltask.aspx.vb" Inherits="createdetiltask" ValidateRequest="false" %>
 <%--<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="createdetiltask.aspx.vb" Inherits="BackupVsat.createdetiltask" %>--%>
 
 <%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
@@ -1103,20 +1103,17 @@
         </ContentTemplate>
     </asp:UpdatePanel>    --%>
 
-    <div class="col-md-12" style="padding: 20px 0 0 0;">
+    <%--<div class="col-md-12" style="padding: 20px 0 0 0;">
         <div class="panel-heading">
             <asp:button id="btn_detailexporttxt" runat="server" cssclass="btn btn-success" text="convert to .txt" OnClick="btn_detailexporttxt_Click"/> 
-            <%--<asp:Button ID="btn_testModal" runat="server" CssClass="btn btn-info" Text="Test Modal" OnClick="btn_testModal_Click" />--%>
             <asp:Button ID="Button2" runat="server" Text="Tes Modal" CssClass="btn btn-primary" OnClientClick="popupEmailEndless.Show(); return false;" />
         </div>
-    </div>   
+    </div>   --%>
 
     <asp:UpdatePanel ID="updExport" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
-            <asp:Button ID="Button1" runat="server"
-                CssClass="btn btn-danger btn-small"
-                Text="Convert to .txt"
-                OnClick="btn_detailexporttxt_Click" />
+            <asp:Button ID="Button1" runat="server" CssClass="btn btn-danger btn-small" Text="Convert to .txt" OnClick="btn_detailexporttxt_Click" />
+            <asp:Button ID="Button2" runat="server" CssClass="btn btn-success btn-small" Text="Convert to .txt" OnClick="btn_PrevExportTxt_Click" />
         </ContentTemplate>
     </asp:UpdatePanel>
     <asp:Panel runat="server">
@@ -1127,7 +1124,7 @@
 
                     <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="popupEmailLabel">Kirim Email Laporan Task</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close " data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div>
@@ -1155,7 +1152,7 @@
 
                     <div class="form-group">
                         <label>Body:</label>
-                        <textarea id="txtBodyEmail" runat="server" class="form-control" rows="8"></textarea>
+                        <textarea id="txtBodyEmail" runat="server" class="form-control" rows="8" style="height: 350px;"></textarea>
                     </div>
 
                     <div class="form-group">
@@ -1176,7 +1173,7 @@
         </div>
     </asp:Panel>    
 
-    <script type="text/javascript">
+    <%--<script type="text/javascript">
         function showPopupAndDownload(fileUrl, subject, body, toEsc, ccEsc, bccEsc) {
             try {
                 // Isi field popup sesuai id masing-masing
@@ -1266,7 +1263,280 @@
             display: none !important;
             background: none;
         }
+    </style>--%>
+
+    <style>
+        /* Header modal tanpa background, dengan sudut melengkung */
+        .modal-header {
+            /*background: transparent !important;*/
+            /*background: linear-gradient(90deg, #2b85d8, #1fb5ff) !important;*/
+            /*background: #887f7f !important;*/
+            color: #fdfdfd !important;
+            border-bottom: 1px solid #e0e0e0 !important;
+            border-top-left-radius: 16px !important;
+            border-top-right-radius: 16px !important;
+            padding: 12px 16px !important;
+            display: flex;
+            align-items: center;          /* sejajarkan vertikal */
+            justify-content: space-between;
+        }
+
+        /* Tombol close (❌) */
+        .modal-header .close {
+            font-size: 1.5rem;           /* sedikit lebih kecil */
+            line-height: 1;
+            padding: 0;
+            margin: 0;
+            color: #666 !important;
+            opacity: 0.7;
+            transition: opacity 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;           /* tombol bundar */
+        }
+        .modal-header .close:hover {
+            opacity: 1;
+            color: #0094ff !important;
+            transform: scale(1.1);
+        }
+
+        .modal-content{
+            border-top-left-radius: 16px !important;
+            border-top-right-radius: 16px !important;
+        }
+
+        /* Body modal */
+        .modal-body {
+            background: #fdfdfd !important;
+            padding: 20px 25px !important;
+        }
+
+        /* Footer modal */
+        .modal-footer {
+            border-top: 1px solid #eee !important;
+            background: #f8f9fa !important;
+            border-bottom-left-radius: 16px !important;
+            border-bottom-right-radius: 16px !important;
+        }
+
+        /* ======== HILANGKAN BACKDROP HITAM ======== */
+        .modal-backdrop.show {
+            opacity: 0 !important;     /* transparan penuh */
+            display: none !important;  /* hilangkan layer hitam */
+        }
+
+        /* Efek animasi saat muncul */
+        .modal.fade .modal-dialog {
+            transform: translateY(-10px);
+            transition: all 0.3s ease-in-out;
+        }
+        .modal.show .modal-dialog {
+            transform: translateY(0);
+        }
+
+        /* Target area editable CKEditor5 Classic (inline/editable) */
+        .ck-editor__editable_inline, 
+        .ck-editor .ck-editor__editable {
+            min-height: 350px !important;
+            max-height: 350px !important;
+            height: 350px !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            box-sizing: border-box !important;
+            padding: 8px !important;
+        }
+
+        /* Jika ada wrapper .ck-content, juga target */
+        .ck-content {
+            max-height: 350px !important;
+            overflow-y: auto !important;
+        }
+
+        .ck-powered-by {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
     </style>
+
+    <script src="assets/tinymce/ckeditor.js"></script>
+    <script type="text/javascript">
+        let emailEditor; // instance global
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const editorEl = document.querySelector('#<%= txtBodyEmail.ClientID %>');
+            if (editorEl) {
+                ClassicEditor
+                    .create(editorEl, {
+                        toolbar: [
+                            'undo', 'redo', '|',
+                            'bold', 'italic', 'underline', '|',
+                            'link', 'bulletedList', 'numberedList', 'blockQuote'
+                        ],
+                        ui: { width: '100%' }
+                    })
+                    .then(editor => {
+                        emailEditor = editor;
+
+                        // apply styles immediately (redundant dengan CSS, tapi aman)
+                        applyEditorStyles();
+
+                        // jika modal dibuka ulang, pastikan ukuran tetap:
+                        // - pakai event modal show untuk reapply
+                        $('#popupEmailEndless').on('shown.bs.modal', function () {
+                            applyEditorStyles();
+                            // terkadang perlu refresh layout
+                            if (emailEditor && emailEditor.editing) {
+                                try { emailEditor.editing.view.domEmitter.fire('resize'); } catch (ex) { /* ignore */ }
+                            }
+                        });
+                    })
+                    .catch(error => console.error(error));
+            }
+
+            // sinkron saat tombol kirim diklik
+            const btn = document.getElementById('<%= btnSendEmail.ClientID %>');
+            if (btn) {
+                btn.addEventListener('click', function () {
+                    if (emailEditor) {
+                        document.getElementById('<%= txtBodyEmail.ClientID %>').value = emailEditor.getData();
+                    }
+                });
+            }
+        });
+
+        function applyEditorStyles() {
+            try {
+                if (!emailEditor) return;
+                const editable = emailEditor.ui.view.editable.element;
+                if (editable) {
+                    editable.style.height = "350px";
+                    editable.style.minHeight = "350px";
+                    editable.style.maxHeight = "350px";
+                    editable.style.overflowY = "auto";
+                    editable.style.overflowX = "hidden";
+                    editable.style.padding = "8px";
+                    editable.style.boxSizing = "border-box";
+                }
+                // juga target .ck-content jika ada
+                const ckContent = editable.querySelector ? editable.querySelector('.ck-content') : null;
+                if (ckContent) {
+                    ckContent.style.maxHeight = "350px";
+                    ckContent.style.overflowY = "auto";
+                }
+            } catch (e) {
+                console.error('applyEditorStyles error', e);
+            }
+        }
+
+        // fungsi show popup (sama seperti punya kamu) — setelah setData() kita reapply styles safeUrl
+        function showPopupAndDownload(fileUrl, fileListJson, subject, body, toEsc, ccEsc, bccEsc) {
+            let fileList = [];
+
+            try {
+                // --- isi field popup
+                document.getElementById("<%= txtToEmail.ClientID %>").value = toEsc || "";
+                document.getElementById("<%= txtCcEmail.ClientID %>").value = ccEsc || "";
+                document.getElementById("<%= txtBccEmail.ClientID %>").value = bccEsc || "";
+                document.getElementById("<%= txtSubjectEmail.ClientID %>").value = subject || "";
+                document.getElementById("<%= txtAttachmentEmail.ClientID %>").value = fileListJson || "";
+
+        // --- parse JSON list attachment
+        try {
+            fileList = JSON.parse(fileListJson);
+        } catch (e) {
+            console.warn("JSON parse gagal, mungkin hanya 1 file:", e);
+            if (fileListJson) fileList = [fileListJson];
+        }
+
+        // --- isi body email ke CKEditor atau textarea
+        if (emailEditor) {
+            emailEditor.setData(body || "");
+            setTimeout(applyEditorStyles, 50);
+        } else {
+                    document.getElementById("<%= txtBodyEmail.ClientID %>").value = body || "";
+                }
+
+                // --- tampilkan daftar attachment di modal
+                const container = document.getElementById("attachmentList");
+                if (container) {
+                    container.innerHTML = "";
+                    if (fileList.length > 0) {
+                        fileList.forEach(f => {
+                            const li = document.createElement("li");
+                            li.textContent = f;
+                            container.appendChild(li);
+                        });
+                    } else {
+                        container.innerHTML = "<li><i>Tidak ada lampiran</i></li>";
+                    }
+                }
+
+            } catch (e) {
+                console.error("Gagal isi field popup:", e);
+            }
+
+            // --- tampilkan modal popup
+            $('#popupEmailEndless').modal({ backdrop: false, keyboard: true });
+            $('.modal-backdrop').remove();
+
+            // --- trigger download untuk file hasil export (hanya 1 file)
+            try {
+                if (fileUrl) {
+                    const link = document.createElement('a');
+                    link.href = fileUrl;
+                    link.download = ""; // paksa download, bukan tab baru
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            } catch (e) {
+                console.error("Gagal auto-download file export:", e);
+            }
+        }
+
+        <%--function showPopupAndDownload(fileListJson, fileUrl, subject, body, toEsc, ccEsc, bccEsc) {
+            try {
+                document.getElementById("<%= txtToEmail.ClientID %>").value = toEsc || "";
+                document.getElementById("<%= txtCcEmail.ClientID %>").value = ccEsc || "";
+                document.getElementById("<%= txtBccEmail.ClientID %>").value = bccEsc || "";
+                document.getElementById("<%= txtSubjectEmail.ClientID %>").value = subject || "";
+                document.getElementById("<%= txtAttachmentEmail.ClientID %>").value = fileListJson || "";
+                document.getElementById("<%= txtAttachmentEmail.ClientID %>").value = fileUrl || "";
+
+                if (emailEditor) {
+                    emailEditor.setData(body || "");
+                    // paksa reapply style sedikit setelah setData
+                    setTimeout(function () {
+                        applyEditorStyles();
+                    }, 50);
+                } else {
+                    document.getElementById("<%= txtBodyEmail.ClientID %>").value = body || "";
+                }
+            } catch (e) {
+                console.error('Gagal isi field popup:', e);
+            }
+
+            // tampilkan modal tanpa overlay gelap
+            $('#popupEmailEndless').modal({ backdrop: false, keyboard: true });
+            $('.modal-backdrop').remove();
+
+            // trigger download
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }--%>
+    </script>
+
 
 </asp:Content>
 

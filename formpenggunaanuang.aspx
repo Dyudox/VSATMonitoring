@@ -322,7 +322,7 @@
                         <div class="jcarousel-wrapper">
                             <div class="jcarousel movie-jcarousel" id="popularMovie" data-jcarousel="true">
 
-                                <asp:Literal ID="ltr_image_room" runat="server"></asp:Literal>
+                                <asp:Literal ID="ltr_image_room" runat="server" Visible="false"></asp:Literal>
                             </div>
                             <%--  <a href="#" class="jcarousel-control-prev" data-jcarouselcontrol="true">‹</a>
                                     <a href="#" class="jcarousel-control-next" data-jcarouselcontrol="true">›</a>--%>
@@ -338,6 +338,7 @@
                             <th>Nominal</th>
                             <th>Tanggal</th>
                             <th>Note</th>
+                            <th>Bukti Kwitansi</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -347,9 +348,25 @@
                         
                     </tbody>
                 </table>
+                <dx:ASPxPopupControl ID="popupImage" runat="server" 
+                    ClientInstanceName="popupImage"
+                    Width="800px" 
+                    Height="600px"
+                    CloseAction="CloseButton"
+                    HeaderText="Foto Bukti"
+                    PopupHorizontalAlign="WindowCenter"
+                    PopupVerticalAlign="WindowCenter"
+                    AllowDragging="True"
+                    Modal="True">
+                    <ContentCollection>
+                        <dx:PopupControlContentControl runat="server">
+                            <iframe id="imageFrame" src="" style="width:100%; height:550px; border:none;"></iframe>
+                        </dx:PopupControlContentControl>
+                    </ContentCollection>
+                </dx:ASPxPopupControl>
                 <br />
                 <div>
-                    <asp:Button ID="btn_exportTxt" class="btn btn-info" runat="server" OnClick="btn_exportTxt_Click" Text="Export To .txt" />
+                    <asp:Button ID="btn_exportTxt" class="btn btn-info" runat="server" OnClick="btn_exportTxt_Click" Text="Export To .txt" Visible="false" />
                 </div>                
                 <br />
                 <center>                    
@@ -362,5 +379,12 @@
 
         </div>
     </div>
+    <script type="text/javascript">
+        function showImagePopup(url) {
+            var frame = document.getElementById("imageFrame");
+            frame.src = url; // set URL gambar
+            popupImage.Show(); // tampilkan popup DevExpress
+        }
+    </script>
 </asp:Content>
 

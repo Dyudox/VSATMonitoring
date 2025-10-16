@@ -205,7 +205,7 @@
                                         <ValidationSettings RequiredField-IsRequired="true"></ValidationSettings>
                                     </PropertiesComboBox>
                                 </dx:GridViewDataComboBoxColumn>
-                                <%--<dx:GridViewDataTextColumn Caption="Foto Bukti" FieldName="file_url" ReadOnly="true"
+                                <dx:GridViewDataTextColumn Caption="Foto Bukti" FieldName="file_url" ReadOnly="true"
                                     PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0"
                                     Settings-AutoFilterCondition="Contains">
                                     <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
@@ -213,8 +213,8 @@
                                     <DataItemTemplate>
                                         <a href="javascript:void(0);" onclick="showImagePopup('<%# Eval("file_url") %>')">View</a>
                                     </DataItemTemplate>
-                                </dx:GridViewDataTextColumn>--%>
-                                <dx:GridViewDataTextColumn Caption="Foto Bukti" FieldName="file_url" ReadOnly="true"
+                                </dx:GridViewDataTextColumn>
+                                <%--<dx:GridViewDataTextColumn Caption="Foto Bukti" FieldName="file_url" ReadOnly="true"
                                     PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0"
                                     Settings-AutoFilterCondition="Contains">
                                     <HeaderStyle HorizontalAlign="Center" />
@@ -231,16 +231,10 @@
                                             <img src='<%# ResolveUrl(Eval("file_url").ToString()) %>'
                                                  alt="Foto" 
                                                  style="width:60px; height:60px; object-fit:cover; border-radius:6px; cursor:pointer;"
-                                                 onclick="showImagePopup('<%# ResolveUrl(Eval("file_url").ToString()) %>')" />
-            
-                                            <!-- URL text (jika kamu mau tampilkan path-nya) -->
-                                            <%--<asp:TextBox ID="txtFileUrl" runat="server" 
-                                                         Text='<%# Bind("file_url") %>' 
-                                                         Width="250px" ReadOnly="true"
-                                                         CssClass="form-control" />--%>
+                                                 onclick="showImagePopup('<%# ResolveUrl(Eval("file_url").ToString()) %>')" />            
                                         </div>
                                     </EditItemTemplate>
-                                </dx:GridViewDataTextColumn>
+                                </dx:GridViewDataTextColumn>--%>
                                  <%--<dx:GridViewDataTextColumn Caption="Foto Bukti" ReadOnly="true" PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0" FieldName="file_url" Settings-AutoFilterCondition="Contains">
                                      <DataItemTemplate>
                                         <a href="<%# Eval("file_url")%>" target="_blank">Gambar</a>

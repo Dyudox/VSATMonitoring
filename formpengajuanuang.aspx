@@ -119,6 +119,15 @@
                                             <dx:GridViewDataTextColumn Caption="Foto Bukti" FieldName="file_url" ReadOnly="true"
                                                 PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0"
                                                 Settings-AutoFilterCondition="Contains">
+                                                <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                                                <CellStyle HorizontalAlign="Center"></CellStyle>
+                                                <DataItemTemplate>
+                                                    <a href="javascript:void(0);" onclick="showImagePopup('<%# Eval("file_url") %>')">View</a>
+                                                </DataItemTemplate>
+                                            </dx:GridViewDataTextColumn>
+                                            <%--<dx:GridViewDataTextColumn Caption="Foto Bukti" FieldName="file_url" ReadOnly="true"
+                                                PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0"
+                                                Settings-AutoFilterCondition="Contains">
                                                 <HeaderStyle HorizontalAlign="Center" />
                                                 <CellStyle HorizontalAlign="Center" />
                                                 <DataItemTemplate>
@@ -135,14 +144,14 @@
                                                              style="width:60px; height:60px; object-fit:cover; border-radius:6px; cursor:pointer;"
                                                              onclick="showImagePopup('<%# ResolveUrl(Eval("file_url").ToString()) %>')" />
             
-                                                        <!-- URL text (jika kamu mau tampilkan path-nya) -->
-                                                        <%--<asp:TextBox ID="txtFileUrl" runat="server" 
+                                                        <!-- URL text (tampilkan path-nya) -->
+                                                        <!--<asp:TextBox ID="txtFileUrl" runat="server" 
                                                                      Text='<%# Bind("file_url") %>' 
                                                                      Width="250px" ReadOnly="true"
-                                                                     CssClass="form-control" />--%>
+                                                                     CssClass="form-control" />-->
                                                     </div>
                                                 </EditItemTemplate>
-                                            </dx:GridViewDataTextColumn>
+                                            </dx:GridViewDataTextColumn>--%>
                                         </Columns>
                                         <SettingsEditing Mode="EditFormAndDisplayRow" />
                                         <%--<Templates>

@@ -184,7 +184,10 @@ Partial Class formpenggunaanuang
         If Request.QueryString("order") = "new" Then
             getdataduit = "select convert(varchar,TglInputBiaya,103) as aa,format(convert(int,Nominal),'##,###') as fNominal,* from tr_penggunaanSPD where VID = '" & cb_vid.Value & "'"
         Else
-            getdataduit = "select convert(varchar,TglInputBiaya,103) as aa,format(convert(int,Nominal),'##,###') as fNominal,* from tr_penggunaanSPD where VID = '" & Request.QueryString("VID") & "'"
+            'getdataduit = "select convert(varchar,TglInputBiaya,103) as aa,format(convert(int,Nominal),'##,###') as fNominal,* from tr_penggunaanSPD where VID = '" & Request.QueryString("VID") & "'"
+            getdataduit = "select convert(varchar,TglInputBiaya,103) as aa,format(convert(int,Nominal),'##,###') as fNominal, TRX_FILE.file_url,* " &
+                           "From tr_penggunaanSPD " &
+                           "LEFT JOIN TRX_FILE ON tr_penggunaanSPD.VID = TRX_FILE.VID and tr_penggunaanSPD.VID = TRX_FILE.VID and tr_penggunaanSPD.flagtime = TRX_FILE.flagtime where tr_penggunaanSPD.VID = '" & Request.QueryString("VID") & "'"
         End If
 
         com = New SqlCommand(getdataduit, con)
@@ -192,12 +195,17 @@ Partial Class formpenggunaanuang
         dr = com.ExecuteReader
         While dr.Read
             If dr.HasRows Then
+                Dim imgUrl As String = dr("file_url").ToString()
+                Dim html As String = "<td style='width:100px'>" &
+                     "<a href='javascript:void(0);' onclick=""showImagePopup('" & imgUrl.Replace("'", "\'") & "')"">View</a>" &
+                     "</td>"
                 If dr("flagconfirm").ToString = True Then
                     tampungan &= "<tr>" &
                                     "<td style='width:200px'>" & dr("JenisBiaya").ToString & "</td>" &
                                     "<td style='width:200px'>" & dr("fNominal").ToString & ",-</td>" &
                                     "<td style='width:200px'>" & dr("aa").ToString & "</td>" &
                                     "<td style='width:250px'>" & dr("CatatanTransaksi").ToString & "</td>" &
+                                    "<td style='width:100px; color:#007BFF; text-decoration:none; font-weight:bold; cursor:pointer;'><a href='javascript:void(0);' onclick=""showImagePopup('" & imgUrl.Replace("'", "\'") & "')"">View</a></td>" &
                                     "<td>" &
                                         "<a id='btnedit' runat='server' class='btn btn-success disabled' " &
                                         "href='#' style='text-align:center; pointer-events:none; opacity:0.5;'>Edit</a>&nbsp;&nbsp;" &
@@ -205,11 +213,11 @@ Partial Class formpenggunaanuang
                                     "</td>" &
                                 "</tr>"
                 Else
-                    tampungan &= "<tr>" & _
-                                "<td style='width:200px'>" & dr("JenisBiaya").ToString & "</td>" & _
-                                "<td style='width:200px'>" & dr("fNominal").ToString & ",-</td>" & _
-                                "<td style='width:200px'>" & dr("aa").ToString & "</td>" & _
-                                "<td style='width:250px'>" & dr("CatatanTransaksi").ToString & "</td>" & _
+                    tampungan &= "<tr>" &
+                                "<td style='width:200px'>" & dr("JenisBiaya").ToString & "</td>" &
+                                "<td style='width:200px'>" & dr("fNominal").ToString & ",-</td>" &
+                                "<td style='width:200px'>" & dr("aa").ToString & "</td>" &
+                                "<td style='width:250px'>" & dr("CatatanTransaksi").ToString & "</td>" &
                                 "<td>"
                     If Request.QueryString("order") = "new" Then
                         tampungan &= "<a id='btnedit' runat='server' style='align:center' href='formpenggunaanuang.aspx?order=edit&VID=" & cb_vid.Value & "&notask=" & Request.QueryString("notask") & "&status=edit&ID=" & dr("ID").ToString & "' class='btn btn-success'>Edit</a> &nbsp; &nbsp; " &
@@ -225,7 +233,7 @@ Partial Class formpenggunaanuang
                              "</tr>"
                     End If
                 End If
-                
+
             End If
         End While
         dr.Close()
@@ -534,7 +542,7 @@ Partial Class formpenggunaanuang
 
         Try
             ' === Path penyimpanan ===
-            Dim folderPath As String = "~/Export_Txt/"
+            Dim folderPath As String = Server.MapPath("~/Export_Txt/")
             If Not Directory.Exists(folderPath) Then
                 Directory.CreateDirectory(folderPath)
             End If
