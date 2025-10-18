@@ -1113,7 +1113,7 @@
     <asp:UpdatePanel ID="updExport" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
             <asp:Button ID="Button1" runat="server" CssClass="btn btn-danger btn-small" Text="Convert to .txt" OnClick="btn_detailexporttxt_Click" />
-            <asp:Button ID="Button2" runat="server" CssClass="btn btn-success btn-small" Text="Convert to .txt" OnClick="btn_PrevExportTxt_Click" />
+            <asp:Button ID="Button2" runat="server" CssClass="btn btn-success btn-small" Text="Preview" OnClick="btn_PrevExportTxt_Click" />
         </ContentTemplate>
     </asp:UpdatePanel>
     <asp:Panel runat="server">

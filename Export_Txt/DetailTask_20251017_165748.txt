@@ -1,0 +1,61 @@
+﻿==================================================
+*DATA LOKASI*
+==================================================
+*Nama Remote       :* BNI ATM Kantor PPSA Belawan
+*Alamat Sekarang   :* belawan
+*Alamat Instalasi  :* melawai
+*Provinsi          :* SUMATERA UTARA
+*Kota / Kabupaten  :* MEDAN
+*Kanwil            :* belawan
+*Kanca Induk/Area  :* belawan
+*Nama PIC          :* yudo
+*Phone PIC         :* 08456776543
+--------------------------------------------------
+*ID Jarkom         :* Telkom 2
+*ID Satelit        :* 9876543223456
+*Hub               :* BRI HUB 1
+*Latitude          :* 5457675645
+*Longitude         :* 5342343564
+*Tanggal Berangkat :* 10/08/2025
+*Tanggal Selesai   :* 10/10/2025
+*Tanggal Pulang    :* 10/11/2025
+*Catatan           :* dismantle yudo
+
+==================================================
+*DATA TEKNIS*
+==================================================
+*Hardware Rusak    :* ganti kabel
+*SQF               :* sqf
+*Initial Esno      :* Initial Esno
+*CPI               :* cpi
+*C/N               :* CN
+*ASI               :* ASI
+*Operator Satelit  :* operator satelit
+*Operator Helpdesk :* Operator Helpdesk
+*Out PLN           :* Out PLN
+*Aktifitas Solusi  :* Aktifitas Solusi
+--------------------------------------------------
+*Out UPS           :* OUT UPS
+*UPS For Backup    :* YES
+*Suhu Ruangan      :* normal
+*Type Mounting     :* Type Mounting
+*Panjang Kabel     :* 10 meter
+*Letak Antena      :* Letak Antena
+*Letak Modem       :* Letak Modem
+*Letak Antena Ke Satelit :* Letak Antena Ke Satelit
+*Analisa Problem   :* Analisa Problem
+
+==================================================
+UPLOAD FOTO
+==================================================
+1. Deskripsi : Antena
+   Keterangan : hadap depan
+   URL : UploadFoto/20251012124614Screenshot_2025-06-04_123102.png
+   Nama File : 20251012124614Screenshot_2025-06-04_123102.png
+
+
+==================================================
+STATUS
+==================================================
+Status Pekerjaan   : 1
+Status Dokumentasi : 10011
