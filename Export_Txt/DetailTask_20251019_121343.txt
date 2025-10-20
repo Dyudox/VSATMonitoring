@@ -1,0 +1,57 @@
+﻿==================================================
+DATA LOKASI
+==================================================
+Nama Remote       : BNI ATM Pelangi Foto & Percertakan
+Alamat Sekarang   :   belawan
+Alamat Instalasi  : ew
+Provinsi          : DI YOGYAKARTA
+Kota / Kabupaten  : YOGYAKARTA
+Kanwil            : fsdadas
+Kanca Induk/Area  : belawan
+Nama PIC          : malik
+Phone PIC         : 08456776543
+--------------------------------------------------
+ID Jarkom         : Telkom 2
+ID Satelit        : 9876543223456
+Hub               : BRI HUB 2
+Latitude          : 5457675645
+Longitude         : 5342343564
+Tanggal Berangkat : 07/10/2025
+Tanggal Selesai   : 09/10/2025
+Tanggal Pulang    : 10/10/2025
+Catatan           : asdasdasdas
+
+==================================================
+DATA TEKNIS
+==================================================
+Hardware Rusak    : qweq34534533443
+SQF               : qweq
+Initial Esno      : qwew
+CPI               : sadadas
+C/N               : qweqw
+ASI               : qweqw
+Operator Satelit  : qweqe
+Operator Helpdesk : qweqe
+Out PLN           : qweqwe
+Aktifitas Solusi  : 345erggdfg
+--------------------------------------------------
+Out UPS           : asdasdas
+UPS For Backup    : YES
+Suhu Ruangan      : asdas
+Type Mounting     : asdas
+Panjang Kabel     : asdasd
+Letak Antena      : asdas
+Letak Modem       : asdas
+Letak Antena Ke Satelit : asdas
+Analisa Problem   : ergerg434
+
+==================================================
+UPLOAD FOTO
+==================================================
+Tidak ada foto diunggah.
+
+==================================================
+STATUS
+==================================================
+Status Pekerjaan   : 1
+Status Dokumentasi : 

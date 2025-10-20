@@ -19,7 +19,7 @@ Partial Class LaporanPekerjaan
     Dim dr, sqldr As SqlDataReader
     Dim com As SqlCommand
     Dim tbldata As DataTable
-    Dim clsg As New cls_global
+    'Dim clsg As New cls_global
     Dim VID, NamaRemote, IPLAN, SID, ALamatInstall, strsql As String
     Dim tampung, NoSubtask As String
     Dim filePath As String = ConfigurationManager.AppSettings("filePath")
@@ -27,115 +27,293 @@ Partial Class LaporanPekerjaan
 
     Protected Sub btn_exportTxt_Click(sender As Object, e As EventArgs) Handles btn_exportTxt.Click
         Try
-            '=== Ambil HTML dari divExport saja ===
-            Dim html As String = RenderControlToString(divExport)
-
-            '=== Siapkan output builder ===
             Dim sb As New StringBuilder()
 
-            '=== Ambil judul utama ===
-            Dim titleMatch = Regex.Match(html, "<label[^>]*>LAPORAN PEKERJAAN.*?<\/label>", RegexOptions.IgnoreCase)
-            If titleMatch.Success Then
-                Dim titleText As String = CleanHtml(titleMatch.Value)
-                sb.AppendLine("*" & titleText & "*")
-                sb.AppendLine()
-            End If
+            '=== JUDUL UTAMA ===
+            sb.AppendLine("*LAPORAN PEKERJAAN (CM, PM, PSB, RELOKASI) SCM*")
 
-            '=== Ambil jenis layanan dan pekerjaan ===
-            Dim spanMatches = Regex.Matches(html, "<span[^>]*>(.*?)<\/span>", RegexOptions.IgnoreCase)
-            For Each m As Match In spanMatches
-                Dim text As String = CleanHtml(m.Groups(1).Value)
-                Dim parts() As String = text.Split(":"c)
-                If parts.Length = 2 Then
-                    sb.AppendLine("*" & parts(0).Trim() & "* : " & parts(1).Trim())
-                Else
-                    sb.AppendLine(text)
-                End If
-            Next
+            '=== Jenis layanan & pekerjaan ===
+            sb.AppendLine("*Jenis Layanan :* " & "VSAT")
+            sb.AppendLine("*Jenis Pekerjaan :* " & "CM")
+            sb.AppendLine()
+            sb.AppendLine(New String("="c, 50))
             sb.AppendLine()
 
-            '=== Ambil semua blok section (1. REMOTE SUPPORT TIM, 2. CUSTOMER, dst.) ===
-            Dim sectionMatches = Regex.Matches(html, "<label[^>]*>\s*(\d+\..*?)<\/label>", RegexOptions.IgnoreCase)
-            For Each section As Match In sectionMatches
-                Dim sectionTitle As String = "*" & CleanHtml(section.Groups(1).Value) & "*"
-                sb.AppendLine(sectionTitle)
-                sb.AppendLine("==================================================")
+            '=== SECTION 1: DATA LOKASI ===
+            sb.AppendLine("*1. REMOTE SUPPORT TIM*")
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine("*NAMA TEKNISI/ NO HP :* " & txtNameTeknisi.Value)
+            sb.AppendLine("*KOORDINATOR :* " & txtKoordinator.Value)
+            sb.AppendLine("*TGL/Jam Tiba :* " & txtTglTiba.Value)
+            sb.AppendLine("*TGL/Jam Mulai :* " & txtTglMulai.Value)
+            sb.AppendLine("*TGL/ Jam Online :* " & txtTglOnline.Value)
+            sb.AppendLine("*TGL/Jam Selesai :* " & txtTglSelesai.Value)
+            sb.AppendLine()
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine()
 
-                ' Cari label-input di bawah section ini
-                Dim startIndex As Integer = section.Index + section.Length
-                Dim nextSectionIndex As Integer = GetNextSectionIndex(section, sectionMatches, html)
+            '=== SECTION 2: DATA PERANGKAT ===
+            sb.AppendLine("*2. CUSTOMER*")
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine("*NAMA CUSTOMER :* " & txtNameCust.Value)
+            sb.AppendLine("*ALAMAT :* " & txtAlamat.Value)
+            sb.AppendLine("*KOTA/KAB :* " & txtKotaKab.Value)
+            sb.AppendLine("*PROVINSI :* " & txtProv.Value)
+            sb.AppendLine("*SITE ID :* " & txtSiteID.Value)
+            sb.AppendLine("*PIC LOKASI :* " & txtPicLok.Value)
+            sb.AppendLine("*IP LAN :* " & txtIPLan.Value)
+            sb.AppendLine()
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine()
 
-                Dim sectionHtml As String = html.Substring(startIndex, nextSectionIndex - startIndex)
+            '=== SECTION 3: HASIL PENGECEKAN ===
+            sb.AppendLine("*3. PERANGKAT TERPASANG*")
+            sb.AppendLine(New String("="c, 50))
 
-                ' Ambil pasangan label-input di dalam section
-                Dim fieldMatches = Regex.Matches(sectionHtml,
-                    "<label[^>]*>(.*?)<\/label>\s*<div[^>]*>\s*<input[^>]*value\s*=\s*""(.*?)""",
-                    RegexOptions.IgnoreCase)
+            '--- SUBSECTION VSAT ---
+            sb.AppendLine("*VSAT*")
+            sb.AppendLine("*JENIS ANTENNA :* " & txtJenisAntena.Value)
+            sb.AppendLine("*JENIS MOUNTING :* " & txtJenisMounting.Value)
+            sb.AppendLine("*JENIS IFL :* " & txtJenisIFL.Value)
+            sb.AppendLine("*TYPE MODEM :* " & txtTypeModem.Value)
+            sb.AppendLine("*SN MODEM :* " & txtSNModem.Value)
+            sb.AppendLine("*ESN MODEM :* " & txtESNModem.Value)
+            sb.AppendLine("*SN ADAPTOR MODEM :* " & txtSNAdaptModem.Value)
+            sb.AppendLine("*SN BUC :* " & txtSNBuc.Value)
+            sb.AppendLine("*SN LNB :* " & txtSNLnb.Value)
+            sb.AppendLine("*SN ROUTER :* " & txtSNRouter.Value)
+            sb.AppendLine("*SN ADAPTOR ROUTER :* " & txtSNAdapterRouter.Value)
+            sb.AppendLine("*SN AP :* " & txtSN_AP.Value)
+            sb.AppendLine("*SN ADAPTOR AP :* " & txtSNAdapterAP.Value)
+            sb.AppendLine()
 
-                For Each f As Match In fieldMatches
-                    Dim lbl As String = CleanHtml(f.Groups(1).Value)
-                    Dim val As String = CleanHtml(f.Groups(2).Value)
-                    lbl = lbl.Trim().TrimEnd(":"c)
-                    sb.AppendLine("*" & lbl & " :* " & val)
-                Next
+            '--- SUBSECTION M2M ---
+            sb.AppendLine("*M2M*")
+            sb.AppendLine("*TYPE MODEM :* " & txtTypeModemM2M.Value)
+            sb.AppendLine("*SN MODEM :* " & txtSNModemM2M.Value)
+            sb.AppendLine("*SN ADAPTOR :* " & txtSNAdapterM2M.Value)
+            sb.AppendLine("*NO SIMCARD :* " & txtNoSimCard.Value)
+            sb.AppendLine()
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine()
 
-                sb.AppendLine("==================================================")
-                sb.AppendLine()
-            Next
+            '=== SECTION 4: KESIMPULAN ===
+            sb.AppendLine("*4. PERANGKAT RUSAK*")
+            sb.AppendLine(New String("="c, 50))
+            '--- SUBSECTION VSAT ---
+            sb.AppendLine("*VSAT*")
+            sb.AppendLine("*TYPE MODEM LAMA :* " & txtTypeModemLama.Value)
+            sb.AppendLine("*SN MODEM LAMA :* " & txtSNModemLama.Value)
+            sb.AppendLine("*ESN MODEM LAMA :* " & txtESNModelLama.Value)
+            sb.AppendLine("*SN ADAPTOR LAMA :* " & txtSNAdaptLama.Value)
+            sb.AppendLine("*SN LNB LAMA :* " & txtSNLnbLama.Value)
+            sb.AppendLine("*SN BUC LAMA :* " & txtSNBucLama.Value)
+            sb.AppendLine("*SN ROUTER LAMA :* " & txtSNRouterLama.Value)
+            sb.AppendLine("*SN ADAPTOR ROUTER LAMA :* " & txtSNAdaptRouterLama.Value)
+            sb.AppendLine("*SN AP LAMA :* " & txtSN_APLama.Value)
+            sb.AppendLine("*SN ADAPTOR AP LAMA :* " & txtSNAdaptAPLama.Value)
+            sb.AppendLine()
 
-            '=== Simpan ke file ===
+            '--- SUBSECTION M2M ---
+            sb.AppendLine("*M2M*")
+            sb.AppendLine("*TYPE MODEM LAMA :* " & txtTypeRouterLama.Value)
+            sb.AppendLine("*SN MODEM LAMA :* " & txtSNModemLamaM2M.Value)
+            sb.AppendLine("*SN ADAPTOR LAMA :* " & txtSNAdaptLamaM2M.Value)
+            sb.AppendLine()
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine()
+
+            '=== SECTION 5: DOKUMENTASI ===
+            sb.AppendLine("*5. INFORMASI PARAMETER*")
+            sb.AppendLine(New String("="c, 50))
+
+            '--- SUBSECTION VSAT ---
+            sb.AppendLine("*VSAT*")
+            sb.AppendLine("*HUB/SATELITE :* " & txtHubSatelit.Value)
+            sb.AppendLine("*SQF AWAL :* " & txtSQFAwal.Value)
+            sb.AppendLine("*SQF POINTING :* " & txtSQFPointing.Value)
+            sb.AppendLine("*INITIAL ESNO :* " & txtInsialESNO.Value)
+            sb.AppendLine("*TARGET ESNO :* " & txtTargetESNO.Value)
+            sb.AppendLine()
+
+            '--- SUBSECTION HASIL XPOL ---
+            sb.AppendLine("*HASIL XPOL*")
+            sb.AppendLine("*CPI :* " & txtCPI.Value)
+            sb.AppendLine("*C/N :* " & txtCN.Value)
+            sb.AppendLine("*ASIASAT :* " & txtASIASAT.Value)
+            sb.AppendLine("*CHINASAT :* " & txtChinaSat.Value)
+            sb.AppendLine("*PETUGAS TCC :* " & txtPetugasTCC.Value)
+            sb.AppendLine("*PETUGAS HD :* " & txtPetugasHD.Value)
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine()
+
+            sb.AppendLine("*SIGNAL M2M*")
+            sb.AppendLine("*Telkomsel :* " & txtTelkomsel.Value)
+            sb.AppendLine("*Indosat :* " & txtIndosat.Value)
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine()
+
+            sb.AppendLine("*6. INFOMASI SARPEN*")
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine("*KONDISI AC :* " & txtKondisiAC.Value)
+            sb.AppendLine("*KONDISI BLOWER BOX :* " & txtKondisiBlower.Value)
+            sb.AppendLine("*SUMBER ELEKTRIKAL :* " & txtElectrical.Value)
+            sb.AppendLine("*P-N :* " & txtPN.Value)
+            sb.AppendLine("*P-G :* " & txtPG.Value)
+            sb.AppendLine("*N-G :* " & txtNG.Value)
+            sb.AppendLine()
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine()
+
+            sb.AppendLine("*7. DETAIL ACTION TEKNISI*")
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine("*TINDAKAN YANG  DILAKUKAN TEKNISI :* " & txtTidakanTeknisi.Value)
+            sb.AppendLine("*TINDAKAN YANG DILAKUKAN FLM :* " & txtTindakanFLM.Value)
+            sb.AppendLine()
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine()
+
+            sb.AppendLine("*8. CATATAN*")
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine("*PENYEBAB GANGGUAN :* " & txtGamas.Value)
+            sb.AppendLine("*PERANGKAT YG DIGANTI :* " & txtGantiPerangkat.Value)
+            sb.AppendLine("*CATATAN :* " & txtNotes.Value)
+            sb.AppendLine()
+            sb.AppendLine(New String("="c, 50))
+            sb.AppendLine()
+
+            '=== SIMPAN FILE TXT ===
             Dim outputText As String = sb.ToString().Trim()
             Dim fileName As String = "laporan_" & DateTime.Now.ToString("yyyyMMdd_HHmmss") & ".txt"
-            Dim filePath As String = Server.MapPath("~/Export_Txt/" & fileName)
+            Dim folderPath As String = Server.MapPath("~/Export_Txt/")
+            If Not Directory.Exists(folderPath) Then
+                Directory.CreateDirectory(folderPath)
+            End If
+            Dim filePath As String = Path.Combine(folderPath, fileName)
             File.WriteAllText(filePath, outputText, Encoding.UTF8)
 
-
-            ' === Redirect ke handler download tag html .aspx ikut ke convert (handler harus ada: DownloadTxt.ashx) ===
+            '=== Redirect ke handler download ===
             Dim downloadUrl As String = "DownloadTxt.ashx?file=" & HttpUtility.UrlEncode(fileName)
             Response.Redirect(downloadUrl, False)
             HttpContext.Current.ApplicationInstance.CompleteRequest()
 
-            '=== Kirim ke browser ===
-            'Response.Clear()
-            'Response.ContentType = "text/plain"
-            'Response.AppendHeader("Content-Disposition", "attachment; filename=" & fileName)
-            'Response.Write(outputText)
-            'Response.End()
-
         Catch ex As Exception
-            Response.Write("Error: " & ex.Message)
+            Response.Write("Gagal export: " & ex.Message)
         End Try
     End Sub
 
-    '=== Helper: render control ke string ===
-    Private Function RenderControlToString(ctrl As Control) As String
-        Dim sb As New StringBuilder()
-        Using sw As New StringWriter(sb)
-            Using hw As New HtmlTextWriter(sw)
-                ctrl.RenderControl(hw)
-            End Using
-        End Using
-        Return sb.ToString()
-    End Function
 
-    '=== Helper: bersihkan tag HTML dan spasi ===
-    Private Function CleanHtml(input As String) As String
-        Dim text As String = Regex.Replace(input, "<.*?>", "")
-        text = Server.HtmlDecode(text)
-        text = Regex.Replace(text, "\s{2,}", " ").Trim()
-        Return text
-    End Function
+    'Protected Sub btn_exportTxt_Click(sender As Object, e As EventArgs) Handles btn_exportTxt.Click
+    '    Try
+    '        '=== Ambil HTML dari divExport saja ===
+    '        Dim html As String = RenderControlToString(divExport)
 
-    '=== Helper: cari posisi section berikutnya untuk pemisahan ===
-    Private Function GetNextSectionIndex(currentSection As Match, allSections As MatchCollection, html As String) As Integer
-        Dim currentIndex As Integer = currentSection.Index + currentSection.Length
-        For Each s As Match In allSections
-            If s.Index > currentSection.Index Then
-                Return s.Index
-            End If
-        Next
-        Return html.Length
-    End Function
+    '        '=== Siapkan output builder ===
+    '        Dim sb As New StringBuilder()
+
+    '        '=== Ambil judul utama ===
+    '        Dim titleMatch = Regex.Match(html, "<label[^>]*>LAPORAN PEKERJAAN.*?<\/label>", RegexOptions.IgnoreCase)
+    '        If titleMatch.Success Then
+    '            Dim titleText As String = CleanHtml(titleMatch.Value)
+    '            sb.AppendLine("*" & titleText & "*")
+    '            sb.AppendLine()
+    '        End If
+
+    '        '=== Ambil jenis layanan dan pekerjaan ===
+    '        Dim spanMatches = Regex.Matches(html, "<span[^>]*>(.*?)<\/span>", RegexOptions.IgnoreCase)
+    '        For Each m As Match In spanMatches
+    '            Dim text As String = CleanHtml(m.Groups(1).Value)
+    '            Dim parts() As String = text.Split(":"c)
+    '            If parts.Length = 2 Then
+    '                sb.AppendLine("*" & parts(0).Trim() & "* : " & parts(1).Trim())
+    '            Else
+    '                sb.AppendLine(text)
+    '            End If
+    '        Next
+    '        sb.AppendLine()
+
+    '        '=== Ambil semua blok section (1. REMOTE SUPPORT TIM, 2. CUSTOMER, dst.) ===
+    '        Dim sectionMatches = Regex.Matches(html, "<label[^>]*>\s*(\d+\..*?)<\/label>", RegexOptions.IgnoreCase)
+    '        For Each section As Match In sectionMatches
+    '            Dim sectionTitle As String = "*" & CleanHtml(section.Groups(1).Value) & "*"
+    '            sb.AppendLine(sectionTitle)
+    '            sb.AppendLine("==================================================")
+
+    '            ' Cari label-input di bawah section ini
+    '            Dim startIndex As Integer = section.Index + section.Length
+    '            Dim nextSectionIndex As Integer = GetNextSectionIndex(section, sectionMatches, html)
+
+    '            Dim sectionHtml As String = html.Substring(startIndex, nextSectionIndex - startIndex)
+
+    '            ' Ambil pasangan label-input di dalam section
+    '            Dim fieldMatches = Regex.Matches(sectionHtml,
+    '                "<label[^>]*>(.*?)<\/label>\s*<div[^>]*>\s*<input[^>]*value\s*=\s*""(.*?)""",
+    '                RegexOptions.IgnoreCase)
+
+    '            For Each f As Match In fieldMatches
+    '                Dim lbl As String = CleanHtml(f.Groups(1).Value)
+    '                Dim val As String = CleanHtml(f.Groups(2).Value)
+    '                lbl = lbl.Trim().TrimEnd(":"c)
+    '                sb.AppendLine("*" & lbl & " :* " & val)
+    '            Next
+
+    '            sb.AppendLine("==================================================")
+    '            sb.AppendLine()
+    '        Next
+
+    '        '=== Simpan ke file ===
+    '        Dim outputText As String = sb.ToString().Trim()
+    '        Dim fileName As String = "laporan_" & DateTime.Now.ToString("yyyyMMdd_HHmmss") & ".txt"
+    '        Dim filePath As String = Server.MapPath("~/Export_Txt/" & fileName)
+    '        File.WriteAllText(filePath, outputText, Encoding.UTF8)
+
+
+    '        ' === Redirect ke handler download tag html .aspx ikut ke convert (handler harus ada: DownloadTxt.ashx) ===
+    '        Dim downloadUrl As String = "DownloadTxt.ashx?file=" & HttpUtility.UrlEncode(fileName)
+    '        Response.Redirect(downloadUrl, False)
+    '        HttpContext.Current.ApplicationInstance.CompleteRequest()
+
+    '        '=== Kirim ke browser ===
+    '        'Response.Clear()
+    '        'Response.ContentType = "text/plain"
+    '        'Response.AppendHeader("Content-Disposition", "attachment; filename=" & fileName)
+    '        'Response.Write(outputText)
+    '        'Response.End()
+
+    '    Catch ex As Exception
+    '        Response.Write("Error: " & ex.Message)
+    '    End Try
+    'End Sub
+
+    ''=== Helper: render control ke string ===
+    'Private Function RenderControlToString(ctrl As Control) As String
+    '    Dim sb As New StringBuilder()
+    '    Using sw As New StringWriter(sb)
+    '        Using hw As New HtmlTextWriter(sw)
+    '            ctrl.RenderControl(hw)
+    '        End Using
+    '    End Using
+    '    Return sb.ToString()
+    'End Function
+
+    ''=== Helper: bersihkan tag HTML dan spasi ===
+    'Private Function CleanHtml(input As String) As String
+    '    Dim text As String = Regex.Replace(input, "<.*?>", "")
+    '    text = Server.HtmlDecode(text)
+    '    text = Regex.Replace(text, "\s{2,}", " ").Trim()
+    '    Return text
+    'End Function
+
+    ''=== Helper: cari posisi section berikutnya untuk pemisahan ===
+    'Private Function GetNextSectionIndex(currentSection As Match, allSections As MatchCollection, html As String) As Integer
+    '    Dim currentIndex As Integer = currentSection.Index + currentSection.Length
+    '    For Each s As Match In allSections
+    '        If s.Index > currentSection.Index Then
+    '            Return s.Index
+    '        End If
+    '    Next
+    '    Return html.Length
+    'End Function
 
 
     'Protected Sub btn_exportTxt_Click(sender As Object, e As EventArgs)

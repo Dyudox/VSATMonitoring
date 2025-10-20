@@ -1,0 +1,76 @@
+﻿==================================================
+DATA LOKASI
+==================================================
+Nama Remote       : Shell Arjuna-1 West Jkt
+Alamat Sekarang   :   JL.ARJUNA UTARA
+Alamat Instalasi  : a
+Provinsi          : DKI JAKARTA
+Kota / Kabupaten  : JAKARTA BARAT
+Kanwil            : kebayoran baru
+Kanca Induk/Area  : CONDET
+Nama PIC          : HARIYADI
+Phone PIC         : 0878887765543
+--------------------------------------------------
+ID Jarkom         : WIFI
+ID Satelit        : 3234789w323242
+Hub               : CIB 2
+Latitude          : 4234234236345
+Longitude         : 23423423
+Tanggal Berangkat : 03/10/2025
+Tanggal Selesai   : 07/10/2025
+Tanggal Pulang    : 08/10/2025
+Catatan           : PT Shell Indonesia
+
+==================================================
+DATA TEKNIS
+==================================================
+Hardware Rusak    : qweq
+SQF               : qweq
+Initial Esno      : qwew
+CPI               : sadadas
+C/N               : qweqw
+ASI               : qweqw
+Operator Satelit  : qweqe
+Operator Helpdesk : qweqe
+Out PLN           : qweqwe
+Aktifitas Solusi  : asdasdasda
+--------------------------------------------------
+Out UPS           : asdasdas
+UPS For Backup    : YES
+Suhu Ruangan      : asdas
+Type Mounting     : asdas
+Panjang Kabel     : asdasd
+Letak Antena      : asdas
+Letak Modem       : asdas
+Letak Antena Ke Satelit : asdas
+Analisa Problem   : asdasd
+
+==================================================
+UPLOAD FOTO
+==================================================
+1. Deskripsi : Antena
+   Keterangan : hadap kiri
+   URL : UploadFoto/20251012011006Screenshot_2025-07-20_234854.png
+   Nama File : 20251012011006Screenshot_2025-07-20_234854.png
+
+2. Deskripsi : Antena
+   Keterangan : hadap kanan
+   URL : UploadFoto/20251012011422Screenshot_2025-10-05_094145.png
+   Nama File : 20251012011422Screenshot_2025-10-05_094145.png
+
+3. Deskripsi : Antena
+   Keterangan : hadap belakang
+   URL : UploadFoto/20251012125126Screenshot_2025-07-20_235436.png
+   Nama File : 20251012125126Screenshot_2025-07-20_235436.png
+
+4. Deskripsi : Antena
+   Keterangan : hadap depan
+   URL : UploadFoto/20251012125318Screenshot_2025-07-20_235105.png
+   Nama File : 20251012125318Screenshot_2025-07-20_235105.png
+
+
+==================================================
+STATUS
+==================================================
+Status Pekerjaan   : 1
+Status Dokumentasi : 10012

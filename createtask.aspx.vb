@@ -27,6 +27,8 @@ Partial Class createtask
     Dim clsg As New cls_global
     Dim tbldata As DataTable
 
+    Dim Notask, getIdStatusManager, namatask, tanggaltask, teknisi, email, project, tglmulai, tglselesai, permasalahan, catkoor, catman, getEmailKoord, getIDKoordinator, getIDMgr As String
+
     Protected Sub Grid_ValidasiColumnDisplayText(sender As Object, e As DevExpress.Web.ASPxGridViewColumnDisplayTextEventArgs) Handles grid_koordinator.CustomColumnDisplayText
         If e.Column.FieldName = "estimasiBiaya" Then
             ' Cek apakah nilainya null atau kosong
@@ -823,8 +825,7 @@ Partial Class createtask
             clsg.writedata(Session("username"), "Update", "Task Manager", strsql, "")
             dsmanager.UpdateCommand = strsql
 
-            Dim Notask, namatask, tanggaltask, teknisi, email, project, tglmulai, tglselesai, permasalahan, catkoor, catman As String
-            Dim getdataemail As String = "SELECT trTask.NoTask, trTask.IdProject, trTask.NamaTask, trTask.TanggalTask, trTask.NamaTeknisi,msEmployee.IdStatusPegawai, msEmployee.Email, trProject.ProjectName, " &
+            Dim getdataemail As String = "SELECT trTask.NoTask, trTask.IdStatusManager, trTask.IdKoordinator, trTask.IdUserManager, msEmployee.Email, msEmployee.NIK, msEmployee.EmployeeType, trTask.IdProject, trTask.NamaTask, trTask.TanggalTask, trTask.NamaTeknisi,msEmployee.IdStatusPegawai, msEmployee.Email, trProject.ProjectName, " &
                                         "trTask.TglMulai, trTask.TglSelesai, trTask.DeskripsiPermasalahan, trTask.CatatanKoordinator, trTask.CatatanManager FROM trTask " &
                                         "INNER JOIN trProject ON trTask.IdProject = trProject.IdProject " &
                                         "INNER JOIN msEmployee ON trTask.IdTeknisi = msEmployee.NIK " &
@@ -841,6 +842,10 @@ Partial Class createtask
             project = dr("ProjectName").ToString
             tglmulai = dr("TglMulai").ToString
             tglselesai = dr("TglSelesai").ToString
+            getEmailKoord = dr("Email").ToString
+            getIDKoordinator = dr("IdKoordinator").ToString
+            getIDMgr = dr("IdUserManager").ToString
+            getIdStatusManager = dr("IdStatusManager").ToString
 
             If IsDBNull(dr("CatatanKoordinator")) = True Then
                 catkoor = Nothing
@@ -863,7 +868,7 @@ Partial Class createtask
             con.Close()
 
             Dim RequestTittle As String = "New Task " & Notask & ""
-            Dim Body As String
+            Dim Body As String = ""
             Body &= "<hr noshade='noshade' style='background-color:#515041; height: 5px;'/>" &
                     "<p>Halo, kamu mendapatkan task/pekerjaan baru dengan detil sebagai berikut: </p>" &
                     "<br/>" &
@@ -928,7 +933,62 @@ Partial Class createtask
             com.ExecuteNonQuery()
             con.Close()
 
-            '=== jika update berhasil, kirim email ===
+            '=== jika status mgr valid, kirim email ===
+            Try
+                If getIdStatusManager = "Valid" Then
+                    ValidasiTask(Notask)
+                    'Dim gtemail, gtIDMgr, gtEmailKeu As String
+
+                    'Dim strSqlEmail As String = "select email, * from msEmployee where NIK='" & getIDMgr & "'"
+                    'com = New SqlCommand(getdataemail, con)
+                    'con.Open()
+                    'dr = com.ExecuteReader()
+                    'dr.Read()
+
+                    'gtemail = dr("Email").ToString
+                    'gtIDMgr = dr("IdUserManager").ToString
+
+                    'dr.Close()
+                    'con.Close()
+
+                    'Dim strSqlKeu As String = "select email, EmployeeType, * from msEmployee where EmployeeType='Staff Keuangan'"
+                    'com = New SqlCommand(getdataemail, con)
+                    'con.Open()
+                    'dr = com.ExecuteReader()
+                    'dr.Read()
+
+                    'gtEmailKeu = dr("Email").ToString
+
+                    'dr.Close()
+                    'con.Close()
+
+                    ''=====send email======
+                    'Dim toList = getEmailKoord.Split(";"c).Where(Function(x) x.Trim() <> "").ToList()
+                    'Dim ccList = New List(Of String)
+                    'ccList.Add(gtemail)
+                    'ccList.Add(gtEmailKeu)
+
+                    'Dim SubjectEmail As String = "New Task " & Notask & ""
+
+                    ''Dim toList = "'" & getEmailKoord & "'"
+                    ''Dim ccList = "'" & gtemail & "','" & ";" & gtEmailKeu & "'"
+                    ''Dim bccList = ""
+                    ''Dim SubjectEmail As String = "New Task " & Notask & ""
+
+                    '' Panggil fungsi insert email
+                    'KirimEmailOutboxMulti(toList, ccList, SubjectEmail, Body)
+                End If
+
+            Catch ex As Exception
+                e.Cancel = True
+                grid_manager.CancelEdit()
+                'grid_manager.JSProperties("cpMessageError") = "Data tidak dapat diubah karena status sudah Valid."
+                ScriptManager.RegisterStartupScript(Me, Me.GetType(), "uploadValid", "alert('Status Manager inValid. email tidak di kirim');", True)
+                grid_manager.DataBind()   ' <-- tambahkan ini
+                Exit Sub
+            End Try
+
+
             'Try
             '    Dim mail As New System.Net.Mail.MailMessage()
             '    mail.From = New System.Net.Mail.MailAddress("harynurcahyo797@gmail.com")
@@ -983,6 +1043,261 @@ Partial Class createtask
         End Try
     End Sub
 
+    'Protected Sub ValidasiTask(NoTask As String)
+    '    Try
+    '        Dim idTask As String = NoTask ' contoh (bisa kamu ganti sesuai variable)
+    '        Dim connStr As String = ConfigurationManager.ConnectionStrings("dbVsatConnectionString").ConnectionString
+    '        Using conn As New SqlConnection(connStr)
+    '            conn.Open()
+
+    '            '=== 1. Ambil data utama task & email terkait ===
+    '            Dim query As String = "SELECT " &
+    '                                        "trTask.NoTask, " &
+    '                                        "trTask.IdProject, " &
+    '                                        "trTask.NamaTask, " &
+    '                                        "trTask.TanggalTask, " &
+    '                                        "trTask.NamaTeknisi, " &
+    '                                        "trTask.IdKoordinator, " &
+    '                                        "trTask.IdUserManager, " &
+    '                                        "trProject.ProjectName, " &
+    '                                        "trTask.TglMulai, " &
+    '                                        "trTask.TglSelesai, " &
+    '                                        "trTask.DeskripsiPermasalahan, " &
+    '                                        "trTask.CatatanKoordinator, " &
+    '                                        "trTask.CatatanManager, " &
+    '                                        "e.NIK, " &
+    '                                        "e.Email, " &
+    '                                        "e.EmployeeType " &
+    '                                    "FROM trTask " &
+    '                                    "INNER JOIN trProject On trTask.IdProject = trProject.IdProject " &
+    '                                    "INNER JOIN msEmployee e On trTask.IdTeknisi = e.NIK " &
+    '                                    "WHERE trTask.NoTask = @NoTask"
+
+    '            Dim cmd As New SqlCommand(query, conn)
+    '            cmd.Parameters.AddWithValue("@NoTask", idTask)
+
+    '            Dim da As New SqlDataAdapter(cmd)
+    '            Dim dt As New DataTable()
+    '            da.Fill(dt)
+
+    '            If dt.Rows.Count = 0 Then
+    '                Response.Write("Data task tidak ditemukan.")
+    '                Exit Sub
+    '            End If
+
+    '            Dim row As DataRow = dt.Rows(0)
+
+    '            '=== 2. Ambil semua email yang dibutuhkan berdasarkan EmployeeType ===
+    '            Dim getEmailQuery As String = "Select Case DISTINCT Email, NIK, EmployeeType " &
+    '                                            "From msEmployee " &
+    '                                            "WHERE EmployeeType IN ('Manager Teknik', 'Coordinator', 'Staff Keuangan', 'Teknisi') " &
+    '                                            "And NIK IN ( " &
+    '                                                "(SELECT IdUserManager FROM trTask WHERE NoTask = @NoTask), " &
+    '                                                "(SELECT IdKoordinator FROM trTask WHERE NoTask = @NoTask), " &
+    '                                                "(SELECT IdTeknisi FROM trTask WHERE NoTask = @NoTask))"
+
+    '            Dim cmdEmail As New SqlCommand(getEmailQuery, conn)
+    '            cmdEmail.Parameters.AddWithValue("@NoTask", idTask)
+
+    '            Dim dtEmail As New DataTable()
+    '            Using daEmail As New SqlDataAdapter(cmdEmail)
+    '                daEmail.Fill(dtEmail)
+    '            End Using
+
+    '            '=== 3. Susun email tujuan dan cc ===
+    '            Dim toList As New List(Of String)
+    '            Dim ccList As New List(Of String)
+
+    '            For Each erow As DataRow In dtEmail.Rows
+    '                Dim email As String = If(IsDBNull(erow("Email")), "", erow("Email").ToString().Trim())
+    '                Dim empType As String = If(IsDBNull(erow("EmployeeType")), "", erow("EmployeeType").ToString().Trim())
+
+    '                Select Case empType
+    '                    Case "Manager Teknik"
+    '                        If Not toList.Contains(email) Then toList.Add(email)
+    '                    Case "Coordinator"
+    '                        If Not ccList.Contains(email) Then ccList.Add(email)
+    '                    Case "Staff Keuangan"
+    '                        If Not ccList.Contains(email) Then ccList.Add(email)
+    '                    Case "Teknisi"
+    '                        If Not ccList.Contains(email) Then ccList.Add(email)
+    '                End Select
+    '            Next
+
+    '            '=== 4. Tentukan subject dan body ===
+    '            Dim SubjectEmail As String = "Validasi Task No " & row("NoTask").ToString()
+    '            Dim Body As New StringBuilder()
+    '            Body.AppendLine("Berikut detail validasi task:")
+    '            Body.AppendLine("No Task     : " & row("NoTask").ToString())
+    '            Body.AppendLine("Project     : " & row("ProjectName").ToString())
+    '            Body.AppendLine("Nama Task   : " & row("NamaTask").ToString())
+    '            Body.AppendLine("Teknisi     : " & row("NamaTeknisi").ToString())
+    '            Body.AppendLine("Tanggal     : " & CDate(row("TanggalTask")).ToString("dd-MM-yyyy"))
+    '            Body.AppendLine()
+    '            Body.AppendLine("Catatan Koordinator : " & row("CatatanKoordinator").ToString())
+    '            Body.AppendLine("Catatan Manager     : " & row("CatatanManager").ToString())
+    '            Body.AppendLine()
+    '            Body.AppendLine("Mohon segera ditindaklanjuti sesuai tugas masing-masing.")
+
+    '            '=== 5. Kirim email ===
+    '            If toList.Count > 0 Then
+    '                KirimEmailOutboxMulti(String.Join(";", toList), String.Join(";", ccList), SubjectEmail, Body.ToString())
+    '            End If
+
+    '        End Using
+
+    '    Catch ex As Exception
+    '        Response.Write("Error: " & ex.Message)
+    '    End Try
+    'End Sub
+
+    Protected Sub ValidasiTask(NoTask As String)
+        Try
+            Dim idTask As String = NoTask
+            Dim connStr As String = ConfigurationManager.ConnectionStrings("dbVsatConnectionString").ConnectionString
+
+            Using conn As New SqlConnection(connStr)
+                conn.Open()
+
+                '=== 1. Ambil data utama task ===
+                Dim query As String = "SELECT trTask.NoTask, trTask.IdProject, trTask.NamaTask, trTask.TanggalTask, " &
+                                  "trTask.NamaTeknisi, trTask.IdKoordinator, trTask.IdUserManager, " &
+                                  "trProject.ProjectName, trTask.TglMulai, trTask.TglSelesai, " &
+                                  "trTask.DeskripsiPermasalahan, trTask.CatatanKoordinator, trTask.CatatanManager " &
+                                  "FROM trTask " &
+                                  "INNER JOIN trProject ON trTask.IdProject = trProject.IdProject " &
+                                  "WHERE trTask.NoTask = @NoTask"
+
+                Dim cmd As New SqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("@NoTask", idTask)
+
+                Dim dt As New DataTable()
+                Using da As New SqlDataAdapter(cmd)
+                    da.Fill(dt)
+                End Using
+
+                If dt.Rows.Count = 0 Then
+                    Response.Write("Data task tidak ditemukan.")
+                    Exit Sub
+                End If
+
+                Dim row As DataRow = dt.Rows(0)
+
+                '=== 2. Ambil email dari msEmployee berdasarkan NIK ===
+                Dim getEmailQuery As String = "SELECT DISTINCT e.Email, e.NIK, e.EmployeeType " &
+                                          "FROM msEmployee e " &
+                                          "WHERE e.EmployeeType IN ('Manager Teknik', 'Coordinator', 'Teknisi') " &
+                                          "AND e.NIK IN ( " &
+                                          "SELECT IdUserManager FROM trTask WHERE NoTask = @NoTask " &
+                                          "UNION " &
+                                          "SELECT IdKoordinator FROM trTask WHERE NoTask = @NoTask " &
+                                          "UNION " &
+                                          "SELECT IdTeknisi FROM trTask WHERE NoTask = @NoTask )"
+
+                Dim cmdEmail As New SqlCommand(getEmailQuery, conn)
+                cmdEmail.Parameters.AddWithValue("@NoTask", idTask)
+
+                Dim dtEmail As New DataTable()
+                Using daEmail As New SqlDataAdapter(cmdEmail)
+                    daEmail.Fill(dtEmail)
+                End Using
+
+                '=== 3. Susun list email ===
+                Dim toList As New List(Of String)
+                Dim ccList As New List(Of String)
+
+                For Each erow As DataRow In dtEmail.Rows
+                    Dim email As String = If(IsDBNull(erow("Email")), "", erow("Email").ToString().Trim())
+                    Dim empType As String = If(IsDBNull(erow("EmployeeType")), "", erow("EmployeeType").ToString().Trim())
+
+                    Select Case empType
+                        Case "Manager Teknik"
+                            If Not toList.Contains(email) Then toList.Add(email)
+                        Case "Coordinator", "Teknisi"
+                            If Not ccList.Contains(email) Then ccList.Add(email)
+                    End Select
+                Next
+
+                '=== 4. Tambahkan Staff Keuangan hardcoded ===
+                Dim staffKeuEmail As String = "indra@scmedia.co.id"
+                If Not ccList.Contains(staffKeuEmail) Then ccList.Add(staffKeuEmail)
+
+                '=== 5. Susun Subject & Body email ===
+                Dim SubjectEmail As String = "New Task No " & row("NoTask").ToString()
+                Dim Body As New StringBuilder()
+                Body.AppendLine("Berikut detail validasi task:")
+                Body.AppendLine("No Task     : " & row("NoTask").ToString())
+                Body.AppendLine("Project     : " & row("ProjectName").ToString())
+                Body.AppendLine("Nama Task   : " & row("NamaTask").ToString())
+                Body.AppendLine("Teknisi     : " & row("NamaTeknisi").ToString())
+                Body.AppendLine("Tanggal     : " & CDate(row("TanggalTask")).ToString("dd-MM-yyyy"))
+                Body.AppendLine()
+                Body.AppendLine("Catatan Koordinator : " & row("CatatanKoordinator").ToString())
+                Body.AppendLine("Catatan Manager     : " & row("CatatanManager").ToString())
+                Body.AppendLine()
+                Body.AppendLine("Mohon segera ditindaklanjuti sesuai tugas masing-masing.")
+
+                '=== 6. Kirim email ke ICC_EMAIL_OUT / Fungsi KirimEmailOutboxMulti ===
+                If toList.Count > 0 OrElse ccList.Count > 0 Then
+                    KirimEmailOutboxMulti(toList, ccList, SubjectEmail, Body.ToString())
+                End If
+
+            End Using
+
+        Catch ex As Exception
+            Response.Write("Error: " & ex.Message)
+        End Try
+    End Sub
+
+
+    Private Sub KirimEmailOutboxMulti(
+    ByVal toList As IEnumerable(Of String),
+    ByVal ccList As IEnumerable(Of String),
+    ByVal subject As String,
+    ByVal bodyHtml As String
+)
+        Try
+            Dim connStr As String = ConfigurationManager.ConnectionStrings("iMailConnection").ConnectionString
+
+            Using con As New SqlConnection(connStr)
+                con.Open()
+
+                'gabungkan penerima jadi string dengan koma
+                Dim toStr As String = String.Join(";", toList)
+                Dim ccStr As String = String.Join(";", ccList)
+                Dim subjectEmail As String = String.Join(";", subject)
+
+                Dim sql As String = "INSERT INTO ICC_EMAIL_OUT " &
+                "(EMAIL_ID, DIRECTION, EFROM, ETO, ECC, ESUBJECT, EBODY_HTML, ROUTED, HANDLED, Email_Date, Flag, UserID, JENIS_EMAIL) " &
+                "VALUES " &
+                "(@EMAIL_ID, @DIRECTION, @EFROM, @ETO, @ECC, @ESUBJECT, @EBODY_HTML, @ROUTED, @HANDLED, @Email_Date, @Flag, @UserID, @JENIS_EMAIL)"
+
+                Using cmd As New SqlCommand(sql, con)
+                    cmd.Parameters.AddWithValue("@EMAIL_ID", Guid.NewGuid().ToString())
+                    cmd.Parameters.AddWithValue("@DIRECTION", "OUT")
+                    cmd.Parameters.AddWithValue("@EFROM", "rsgsystem@selindo.com")
+                    cmd.Parameters.AddWithValue("@ETO", toStr)
+                    cmd.Parameters.AddWithValue("@ECC", ccStr)
+                    cmd.Parameters.AddWithValue("@ESUBJECT", subject)
+                    cmd.Parameters.AddWithValue("@EBODY_HTML", bodyHtml)
+                    '' Gunakan NVARCHAR(MAX) agar isi HTML tidak terpotong
+                    'cmd.Parameters.Add("@EBODY_HTML", SqlDbType.NVarChar).Value = bodyHtml
+
+                    cmd.Parameters.AddWithValue("@ROUTED", "N")
+                    cmd.Parameters.AddWithValue("@HANDLED", "N")
+                    cmd.Parameters.AddWithValue("@Email_Date", DateTime.Now)
+                    cmd.Parameters.AddWithValue("@Flag", "N")
+                    cmd.Parameters.AddWithValue("@UserID", Session("UserName"))
+                    cmd.Parameters.AddWithValue("@JENIS_EMAIL", "STATUS VALID MGR")
+
+                    cmd.ExecuteNonQuery()
+                End Using
+            End Using
+
+        Catch ex As Exception
+            System.Diagnostics.Debug.WriteLine("Error insert email multi: " & ex.Message)
+        End Try
+    End Sub
 
     Protected Sub grid_subtask_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
