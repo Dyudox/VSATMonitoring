@@ -21,9 +21,9 @@ Partial Class tasklistBootsraps
         End If
 
         If Session("Level") = "Coordinator" Then
-            Dim getdataopen As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open' and trDetail_Task.VID <> ''" & _
+            Dim getdataopen As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(getdataopen, con)
             con.Open()
@@ -38,9 +38,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim dataonprogress As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'On Progress' and trDetail_Task.VID <> ''" & _
+            Dim dataonprogress As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'On Progress' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             'and (trTask.IdKoordinator = '" & Session("username") & "' or trTask.NamaKoordinator = '" & Session("username") & "')
             com = New SqlCommand(dataonprogress, con)
@@ -56,9 +56,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datafinish As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Finish' and trDetail_Task.VID <> ''" & _
+            Dim datafinish As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Finish' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             'and (trTask.IdKoordinator = '" & Session("username") & "' or trTask.NamaKoordinator = '" & Session("username") & "')
             com = New SqlCommand(datafinish, con)
@@ -74,9 +74,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim dataverified As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Obstacle' and trDetail_Task.VID <> ''" & _
+            Dim dataverified As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Obstacle' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             'and (trTask.IdKoordinator = '" & Session("username") & "' or trTask.NamaKoordinator = '" & Session("username") & "')
             com = New SqlCommand(dataverified, con)
@@ -92,9 +92,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datareschedule As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Reschedule' and trDetail_Task.VID <> ''" & _
+            Dim datareschedule As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Reschedule' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             'and (trTask.IdKoordinator = '" & Session("username") & "' or trTask.NamaKoordinator = '" & Session("username") & "')
             com = New SqlCommand(datareschedule, con)
@@ -110,9 +110,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datapending As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Pending' and trDetail_Task.VID <> ''" & _
+            Dim datapending As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Pending' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             'and (trTask.IdKoordinator = '" & Session("username") & "' or trTask.NamaKoordinator = '" & Session("username") & "')
             com = New SqlCommand(datapending, con)
@@ -128,9 +128,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datacancel As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Cancel' and trDetail_Task.VID <> ''" & _
+            Dim datacancel As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Cancel' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             'and (trTask.IdKoordinator = '" & Session("username") & "' or trTask.NamaKoordinator = '" & Session("username") & "') 
             com = New SqlCommand(datacancel, con)
@@ -146,10 +146,10 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim alldata As String = "SELECT SUM(tot) as tot from ( " & _
-                                    "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task " & _
-                                    "INNER JOIN trTask ON trDetail_Task.NoTask = trTask.NoTask " & _
-                                    "INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID  " & _
+            Dim alldata As String = "SELECT SUM(tot) as tot from ( " &
+                                    "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task " &
+                                    "INNER JOIN trTask ON trDetail_Task.NoTask = trTask.NoTask " &
+                                    "INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID  " &
                                     " where trtask.IdStatusManager = 'Valid' and trDetail_Task.VID <> '' GROUP BY msStatus.Status, IdStatusTask ) a"
             'and (trTask.IdKoordinator = '" & Session("username") & "' or trTask.NamaKoordinator = '" & Session("username") & "') 
             com = New SqlCommand(alldata, con)
@@ -548,9 +548,9 @@ Partial Class tasklistBootsraps
             End If
 
         ElseIf Session("level") = "Teknisi" Then
-            Dim getdataopen As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                      "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" & _
+            Dim getdataopen As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                      "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" &
                                       "GROUP BY msStatus.Status "
             com = New SqlCommand(getdataopen, con)
             con.Open()
@@ -566,9 +566,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim dataonprogress As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'On Progress' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" & _
+            Dim dataonprogress As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'On Progress' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(dataonprogress, con)
             con.Open()
@@ -583,9 +583,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datafinish As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Finish' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" & _
+            Dim datafinish As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Finish' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(datafinish, con)
             con.Open()
@@ -600,9 +600,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim dataverified As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Obstacle' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" & _
+            Dim dataverified As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Obstacle' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(dataverified, con)
             con.Open()
@@ -617,9 +617,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datareschedule As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Reschedule' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" & _
+            Dim datareschedule As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Reschedule' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(datareschedule, con)
             con.Open()
@@ -634,9 +634,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datapending As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Pending' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" & _
+            Dim datapending As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Pending' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(datapending, con)
             con.Open()
@@ -651,9 +651,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datacancel As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Cancel' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" & _
+            Dim datacancel As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Cancel' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(datacancel, con)
             con.Open()
@@ -668,10 +668,10 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim alldata As String = "select SUM(tot) as tot , 'All data' as status from ( " & _
-                                    "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task " & _
-                                    "INNER JOIN trTask ON trDetail_Task.NoTask = trTask.NoTask " & _
-                                    "INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
+            Dim alldata As String = "select SUM(tot) as tot , 'All data' as status from ( " &
+                                    "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task " &
+                                    "INNER JOIN trTask ON trDetail_Task.NoTask = trTask.NoTask " &
+                                    "INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
                                     "where trtask.IdStatusManager = 'Valid' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> '' GROUP BY msStatus.Status, IdStatusTask ) a"
             com = New SqlCommand(alldata, con)
             con.Open()
@@ -687,9 +687,9 @@ Partial Class tasklistBootsraps
             con.Close()
 
             If Request.QueryString("status") = "open" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                          "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open'  and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 '    Dim open As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -729,9 +729,9 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "onprogress" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                          "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'On Progress' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 '    Dim onprogress As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -771,9 +771,9 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "finish" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                          "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Finish' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 '    Dim finish As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -813,9 +813,9 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Obscatle" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                          "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Obstacle' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 '    Dim verified As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -855,9 +855,9 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Reschedule" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                          "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Reschedule' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 '    Dim reschedule As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -897,9 +897,9 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Pending" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                          "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'pending' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 '    Dim pending As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -939,9 +939,9 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Cancel" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                       "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                       "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                       "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                       "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                        "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Cancel' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 '    Dim Cancel As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -981,9 +981,9 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "all" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                         "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                         "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                          "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and (trTask.IdTeknisi = '" & Session("username") & "' or trTask.NamaTeknisi = '" & Session("username") & "' ) and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 '    Dim all As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1024,9 +1024,9 @@ Partial Class tasklistBootsraps
             End If
 
         ElseIf Session("level") = "Helpdesk" Then
-            Dim getdataopen As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan  <> '' " & _
+            Dim getdataopen As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan  <> '' " &
                                         "GROUP BY msStatus.Status, trtask.NomorPengaduan"
             com = New SqlCommand(getdataopen, con)
             con.Open()
@@ -1042,9 +1042,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim dataonprogress As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'On Progress' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan  <> '' " & _
+            Dim dataonprogress As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'On Progress' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan  <> '' " &
                                         "GROUP BY msStatus.Status, trtask.NomorPengaduan"
             com = New SqlCommand(dataonprogress, con)
             con.Open()
@@ -1059,9 +1059,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datafinish As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Finish' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> '' " & _
+            Dim datafinish As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Finish' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> '' " &
                                         "GROUP BY msStatus.Status, trtask.NomorPengaduan"
             com = New SqlCommand(datafinish, con)
             con.Open()
@@ -1076,9 +1076,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim dataverified As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Obstacle' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> '' " & _
+            Dim dataverified As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Obstacle' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> '' " &
                                         "GROUP BY msStatus.Status, trtask.NomorPengaduan"
             com = New SqlCommand(dataverified, con)
             con.Open()
@@ -1093,9 +1093,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datareschedule As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Reschedule' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> '' " & _
+            Dim datareschedule As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Reschedule' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> '' " &
                                         "GROUP BY msStatus.Status, trtask.NomorPengaduan"
             com = New SqlCommand(datareschedule, con)
             con.Open()
@@ -1110,9 +1110,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datapending As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Pending' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> '' " & _
+            Dim datapending As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Pending' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> '' " &
                                         "GROUP BY msStatus.Status, trtask.NomorPengaduan"
             com = New SqlCommand(datapending, con)
             con.Open()
@@ -1127,9 +1127,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datacancel As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Cancel' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> '' " & _
+            Dim datacancel As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Cancel' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> '' " &
                                         "GROUP BY msStatus.Status, trtask.NomorPengaduan"
             com = New SqlCommand(datacancel, con)
             con.Open()
@@ -1144,10 +1144,10 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim alldata As String = "SELECT SUM(tot) as total, 'all data' as status from ( " & _
-                                    "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task " & _
-                                    "INNER JOIN trTask ON trDetail_Task.NoTask = trTask.NoTask " & _
-                                    "INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID  " & _
+            Dim alldata As String = "SELECT SUM(tot) as total, 'all data' as status from ( " &
+                                    "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task " &
+                                    "INNER JOIN trTask ON trDetail_Task.NoTask = trTask.NoTask " &
+                                    "INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID  " &
                                     "where trtask.IdStatusManager = 'Valid' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> '' GROUP BY msStatus.Status, IdStatusTask ) a"
             com = New SqlCommand(alldata, con)
             con.Open()
@@ -1168,10 +1168,10 @@ Partial Class tasklistBootsraps
             con.Close()
 
             If Request.QueryString("status") = "open" Then
-                dstask.SelectCommand = "SELECT trTask.NomorPengaduan,trDetail_Task.NAMAREMOTE, trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " & _
-                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " & _
-                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
+                dstask.SelectCommand = "SELECT trTask.NomorPengaduan,trDetail_Task.NAMAREMOTE, trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " &
+                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " &
+                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
                                         "LEFT OUTER JOIN msProvinsi ON trTask.IdProvinsi = msProvinsi.IdProvinsi where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open'  and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> ''"
                 gridtask.DataBind()
                 '    Dim open As String = "SELECT trTask.NomorPengaduan, trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1206,10 +1206,10 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "onprogress" Then
-                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " & _
-                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " & _
-                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
+                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " &
+                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " &
+                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
                                         "LEFT OUTER JOIN msProvinsi ON trTask.IdProvinsi = msProvinsi.IdProvinsi where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'On Progress' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> ''"
                 gridtask.DataBind()
                 '    Dim onprogress As String = "SELECT trTask.NomorPengaduan, trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1244,10 +1244,10 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "finish" Then
-                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " & _
-                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " & _
-                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
+                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " &
+                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " &
+                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
                                         "LEFT OUTER JOIN msProvinsi ON trTask.IdProvinsi = msProvinsi.IdProvinsi where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Finish' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> ''"
                 gridtask.DataBind()
                 '    Dim finish As String = "SELECT trTask.NomorPengaduan, trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1282,10 +1282,10 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Obscatle" Then
-                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " & _
-                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " & _
-                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
+                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " &
+                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " &
+                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
                                         "LEFT OUTER JOIN msProvinsi ON trTask.IdProvinsi = msProvinsi.IdProvinsi where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Obstacle' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> ''"
                 gridtask.DataBind()
                 '    Dim verified As String = "SELECT trTask.NomorPengaduan, trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1320,10 +1320,10 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Reschedule" Then
-                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " & _
-                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " & _
-                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
+                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " &
+                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " &
+                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
                                         "LEFT OUTER JOIN msProvinsi ON trTask.IdProvinsi = msProvinsi.IdProvinsi where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Reschedule' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> ''"
                 gridtask.DataBind()
                 '    Dim reschedule As String = "SELECT trTask.NomorPengaduan, trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1358,10 +1358,10 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Pending" Then
-                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " & _
-                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " & _
-                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
+                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " &
+                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " &
+                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
                                         "LEFT OUTER JOIN msProvinsi ON trTask.IdProvinsi = msProvinsi.IdProvinsi where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'pending' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> ''"
                 gridtask.DataBind()
                 '    Dim pending As String = "SELECT trTask.NomorPengaduan, trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1396,10 +1396,10 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Cancel" Then
-                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " & _
-                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " & _
-                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
+                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " &
+                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " &
+                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
                                         "LEFT OUTER JOIN msProvinsi ON trTask.IdProvinsi = msProvinsi.IdProvinsi where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Cancel' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> ''"
                 gridtask.DataBind()
                 '    Dim Cancel As String = "SELECT trTask.NomorPengaduan, trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1434,10 +1434,10 @@ Partial Class tasklistBootsraps
                 '    ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "all" Then
-                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " & _
-                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " & _
-                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
+                dstask.SelectCommand = "SELECT trTask.NomorPengaduan, trDetail_Task.NAMAREMOTE,trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                        "trDetail_Task.ALAMAT, msStatus.Status AS StatusTask FROM trTask " &
+                                        "LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask " &
+                                        "LEFT OUTER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
                                         "LEFT OUTER JOIN msProvinsi ON trTask.IdProvinsi = msProvinsi.IdProvinsi where trtask.IdStatusManager = 'Valid' and trTask.UserStamp = '" & Session("username") & "' and trTask.NomorPengaduan <> ''"
                 gridtask.DataBind()
                 '    Dim all As String = "SELECT trTask.NomorPengaduan, trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1473,9 +1473,9 @@ Partial Class tasklistBootsraps
             End If
 
         Else
-            Dim getdataopen As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open' and trDetail_Task.VID <> ''" & _
+            Dim getdataopen As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(getdataopen, con)
             con.Open()
@@ -1491,9 +1491,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim dataonprogress As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'On Progress' and trDetail_Task.VID <> ''" & _
+            Dim dataonprogress As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'On Progress' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(dataonprogress, con)
             con.Open()
@@ -1508,9 +1508,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datafinish As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Finish' and trDetail_Task.VID <> ''" & _
+            Dim datafinish As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Finish' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(datafinish, con)
             con.Open()
@@ -1525,9 +1525,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim dataverified As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Obstacle' and trDetail_Task.VID <> ''" & _
+            Dim dataverified As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Obstacle' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(dataverified, con)
             con.Open()
@@ -1542,9 +1542,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datareschedule As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Reschedule' and trDetail_Task.VID <> ''" & _
+            Dim datareschedule As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Reschedule' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(datareschedule, con)
             con.Open()
@@ -1559,9 +1559,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datapending As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Pending' and trDetail_Task.VID <> ''" & _
+            Dim datapending As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Pending' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(datapending, con)
             con.Open()
@@ -1576,9 +1576,9 @@ Partial Class tasklistBootsraps
             dr.Close()
             con.Close()
 
-            Dim datacancel As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " & _
-                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " & _
-                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Cancel' and trDetail_Task.VID <> ''" & _
+            Dim datacancel As String = "SELECT COUNT(trDetail_Task.VID) as tot, msStatus.Status FROM  trDetail_Task INNER JOIN " &
+                                        "trTask ON trDetail_Task.NoTask = trTask.NoTask INNER JOIN msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID " &
+                                        "WHERE trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Cancel' and trDetail_Task.VID <> ''" &
                                         "GROUP BY msStatus.Status "
             com = New SqlCommand(datacancel, con)
             con.Open()
@@ -1608,9 +1608,9 @@ Partial Class tasklistBootsraps
             con.Close()
 
             If Request.QueryString("status") = "open" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.NAMAREMOTE,trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                    "trDetail_Task.PROVINSI,trDetail_Task.NAMAREMOTE, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.NAMAREMOTE,trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                    "trDetail_Task.PROVINSI,trDetail_Task.NAMAREMOTE, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                     "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Open' and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 'Dim open As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1650,9 +1650,9 @@ Partial Class tasklistBootsraps
                 'ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "onprogress" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.NAMAREMOTE,trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                    "trDetail_Task.PROVINSI, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.NAMAREMOTE,trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                    "trDetail_Task.PROVINSI, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                     "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'On Progress' and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 'Dim onprogress As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1692,9 +1692,9 @@ Partial Class tasklistBootsraps
                 'ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "finish" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                    "trDetail_Task.PROVINSI,trDetail_Task.NAMAREMOTE, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                    "trDetail_Task.PROVINSI,trDetail_Task.NAMAREMOTE, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                     "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Finish' and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 'Dim finish As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1735,9 +1735,9 @@ Partial Class tasklistBootsraps
                 'ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Obscatle" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.NAMAREMOTE,trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                   "trDetail_Task.PROVINSI, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                   "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.NAMAREMOTE,trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                   "trDetail_Task.PROVINSI, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                   "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                   "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Obstacle' and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 'Dim verified As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1777,9 +1777,9 @@ Partial Class tasklistBootsraps
                 'ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Reschedule" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.NAMAREMOTE,trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                    "trDetail_Task.PROVINSI, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.NAMAREMOTE,trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                    "trDetail_Task.PROVINSI, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                     "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Reschedule' and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 'Dim reschedule As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1819,9 +1819,9 @@ Partial Class tasklistBootsraps
                 'ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Pending" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.NAMAREMOTE,trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                    "trDetail_Task.PROVINSI, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.NAMAREMOTE,trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                    "trDetail_Task.PROVINSI, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                     "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'pending' and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 'Dim pending As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1861,9 +1861,9 @@ Partial Class tasklistBootsraps
                 'ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "Cancel" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                    "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                    "trDetail_Task.PROVINSI, trDetail_Task.NAMAREMOTE,trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                     "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and msStatus.Status = 'Cancel' and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 'Dim Cancel As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1903,9 +1903,9 @@ Partial Class tasklistBootsraps
                 'ltr_email.Text = tampungan
 
             ElseIf Request.QueryString("status") = "all" Then
-                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
-                                  "trDetail_Task.PROVINSI,trDetail_Task.NAMAREMOTE, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " & _
-                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " & _
+                dstask.SelectCommand = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " &
+                                  "trDetail_Task.PROVINSI,trDetail_Task.NAMAREMOTE, trDetail_Task.idJenisTask, trTask.NamaKoordinator, trTask.NamaTeknisi, msStatus.Status AS StatusTask " &
+                                    "FROM trTask LEFT OUTER JOIN trDetail_Task ON trTask.NoTask = trDetail_Task.NoTask LEFT OUTER JOIN " &
                                     "msStatus ON trDetail_Task.IdStatusPerbaikan = msStatus.ID where trtask.IdStatusManager = 'Valid' and trDetail_Task.VID <> ''"
                 gridtask.DataBind()
                 'Dim all As String = "SELECT trTask.NoTask, trDetail_Task.VID, trDetail_Task.NoListTask as ID, CONVERT(DATE,trTask.TanggalTask) as TanggalTask, " & _
@@ -1942,12 +1942,120 @@ Partial Class tasklistBootsraps
                 'dr.Close()
                 'con.Close()
                 'ltrheader.Text = tampungheader
-                'ltr_email.Text = tampungan
+                'ltr_email.Text = tampungan     Staff Admin
             End If
         End If
 
+        If Session("level") = "ManagerAdmin" Then
+            openSPD()
+            bucket1.Visible = False
+            bucket2.Visible = False
+            taskGrid.Visible = False
+        ElseIf Session("level") = "Staff Admin" Then
+            openSPD()
+            bucket1.Visible = False
+            bucket2.Visible = False
+            taskGrid.Visible = False
+        ElseIf Session("level") = "Finance" Then
+
+            Dim strSPDReq As String = "select COUNT(b.notask) as total " &
+                                        "From tr_permintaanSPD a " &
+                                        "Left OUTER JOIN trDetail_permintaanSPD b ON a.NoTask = b.notask " &
+                                        "Left OUTER JOIN tr_penggunaanSPD c ON b.NoTask = c.notask " &
+                                        "where b.statustrf = 'Open' and c.VID <> ''"
+            com = New SqlCommand(strSPDReq, con)
+            con.Open()
+            dr = com.ExecuteReader
+            If dr.HasRows Then
+                dr.Read()
+                txtPermintaanSPD.Text = dr("total").ToString
+            Else
+                dr.Read()
+                lblreschedule.Text = 0
+            End If
+            dr.Close()
+            con.Close()
+
+            Dim strSPDPending As String = "select COUNT(b.notask) as total " &
+                                        "From tr_permintaanSPD a " &
+                                        "Left OUTER JOIN trDetail_permintaanSPD b ON a.NoTask = b.notask " &
+                                        "Left OUTER JOIN tr_penggunaanSPD c ON b.NoTask = c.notask " &
+                                        "where b.statustrf = 'PENDING' and c.Status = 'Approve' and c.VID <> ''"
+            com = New SqlCommand(strSPDPending, con)
+            con.Open()
+            dr = com.ExecuteReader
+            If dr.HasRows Then
+                dr.Read()
+                txtPendingSPD.Text = dr("total").ToString
+            Else
+                dr.Read()
+                lblreschedule.Text = 0
+            End If
+            dr.Close()
+            con.Close()
+
+            Dim strSPDDone As String = "select COUNT(b.notask) as total " &
+                                        "From tr_permintaanSPD a " &
+                                        "Left OUTER JOIN trDetail_permintaanSPD b ON a.NoTask = b.notask " &
+                                        "Left OUTER JOIN tr_penggunaanSPD c ON b.NoTask = c.notask " &
+                                        "where b.statustrf = 'DONE' and c.Status = 'Approve' and c.VID <> ''"
+            com = New SqlCommand(strSPDDone, con)
+            con.Open()
+            dr = com.ExecuteReader
+            If dr.HasRows Then
+                dr.Read()
+                txtDoneSPD.Text = dr("total").ToString
+            Else
+                dr.Read()
+                lblreschedule.Text = 0
+            End If
+            dr.Close()
+            con.Close()
+
+            If Request.QueryString("status") = "DoneSPD" Then
+                dsTaskSPD.SelectCommand = "select b.idtbl as ID, a.NoTask, a.NamaTeknisi, a.Provider, b.NoReferensi, b.tgltrf as tgltrf, b.keterangan, b.notekeuangan, b.jumlahtrf, b.statustrf as statustrf, " &
+                                            "c.VID, c.JenisBiaya, c.Nominal, c.ApprovalNominal, c.TglInputBiaya, c.TglApproveBiaya, c.CatatanTransaksi, c.CatatanApproval, c.Status as Status " &
+                                            "from tr_permintaanSPD a " &
+                                            "LEFT OUTER JOIN trDetail_permintaanSPD b ON a.NoTask = b.notask " &
+                                            "LEFT OUTER JOIN tr_penggunaanSPD c ON b.NoTask = c.notask " &
+                                            "where b.statustrf = 'DONE' and c.Status = 'Approve' and c.VID <> ''"
+                gridSPD.DataBind()
+            ElseIf Request.QueryString("status") = "PendingSPD" Then
+                dsTaskSPD.SelectCommand = "select b.idtbl as ID, a.NoTask, a.NamaTeknisi, a.Provider, b.NoReferensi, b.tgltrf as tgltrf, b.keterangan, b.notekeuangan, b.jumlahtrf, b.statustrf as statustrf, " &
+                                            "c.VID, c.JenisBiaya, c.Nominal, c.ApprovalNominal, c.TglInputBiaya, c.TglApproveBiaya, c.CatatanTransaksi, c.CatatanApproval, c.Status as Status " &
+                                            "from tr_permintaanSPD a " &
+                                            "LEFT OUTER JOIN trDetail_permintaanSPD b ON a.NoTask = b.notask " &
+                                            "LEFT OUTER JOIN tr_penggunaanSPD c ON b.NoTask = c.notask " &
+                                            "where b.statustrf = 'PENDING' and c.Status = 'Approve' and c.VID <> ''"
+                gridSPD.DataBind()
+            ElseIf Request.QueryString("status") = "PermintaanSPD" Then
+                dsTaskSPD.SelectCommand = "select b.idtbl as ID, a.NoTask, a.NamaTeknisi, a.Provider, b.NoReferensi, b.tgltrf as tgltrf, b.keterangan, b.notekeuangan, b.jumlahtrf, b.statustrf as statustrf, " &
+                                            "c.VID, c.JenisBiaya, c.Nominal, c.ApprovalNominal, c.TglInputBiaya, c.TglApproveBiaya, c.CatatanTransaksi, c.CatatanApproval, c.Status as Status " &
+                                            "from tr_permintaanSPD a " &
+                                            "LEFT OUTER JOIN trDetail_permintaanSPD b ON a.NoTask = b.notask " &
+                                            "LEFT OUTER JOIN tr_penggunaanSPD c ON b.NoTask = c.notask " &
+                                            "where b.statustrf = 'Open' and c.VID <> ''"
+                gridSPD.DataBind()
+            End If
+
+
+            openSPD()
+            bucket1.Visible = False
+            bucket2.Visible = False
+            taskGrid.Visible = False
+        Else
+            disableSPD()
+
+        End If
 
     End Sub
 
+    Sub openSPD()
+        divSPD.Visible = True
+    End Sub
+    Sub disableSPD()
+        divSPD.Visible = False
+        taskGridSPD.Visible = False
+    End Sub
 
 End Class

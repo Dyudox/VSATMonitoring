@@ -51,7 +51,11 @@
                     </dx:GridViewDataTextColumn>--%>
                     <dx:GridViewDataTextColumn Caption="Pagu" PropertiesTextEdit-DisplayFormatString="{0:n0}" HeaderStyle-HorizontalAlign="Center" FieldName="pagu" VisibleIndex="5">
                     </dx:GridViewDataTextColumn>
-                    <dx:GridViewDataTextColumn Caption="Total Pengajuan Uang" PropertiesTextEdit-DisplayFormatString="{0:n0}" FieldName="total" CellStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" VisibleIndex="6">
+                    <dx:GridViewDataTextColumn Caption="Estimasi Biaya" FieldName="estimasiBiaya" VisibleIndex="6">
+                        <PropertiesTextEdit DisplayFormatString="{0:n0}" />
+                        <HeaderStyle HorizontalAlign="Center" />
+                    </dx:GridViewDataTextColumn>
+                    <dx:GridViewDataTextColumn Caption="Total Pengajuan Uang" PropertiesTextEdit-DisplayFormatString="{0:n0}" FieldName="total" CellStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" VisibleIndex="7">
                     </dx:GridViewDataTextColumn>                    
                 </Columns>
                 <Templates>
@@ -122,7 +126,12 @@
                                                 <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
                                                 <CellStyle HorizontalAlign="Center"></CellStyle>
                                                 <DataItemTemplate>
-                                                    <a href="javascript:void(0);" onclick="showImagePopup('<%# Eval("file_url") %>')">View</a>
+                                                    <%--<a href="javascript:void(0);" onclick="showImagePopup('<%# Eval("file_url") %>')">View</a>--%>
+                                                    <a href="javascript:void(0);"
+                                                       onclick='<%# "showImagePopup(""" & Eval("file_url") & """)" %>'
+                                                       style='<%# If(Eval("file_url") Is Nothing OrElse Eval("file_url").ToString() = "", "pointer-events:none; color:#ccc; text-decoration:none;", "color:blue; text-decoration:underline; cursor:pointer;") %>'>
+                                                        View
+                                                    </a>
                                                 </DataItemTemplate>
                                             </dx:GridViewDataTextColumn>
                                             <%--<dx:GridViewDataTextColumn Caption="Foto Bukti" FieldName="file_url" ReadOnly="true"

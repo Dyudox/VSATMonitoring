@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/site.master" AutoEventWireup="false" CodeFile="createtask.aspx.vb" Inherits="createtask" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/site.master" AutoEventWireup="false" CodeFile="createtask - Copy.aspx.vb" Inherits="createtask" %>
 
 <%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
 <%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
@@ -687,7 +687,7 @@
                                 <PropertiesComboBox ValueType="System.String" IncrementalFilteringMode="Contains">
                                     <Items>
                                         <dx:ListEditItem Text="Valid" Value="Valid" />
-                                        <dx:ListEditItem Text="Not Valid" Value="Not Valid" Selected="true" />
+                                        <dx:ListEditItem Text="Not Valid" Value="Not Valid" />
                                     </Items>
                                 </PropertiesComboBox>
                             </dx:GridViewDataComboBoxColumn>
@@ -697,7 +697,7 @@
                             </dx:GridViewDataTextColumn>   --%>                       
                             <dx:GridViewDataComboBoxColumn FieldName="IdJenisTask" HeaderStyle-HorizontalAlign="Center" Caption="Order" Visible="false" 
 							VisibleIndex="2" Width="100px">
-                                <EditFormSettings VisibleIndex="5" Visible="False" Caption="Order" />
+                                <EditFormSettings VisibleIndex="5" Visible="True" Caption="Order" />
                                 <PropertiesComboBox DataSourceID="dsjeniskerja" TextField="Service" ValueField="KodeService"
                                     ValueType="System.String" IncrementalFilteringMode="Contains" ValidationSettings-RequiredField-IsRequired="true">
                                 </PropertiesComboBox>
@@ -723,20 +723,9 @@
                                 <PropertiesComboBox DataSourceID="dskota" TextField="Kota" ValueField="Kota"
                                     IncrementalFilteringMode="Contains" ValidationSettings-RequiredField-IsRequired="true">
                                 </PropertiesComboBox>
-                            </dx:GridViewDataComboBoxColumn>                                                        
-                            <dx:GridViewDataDateColumn FieldName="TglStatusTask" Visible="false" Width="100%">
-                                <EditFormSettings Caption="Tanggal Status Task" VisibleIndex="3" Visible="True" />
-                                <PropertiesDateEdit DisplayFormatString="dd/MM/yyyy" DisplayFormatInEditMode="True" ValidationSettings-RequiredField-IsRequired="true"></PropertiesDateEdit>
-                            </dx:GridViewDataDateColumn>                            
-                            <dx:GridViewDataComboBoxColumn Visible="False" FieldName="IdStatusTask" HeaderStyle-HorizontalAlign="Center" Caption="Status Pengaduan" Width="150px">
-                                <EditFormSettings Visible="True" VisibleIndex="2" Caption="Status task" />
-                                <PropertiesComboBox DataSourceID="dsstatus" TextField="Status" ValueField="ID"
-                                    ValueType="System.String" IncrementalFilteringMode="Contains" ValidationSettings-RequiredField-IsRequired="true">
-                                </PropertiesComboBox>
-                                <Settings AutoFilterCondition="Contains"></Settings>
                             </dx:GridViewDataComboBoxColumn>
                             <dx:GridViewDataMemoColumn FieldName="AlamatPengaduan" Caption="Alamat Pengaduan" Visible="false" Width="100%">
-                                <EditFormSettings VisibleIndex="11" Visible="False" Caption="Alamat " />
+                                <EditFormSettings VisibleIndex="12" Visible="True" Caption="Alamat " />
                                 <Settings AutoFilterCondition="Contains"></Settings>
 								<PropertiesMemoEdit ValidationSettings-RequiredField-IsRequired="true"></PropertiesMemoEdit>
                             </dx:GridViewDataMemoColumn>
@@ -751,6 +740,18 @@
                                 <Settings AutoFilterCondition="Contains"></Settings>
 								<PropertiesMemoEdit ValidationSettings-RequiredField-IsRequired="false" Width="300px" Height="90px"></PropertiesMemoEdit>
                             </dx:GridViewDataMemoColumn>
+                            <dx:GridViewDataDateColumn FieldName="TglStatusTask" Visible="false" Width="100%">
+                                <EditFormSettings Caption="Tanggal Status Task" VisibleIndex="9" Visible="True" />
+                                <PropertiesDateEdit DisplayFormatString="dd/MM/yyyy" DisplayFormatInEditMode="True" ValidationSettings-RequiredField-IsRequired="true"></PropertiesDateEdit>
+                            </dx:GridViewDataDateColumn>                            
+                            <dx:GridViewDataComboBoxColumn Visible="False" FieldName="IdStatusTask" HeaderStyle-HorizontalAlign="Center" Caption="Status Pengaduan" VisibleIndex="3" Width="150px">
+                                <EditFormSettings Visible="True" VisibleIndex="11" Caption="Status task" />
+                                <PropertiesComboBox DataSourceID="dsstatus" TextField="Status" ValueField="ID"
+                                    ValueType="System.String" IncrementalFilteringMode="Contains" ValidationSettings-RequiredField-IsRequired="true">
+                                </PropertiesComboBox>
+                                <Settings AutoFilterCondition="Contains"></Settings>
+                            </dx:GridViewDataComboBoxColumn>
+                            
                         </Columns>
                         <Templates>
                             <DetailRow>
@@ -1026,7 +1027,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <dx:ASPxGridView ID="grid_manager" runat="server" DataSourceID="dsmanager" KeyFieldName="ID" Width="100%" AutoGenerateColumns="false" 
+                    <dx:ASPxGridView ID="grid_manager" runat="server" DataSourceID="dsmanager" KeyFieldName="ID;NoTask" Width="100%" AutoGenerateColumns="false" 
                         Theme="MetropolisBlue">                        
                         <Settings HorizontalScrollBarMode="Visible" ShowFooter="false" ShowGroupPanel="True" />
                         <SettingsBehavior ConfirmDelete="True" />
@@ -1038,7 +1039,22 @@
                         <SettingsSearchPanel Visible="True" />
                         <SettingsEditing Mode="PopupEditForm" />
                         <SettingsDetail ShowDetailRow="true" />
-                        <%--<ClientSideEvents EndCallback="OnEndCallback" />--%>
+                        
+                        <ClientSideEvents EndCallback="function(s, e) {
+                                if (s.cpErrorMsg) {
+                                    alert(s.cpErrorMsg);
+                                    s.cpErrorMsg = null;
+                                }
+                                if (s.cpShowPopup && s.cpShowPopup === true) {
+                                    showPopupAndDownload(
+                                        s.cpToEmails || '',
+                                        s.cpCcEmails || '',
+                                        s.cpSubject || '',
+                                        s.cpBody || ''
+                                    );
+                                    s.cpShowPopup = null;
+                                }
+                            }" />
                         <Columns>
                             <dx:GridViewCommandColumn FixedStyle="Left" HeaderStyle-HorizontalAlign="Center" CellStyle-BackColor="#d6f1ff" HeaderStyle-BackColor="#d6f1ff" ShowDeleteButton="true" ShowEditButton="True" VisibleIndex="20">
                                 <CellStyle BackColor="#d6f1ff">
@@ -1152,7 +1168,7 @@
                                 <CellStyle HorizontalAlign="Center"></CellStyle>
                             </dx:GridViewDataMemoColumn>
                             <dx:GridViewDataMemoColumn FieldName="AlamatPengaduan" Caption="Alamat Pengaduan" Visible="false" Width="100%">
-                                <EditFormSettings VisibleIndex="9" Visible="False" Caption="Alamat " />
+                                <EditFormSettings VisibleIndex="9" Visible="True" Caption="Alamat " />
                                 <Settings AutoFilterCondition="Contains"></Settings>
                             </dx:GridViewDataMemoColumn>
 
@@ -1380,8 +1396,314 @@
         </div>
 
     </div>
+    <asp:Panel runat="server">
+        <!-- POPUP EMAIL (Bootstrap modal style) -->
+        <div class="modal fade" id="popupEmailEndless" tabindex="-1" role="dialog" aria-labelledby="popupEmailLabel" style="background: none;">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="popupEmailLabel">Kirim Email Laporan Task</h5>
+                    <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+
+                    <div class="modal-body">
+                    <div class="form-group">
+                        <label>To:</label>
+                        <input type="text" id="txtToEmail" runat="server" class="form-control" placeholder="Alamat email penerima (pisahkan dengan ;)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cc:</label>
+                        <input type="text" id="txtCcEmail" runat="server" class="form-control" placeholder="Alamat CC (opsional)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bcc:</label>
+                        <input type="text" id="txtBccEmail" runat="server" class="form-control" placeholder="Alamat BCC (opsional)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subject:</label>
+                        <input type="text" id="txtSubjectEmail" runat="server" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Body:</label>
+                        <textarea id="txtBodyEmail" runat="server" class="form-control" rows="8" style="height: 350px;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Attachment:</label>
+                        <input type="text" id="txtAttachmentEmail" runat="server" class="form-control" readonly />
+                    </div>
+                    </div>
+
+                    <div class="modal-footer">
+                    <button type="button" id="btnSendEmail" runat="server" onserverclick="btnSendEmail_ServerClick" class="btn btn-success">
+                        <i class="fa fa-paper-plane"></i> Kirim Email
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closePopupEmail();">Tutup</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </asp:Panel>
 
     <script src="js/sweetalert2@11.js"></script>
+    <style>
+        /* Header modal tanpa background, dengan sudut melengkung */
+        .modal-header {
+            /*background: transparent !important;*/
+            /*background: linear-gradient(90deg, #2b85d8, #1fb5ff) !important;*/
+            /*background: #887f7f !important;*/
+            color: #fdfdfd !important;
+            border-bottom: 1px solid #e0e0e0 !important;
+            border-top-left-radius: 16px !important;
+            border-top-right-radius: 16px !important;
+            padding: 12px 16px !important;
+            display: flex;
+            align-items: center;          /* sejajarkan vertikal */
+            justify-content: space-between;
+        }
+
+        /* Tombol close (❌) */
+        .modal-header .close {
+            font-size: 1.5rem;           /* sedikit lebih kecil */
+            line-height: 1;
+            padding: 0;
+            margin: 0;
+            color: #666 !important;
+            opacity: 0.7;
+            transition: opacity 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;           /* tombol bundar */
+        }
+        .modal-header .close:hover {
+            opacity: 1;
+            color: #0094ff !important;
+            transform: scale(1.1);
+        }
+
+        .modal-content{
+            border-top-left-radius: 16px !important;
+            border-top-right-radius: 16px !important;
+        }
+
+        /* Body modal */
+        .modal-body {
+            background: #fdfdfd !important;
+            padding: 20px 25px !important;
+        }
+
+        /* Footer modal */
+        .modal-footer {
+            border-top: 1px solid #eee !important;
+            background: #f8f9fa !important;
+            border-bottom-left-radius: 16px !important;
+            border-bottom-right-radius: 16px !important;
+        }
+
+        /* ======== HILANGKAN BACKDROP HITAM ======== */
+        .modal-backdrop.show {
+            opacity: 0 !important;     /* transparan penuh */
+            display: none !important;  /* hilangkan layer hitam */
+        }
+
+        /* Efek animasi saat muncul */
+        .modal.fade .modal-dialog {
+            transform: translateY(-10px);
+            transition: all 0.3s ease-in-out;
+        }
+        .modal.show .modal-dialog {
+            transform: translateY(0);
+        }
+
+        /* Target area editable CKEditor5 Classic (inline/editable) */
+        .ck-editor__editable_inline, 
+        .ck-editor .ck-editor__editable {
+            min-height: 350px !important;
+            max-height: 350px !important;
+            height: 350px !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            box-sizing: border-box !important;
+            padding: 8px !important;
+        }
+
+        /* Jika ada wrapper .ck-content, juga target */
+        .ck-content {
+            max-height: 350px !important;
+            overflow-y: auto !important;
+        }
+
+        .ck-powered-by {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    </style>
+
+    <script src="assets/tinymce/ckeditor.js"></script>
+    <script type="text/javascript">
+        let emailEditor; // instance global
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const editorEl = document.querySelector('#<%= txtBodyEmail.ClientID %>');
+            if (editorEl) {
+                ClassicEditor
+                    .create(editorEl, {
+                        toolbar: [
+                            'undo', 'redo', '|',
+                            'bold', 'italic', 'underline', '|',
+                            'link', 'bulletedList', 'numberedList', 'blockQuote'
+                        ],
+                        ui: { width: '100%' }
+                    })
+                    .then(editor => {
+                        emailEditor = editor;
+
+                        // apply styles immediately (redundant dengan CSS, tapi aman)
+                        applyEditorStyles();
+
+                        // jika modal dibuka ulang, pastikan ukuran tetap:
+                        // - pakai event modal show untuk reapply
+                        $('#popupEmailEndless').on('shown.bs.modal', function () {
+                            applyEditorStyles();
+                            // terkadang perlu refresh layout
+                            if (emailEditor && emailEditor.editing) {
+                                try { emailEditor.editing.view.domEmitter.fire('resize'); } catch (ex) { /* ignore */ }
+                            }
+                        });
+                    })
+                    .catch(error => console.error(error));
+            }
+
+            // sinkron saat tombol kirim diklik
+            const btn = document.getElementById('<%= btnSendEmail.ClientID %>');
+            if (btn) {
+                btn.addEventListener('click', function () {
+                    if (emailEditor) {
+                        document.getElementById('<%= txtBodyEmail.ClientID %>').value = emailEditor.getData();
+                    }
+                });
+            }
+        });
+
+        function applyEditorStyles() {
+            try {
+                if (!emailEditor) return;
+                const editable = emailEditor.ui.view.editable.element;
+                if (editable) {
+                    editable.style.height = "350px";
+                    editable.style.minHeight = "350px";
+                    editable.style.maxHeight = "350px";
+                    editable.style.overflowY = "auto";
+                    editable.style.overflowX = "hidden";
+                    editable.style.padding = "8px";
+                    editable.style.boxSizing = "border-box";
+                }
+                // juga target .ck-content jika ada
+                const ckContent = editable.querySelector ? editable.querySelector('.ck-content') : null;
+                if (ckContent) {
+                    ckContent.style.maxHeight = "350px";
+                    ckContent.style.overflowY = "auto";
+                }
+            } catch (e) {
+                console.error('applyEditorStyles error', e);
+            }
+        }
+
+        //function showPopupAndDownload(to, cc, subject, body) {
+        //    console.log("Popup:", to, cc, subject, body);
+        //    alert("Popup email untuk " + to + " siap dibuka.");
+        //}
+        function showPopupAndDownload(to, cc, subject, body) {
+            document.getElementById("txtTo").value = to;
+            document.getElementById("txtCc").value = cc;
+            document.getElementById("txtSubject").value = subject;
+            document.getElementById("txtBody").value = body;
+            //document.getElementById("popupEmailEndless").style.display = 'block';
+            $('#popupEmailEndless').modal({ backdrop: false, keyboard: true });
+            $('.modal-backdrop').remove();
+        }
+        // fungsi show popup (sama seperti punya kamu) — setelah setData() kita reapply styles safeUrl
+        function showPopupAndDownloadOK(fileUrl, fileListJson, subject, body, toEsc, ccEsc, bccEsc) {
+            let fileList = [];
+
+            try {
+                // --- isi field popup
+                document.getElementById("<%= txtToEmail.ClientID %>").value = toEsc || "";
+                document.getElementById("<%= txtCcEmail.ClientID %>").value = ccEsc || "";
+                document.getElementById("<%= txtBccEmail.ClientID %>").value = bccEsc || "";
+                document.getElementById("<%= txtSubjectEmail.ClientID %>").value = subject || "";
+                document.getElementById("<%= txtAttachmentEmail.ClientID %>").value = fileListJson || "";
+
+            // --- parse JSON list attachment
+            try {
+                fileList = JSON.parse(fileListJson);
+                } catch (e) {
+                    console.warn("JSON parse gagal, mungkin hanya 1 file:", e);
+                    if (fileListJson) fileList = [fileListJson];
+                }
+
+                // --- isi body email ke CKEditor atau textarea
+                if (emailEditor) {
+                    emailEditor.setData(body || "");
+                    setTimeout(applyEditorStyles, 50);
+                } else {
+                    document.getElementById("<%= txtBodyEmail.ClientID %>").value = body || "";
+                }
+
+                // --- tampilkan daftar attachment di modal
+                const container = document.getElementById("attachmentList");
+                if (container) {
+                    container.innerHTML = "";
+                    if (fileList.length > 0) {
+                        fileList.forEach(f => {
+                            const li = document.createElement("li");
+                            li.textContent = f;
+                            container.appendChild(li);
+                        });
+                    } else {
+                        container.innerHTML = "<li><i>Tidak ada lampiran</i></li>";
+                    }
+                }
+
+            } catch (e) {
+                console.error("Gagal isi field popup:", e);
+            }
+
+            // --- tampilkan modal popup
+            $('#popupEmailEndless').modal({ backdrop: false, keyboard: true });
+            $('.modal-backdrop').remove();
+
+            // --- trigger download untuk file hasil export (hanya 1 file)
+            try {
+                if (fileUrl) {
+                    const link = document.createElement('a');
+                    link.href = fileUrl;
+                    link.download = ""; // paksa download, bukan tab baru
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            } catch (e) {
+                console.error("Gagal auto-download file export:", e);
+            }
+        }
+    </script>
+
     <script type="text/javascript">
         function OnEndCallback(s, e) {
             if (s.cpMessageError) {

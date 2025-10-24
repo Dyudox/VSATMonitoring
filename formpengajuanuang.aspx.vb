@@ -42,13 +42,13 @@ Partial Class formpengajuanuang
             '                                "LEFT OUTER JOIN trTask on tr_permintaanSPD.NoTask = trTask.NoTask where trTask.IdStatusManager = 'Valid'" & _
             '                                "group by tr_permintaanSPD.NoTask, tr_permintaanSPD.NamaTeknisi, tr_permintaanSPD.Provider, tr_permintaanSPD.TypeTeknisi, a.total, trTask.TanggalTask, trTask.NamaTask"
 
-            dspengajuanuang.SelectCommand = "select  trtask.NamaTask, trTask.NoTask, trTask.NamaTeknisi, trTask.TanggalTask, msEmployee.IdStatusPegawai, SUM(try_convert(numeric(38, 0), ms_pagu.Pagu)) as pagu, a.total, trtask.status, trTask.IdStatusManager from trTask " &
+            dspengajuanuang.SelectCommand = "select  trtask.NamaTask, trTask.NoTask, trTask.NamaTeknisi, trTask.TanggalTask, msEmployee.IdStatusPegawai, SUM(try_convert(numeric(38, 0), ms_pagu.Pagu)) as pagu, a.total, trtask.status, trTask.IdStatusManager, TRY_CONVERT(NUMERIC(38, 0), estimasiBiaya) AS estimasiBiaya from trTask " &
                                             "LEFT OUTER JOIN trDetail_Task on trTask.NoTask = trDetail_Task.NoTask " &
                                             "LEFT OUTER JOIN msEmployee on trTask.NamaTeknisi = msEmployee.Nama " &
                                             "LEFT OUTER JOIN ms_pagu on msEmployee.IdStatusPegawai = ms_Pagu.TypeKaryawan " &
                                             "LEFT OUTER JOIN (select SUM(try_convert(numeric(38, 0), jumlahpengajuan)) as total, notask as tot from trDetail_permintaanSPD group by notask) a on trTask.NoTask = a.tot " &
                                             "where  trTask.IdStatusManager = 'Valid' " &
-                                            "group by trTask.NamaTask, trTask.NoTask, trtask.NamaTeknisi, trTask.TanggalTask, msEmployee.IdStatusPegawai, a.total, trtask.status, trTask.IdStatusManager"
+                                            "group by trTask.NamaTask, trTask.NoTask, trtask.NamaTeknisi, trTask.TanggalTask, msEmployee.IdStatusPegawai, a.total, trtask.status, trTask.IdStatusManager, trTask.estimasiBiaya"
         Else
             Dim tampungprovider As String
             Dim getdataprovider As String = "SELECT trTask.NoTask, trTask.IdProject, trProject.ProjectName, trProject.IdProvider " & _
@@ -62,13 +62,13 @@ Partial Class formpengajuanuang
             dr.Close()
             con.Close()
 
-            dspengajuanuang.SelectCommand = "select  trtask.NamaTask, trTask.NoTask, trTask.NamaTeknisi, trTask.TanggalTask, msEmployee.IdStatusPegawai, SUM(try_convert(numeric(38, 0), ms_pagu.Pagu)) as pagu, a.total, trTask.IdStatusManager from trTask " &
+            dspengajuanuang.SelectCommand = "select  trtask.NamaTask, trTask.NoTask, trTask.NamaTeknisi, trTask.TanggalTask, msEmployee.IdStatusPegawai, SUM(try_convert(numeric(38, 0), ms_pagu.Pagu)) as pagu, a.total, trTask.IdStatusManager, TRY_CONVERT(NUMERIC(38, 0), estimasiBiaya) AS estimasiBiaya from trTask " &
                                             "LEFT OUTER JOIN trDetail_Task on trTask.NoTask = trDetail_Task.NoTask " &
                                             "LEFT OUTER JOIN msEmployee on trTask.NamaTeknisi = msEmployee.Nama " &
                                             "LEFT OUTER JOIN ms_pagu on msEmployee.IdStatusPegawai = ms_Pagu.TypeKaryawan " &
                                             "LEFT OUTER JOIN (select SUM(try_convert(numeric(38, 0), jumlahpengajuan)) as total, notask as tot from trDetail_permintaanSPD group by notask) a on trTask.NoTask = a.tot " &
                                             "where trtask.NoTask = '" & Request.QueryString("NoTask") & "' and ms_pagu.Provider = '" & tampungprovider & "' and trTask.IdStatusManager = 'Valid' " &
-                                            "group by trTask.NamaTask, trTask.NoTask, trtask.NamaTeknisi, trTask.TanggalTask, msEmployee.IdStatusPegawai, a.total, trTask.IdStatusManager"
+                                            "group by trTask.NamaTask, trTask.NoTask, trtask.NamaTeknisi, trTask.TanggalTask, msEmployee.IdStatusPegawai, a.total, trTask.IdStatusManager, trTask.estimasiBiaya"
             'dspengajuanuang.SelectCommand = "select  tr_permintaanSPD.NoTask, trtask.NamaTask, tr_permintaanSPD.NamaTeknisi, tr_permintaanSPD.Provider, TypeTeknisi, SUM(try_convert(numeric(38, 0), totalPaguSuk)) as totalPaguSuk1, total, trTask.TanggalTask from tr_permintaanSPD " & _
             '                                "LEFT OUTER JOIN (select SUM(try_convert(numeric(38, 0), jumlahpengajuan)) as total, notask as tot from trDetail_permintaanSPD group by notask) a on tr_permintaanSPD.NoTask = a.tot " & _
             '                                "LEFT OUTER JOIN (select SUM(try_convert(numeric(38, 0), Pagu)) as totalPaguSuk, NoTask from " & _
@@ -134,7 +134,7 @@ Partial Class formpengajuanuang
     Protected Sub gridpengajuanuang_RowInserting(sender As Object, e As DevExpress.Web.Data.ASPxDataInsertingEventArgs) Handles gridpengajuanuang.RowInserting
         Session("ID") = (TryCast(sender, ASPxGridView)).GetMasterRowKeyValue()
         Dim tampungan As String = Session("ID")
-        dsdetilpengajuan.InsertCommand = "insert into trDetail_permintaanSPD (jumlahpengajuan, notask, tglpengajuan, keterangan) VALUES (@jumlahpengajuan, '" & tampungan & "', @tglpengajuan, @keterangan)"
+        dsdetilpengajuan.InsertCommand = "insert into trDetail_permintaanSPD (jumlahpengajuan, notask, tglpengajuan, keterangan, statustrf) VALUES (@jumlahpengajuan, '" & tampungan & "', @tglpengajuan, @keterangan, 'Open')"
         'dspengajuanuang.InsertCommand = "insert into tr_permintaanSPD (NamaTeknisi, TypeTeknisi, NoTask, Provider, Perusahaan) VALUES ('" & e.NewValues("NamaTeknisi").ToString & "', '" & tampungteknisi & "', '" & idsuk & "', '" & namaprovider & "', '" & GetPerusahaan & "')"
         dsdetilpengajuan.DataBind()
         gridpengajuanuang.DataBind()

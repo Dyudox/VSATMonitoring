@@ -108,16 +108,30 @@
 
                         <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
                     </dx:GridViewDataTextColumn>
-                    <dx:GridViewDataTextColumn Caption="Provinsi" Width="150px" HeaderStyle-HorizontalAlign="Center" FieldName="PROVINSI" Settings-AutoFilterCondition="Contains" VisibleIndex="18">
+                    <%--<dx:GridViewDataTextColumn Caption="Provinsi" Width="150px" HeaderStyle-HorizontalAlign="Center" FieldName="PROVINSI" Settings-AutoFilterCondition="Contains" VisibleIndex="18">
                         <Settings AutoFilterCondition="Contains"></Settings>
 
                         <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
-                    </dx:GridViewDataTextColumn>
-                    <dx:GridViewDataTextColumn Caption="Kota" Width="150px" HeaderStyle-HorizontalAlign="Center" FieldName="KOTA" Settings-AutoFilterCondition="Contains" VisibleIndex="19">
+                    </dx:GridViewDataTextColumn>--%>
+                    <dx:GridViewDataComboBoxColumn FieldName="PROVINSI" HeaderStyle-HorizontalAlign="Center" Caption="Provinsi" VisibleIndex="18" Width="100px">
+                        <PropertiesComboBox DataSourceID="dsProvinsi" TextField="Provinsi" DisplayFormatInEditMode="true"
+                            ValueField="PROVINSI" EnableSynchronization="False" IncrementalFilteringMode="StartsWith">
+                            <%--<ValidationSettings RequiredField-IsRequired="true"></ValidationSettings>--%>
+                        </PropertiesComboBox>
+                        <EditFormSettings Caption="Provinsi" VisibleIndex="18" />
+                    </dx:GridViewDataComboBoxColumn>
+                    <dx:GridViewDataComboBoxColumn FieldName="KOTA" HeaderStyle-HorizontalAlign="Center" Caption="Kota" VisibleIndex="19" Width="100px">
+                        <PropertiesComboBox DataSourceID="dsKota" TextField="Kota" DisplayFormatInEditMode="true"
+                            ValueField="KOTA" EnableSynchronization="False" IncrementalFilteringMode="StartsWith">
+                            <%--<ValidationSettings RequiredField-IsRequired="true"></ValidationSettings>--%>
+                        </PropertiesComboBox>
+                        <EditFormSettings Caption="Kota" VisibleIndex="19" />
+                    </dx:GridViewDataComboBoxColumn>
+                    <%--<dx:GridViewDataTextColumn Caption="Kota" Width="150px" HeaderStyle-HorizontalAlign="Center" FieldName="KOTA" Settings-AutoFilterCondition="Contains" VisibleIndex="19">
                         <Settings AutoFilterCondition="Contains"></Settings>
 
                         <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
-                    </dx:GridViewDataTextColumn>
+                    </dx:GridViewDataTextColumn>--%>
                     <dx:GridViewDataTextColumn Caption="Jarkom" Width="100px" HeaderStyle-HorizontalAlign="Center" FieldName="IdJarkom" Settings-AutoFilterCondition="Contains" VisibleIndex="20">
                         <Settings AutoFilterCondition="Contains"></Settings>
 
@@ -229,6 +243,8 @@
             <asp:SqlDataSource ID="dsRemoteSite" runat="server" ConnectionString="<%$ ConnectionStrings:dbVsatConnectionString %>" ></asp:SqlDataSource>
             <asp:SqlDataSource ID="dsgridhistory" runat="server" ConnectionString="<%$ ConnectionStrings:dbVsatConnectionString %>"></asp:SqlDataSource>
             <asp:SqlDataSource ID="dsproject" runat="server" ConnectionString="<%$ ConnectionStrings:dbVsatConnectionString %>" SelectCommand="select * from trproject"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="dsProvinsi" runat="server" ConnectionString="<%$ ConnectionStrings:dbVsatConnectionString %>" SelectCommand="select * from msProvinsi"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="dsKota" runat="server" ConnectionString="<%$ ConnectionStrings:dbVsatConnectionString %>" SelectCommand="select * from msKota"></asp:SqlDataSource>
             <asp:SqlDataSource ID="dsbarang_on" runat="server" ConnectionString="<%$ ConnectionStrings:dbVsatConnectionString %>"></asp:SqlDataSource>
             <asp:SqlDataSource ID="dsbarangreplace" runat="server" ConnectionString="<%$ ConnectionStrings:dbVsatConnectionString %>"></asp:SqlDataSource>
 

@@ -25,7 +25,7 @@
                 <SettingsSearchPanel Visible="True" />
                 <SettingsDetail ShowDetailRow="true" ShowDetailButtons="true" />
                 <Columns>
-                    <dx:GridViewDataTextColumn Caption="No. Task" Width="150px" CellStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" FieldName="NoTask" VisibleIndex="0">
+                    <dx:GridViewDataTextColumn Caption="No. Task" Width="100px" CellStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" FieldName="NoTask" VisibleIndex="0">
                     </dx:GridViewDataTextColumn>
                     <dx:GridViewDataTextColumn Caption="Nama Task" Width="200px" HeaderStyle-HorizontalAlign="Center" FieldName="NamaTask" VisibleIndex="1">
                     </dx:GridViewDataTextColumn>
@@ -52,10 +52,14 @@
                     </dx:GridViewDataComboBoxColumn>
                     <dx:GridViewDataTextColumn Caption="Pagu" PropertiesTextEdit-DisplayFormatString="{0:n0}" HeaderStyle-HorizontalAlign="Center" FieldName="pagu" VisibleIndex="6">
                     </dx:GridViewDataTextColumn>
-                    <dx:GridViewDataTextColumn Caption="Total Pengajuan Uang" PropertiesTextEdit-DisplayFormatString="{0:n0}" FieldName="totalPengajuan" CellStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" VisibleIndex="7" Width="100%">
+                    <dx:GridViewDataTextColumn Caption="Estimasi Biaya" FieldName="estimasiBiaya" VisibleIndex="7">
+                        <PropertiesTextEdit DisplayFormatString="{0:n0}" />
+                        <HeaderStyle HorizontalAlign="Center" />
                     </dx:GridViewDataTextColumn>
-                    <%--<dx:GridViewDataTextColumn Caption="Status Manager" HeaderStyle-HorizontalAlign="Center" FieldName="IdStatusManager" VisibleIndex="4">
-                    </dx:GridViewDataTextColumn>--%>
+                    <dx:GridViewDataTextColumn Caption="Total Pengajuan Uang" PropertiesTextEdit-DisplayFormatString="{0:n0}" FieldName="totalPengajuan" 
+                        HeaderStyle-HorizontalAlign="Center" VisibleIndex="8" Width="100%">
+                    </dx:GridViewDataTextColumn>
+                    
                     <%--<dx:GridViewDataTextColumn Caption="Pagu" PropertiesTextEdit-DisplayFormatString="{0:n0}" HeaderStyle-HorizontalAlign="Center" FieldName="pagu" VisibleIndex="5">
                     </dx:GridViewDataTextColumn>
                     <dx:GridViewDataTextColumn Caption="Total Pengajuan Uang" PropertiesTextEdit-DisplayFormatString="{0:n0}" FieldName="total" CellStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" VisibleIndex="6">
@@ -78,7 +82,8 @@
                                 <b>Rincian Pengajuan/Transfer</b>
                             </h4>
                         </div>
-                        <dx:ASPxGridView ID="gv_detilpengajuan" ClientInstanceName="gv_detilpengajuan" runat="server" EnableTheming="True" Theme="MetropolisBlue" Width="100%" OnBeforePerformDataSelect="gv_detilpengajuan_BeforePerformDataSelect" AutoGenerateColumns="False" DataSourceID="dsdetilpengajuan" KeyFieldName="ID">
+                        <dx:ASPxGridView ID="gv_detilpengajuan" ClientInstanceName="gv_detilpengajuan" runat="server" EnableTheming="True" Theme="MetropolisBlue" Width="100%" 
+                            OnBeforePerformDataSelect="gv_detilpengajuan_BeforePerformDataSelect" AutoGenerateColumns="False" DataSourceID="dsdetilpengajuan" KeyFieldName="ID">
                             <Settings ShowFooter="false" ShowGroupPanel="True" />
                             <Settings HorizontalScrollBarMode="Visible" ShowFooter="false" ShowGroupPanel="True" />
                             <SettingsBehavior ConfirmDelete="True" />
@@ -89,23 +94,33 @@
                             <Columns>
                                 <dx:GridViewDataTextColumn Caption="No Task" PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0" HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="Center" ReadOnly="true" FieldName="notask" Settings-AutoFilterCondition="Contains">
                                 </dx:GridViewDataTextColumn>
-                                <dx:GridViewDataDateColumn Caption="Tanggal Pengajuan" FieldName="tglpengajuan" Settings-AutoFilterCondition="Contains">
+                                <dx:GridViewDataDateColumn Caption="Tanggal Pengajuan" FieldName="tglpengajuan" Settings-AutoFilterCondition="Contains" Width="150px">
 									<PropertiesDateEdit DisplayFormatString="dd/MM/yyyy" DisplayFormatInEditMode="True"/>
+                                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                                    <CellStyle HorizontalAlign="Center"></CellStyle>
                                     <Settings AutoFilterCondition="Contains"></Settings>
                                 </dx:GridViewDataDateColumn>
-                                <dx:GridViewDataTextColumn Caption="Jumlah Pengajuan" PropertiesTextEdit-DisplayFormatString="{0:n0}" PropertiesTextEdit-DisplayFormatInEditMode="true" FieldName="jumlahpengajuan" Settings-AutoFilterCondition="Contains">
+                                <dx:GridViewDataTextColumn Caption="Jumlah Pengajuan" PropertiesTextEdit-DisplayFormatString="{0:n0}" Width="150px" PropertiesTextEdit-DisplayFormatInEditMode="true" FieldName="jumlahpengajuan" Settings-AutoFilterCondition="Contains">
+                                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
                                 </dx:GridViewDataTextColumn>
                                 <dx:GridViewDataDateColumn Caption="Tanggal Transfer" FieldName="tgltrf" Settings-AutoFilterCondition="Contains">
 									<PropertiesDateEdit DisplayFormatString="dd/MM/yyyy" DisplayFormatInEditMode="True"/>
                                     <Settings AutoFilterCondition="Contains"></Settings>
+                                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                                    <CellStyle HorizontalAlign="Center"></CellStyle>
                                 </dx:GridViewDataDateColumn>
-                                <dx:GridViewDataTextColumn Caption="Jumlah Transfer" PropertiesTextEdit-DisplayFormatString="{0:n0}" PropertiesTextEdit-DisplayFormatInEditMode="true" FieldName="jumlahtrf" Settings-AutoFilterCondition="Contains">
+                                <dx:GridViewDataTextColumn Caption="Jumlah Transfer" PropertiesTextEdit-DisplayFormatString="{0:n0}" Width="150px" PropertiesTextEdit-DisplayFormatInEditMode="true" FieldName="jumlahtrf" Settings-AutoFilterCondition="Contains">
+                                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
                                 </dx:GridViewDataTextColumn>
                                 <dx:GridViewDataTextColumn Caption="No Referensi" FieldName="NoReferensi" Settings-AutoFilterCondition="Contains">
                                     <Settings AutoFilterCondition="Contains"></Settings>
+                                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                                    <CellStyle HorizontalAlign="Center"></CellStyle>
                                 </dx:GridViewDataTextColumn>
                                 <dx:GridViewDataTextColumn Caption="Status Transfer" FieldName="statustrf" Settings-AutoFilterCondition="Contains">
                                     <Settings AutoFilterCondition="Contains"></Settings>
+                                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                                    <CellStyle HorizontalAlign="Center"></CellStyle>
                                 </dx:GridViewDataTextColumn>
                             </Columns>
                             <SettingsEditing Mode="EditFormAndDisplayRow" />
@@ -130,15 +145,29 @@
                             </SettingsPager>
                             <SettingsDataSecurity AllowDelete="True" AllowEdit="True" AllowInsert="True" />
                             <Columns>
-                                <dx:GridViewCommandColumn CellStyle-BackColor="#d6f1ff" ShowDeleteButton="True" Width="100px" ShowClearFilterButton="True" ShowEditButton="True" ShowNewButtonInHeader="True" VisibleIndex="15">
-                                    <CellStyle BackColor="#d6f1ff">
-                                    </CellStyle>
+                                <dx:GridViewCommandColumn CellStyle-BackColor="#d6f1ff" ShowDeleteButton="True" Width="100px" ShowClearFilterButton="True" ShowEditButton="True" ShowNewButtonInHeader="True" VisibleIndex="0">
+                                    <CellStyle BackColor="#d6f1ff"></CellStyle>
+                                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
                                     <HeaderTemplate>
                                          <dx:ASPxButton ID="b_new_kosong" runat="server" ToolTip="New" OnClick="b_new_Click" RenderMode="Link" Text="New">
                                             <ClientSideEvents Click="function(s,e){ e.processOnServer=confirm('Do you wish to process this new record?');}"/>
                                         </dx:ASPxButton>
                                     </HeaderTemplate>
                                 </dx:GridViewCommandColumn>
+                                <dx:GridViewDataTextColumn Caption="Foto Bukti" FieldName="file_url" ReadOnly="true"
+                                    PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0"
+                                    Settings-AutoFilterCondition="Contains">
+                                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                                    <CellStyle HorizontalAlign="Center"></CellStyle>
+                                    <DataItemTemplate>
+                                        <%--<a href="javascript:void(0);" onclick="showImagePopup('<%# Eval("file_url") %>')">View</a>--%>
+                                        <a href="javascript:void(0);"
+                                           onclick='<%# "showImagePopup(""" & Eval("file_url") & """)" %>'
+                                           style='<%# If(Eval("file_url") Is Nothing OrElse Eval("file_url").ToString() = "", "pointer-events:none; color:#ccc; text-decoration:none;", "color:blue; text-decoration:underline; cursor:pointer;") %>'>
+                                            View
+                                        </a>
+                                    </DataItemTemplate>
+                                </dx:GridViewDataTextColumn>
                                 <%--<dx:GridViewDataTextColumn Caption="#" HeaderStyle-HorizontalAlign="Center" Width="100px" VisibleIndex="15">
                                     <HeaderTemplate>
                                          <dx:ASPxButton ID="b_new_kosong" runat="server" ToolTip="New" OnClick="b_new_Click" RenderMode="Link" Text="New">
@@ -160,7 +189,7 @@
                                     CellStyle-HorizontalAlign="Center" ReadOnly="true" FieldName="VID" Settings-AutoFilterCondition="Contains" Width="150px">
                                     <EditFormSettings Visible="false" />
                                 </dx:GridViewDataTextColumn>
-                                <dx:GridViewDataTextColumn Caption="iplan" FieldName="IPLAN" Settings-AutoFilterCondition="Contains">
+                                <dx:GridViewDataTextColumn Caption="iplan" FieldName="IPLAN" Settings-AutoFilterCondition="Contains" Visible="false">
                                     <EditFormSettings Visible="false" />
                                 </dx:GridViewDataTextColumn>
                                 <dx:GridViewDataDateColumn Caption="Nama Remote" FieldName="NAMAREMOTE" Settings-AutoFilterCondition="Contains" Width="200px">
@@ -178,12 +207,12 @@
                                 </dx:GridViewDataDateColumn>
                                 <dx:GridViewDataTextColumn Caption="Jumlah Pengeluaran" PropertiesTextEdit-DisplayFormatString="{0:n0}" PropertiesTextEdit-DisplayFormatInEditMode="true" 
                                     FieldName="Nominal" Settings-AutoFilterCondition="Contains" PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0" 
-                                    ReadOnly="true" HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="Right" Width="100px">
+                                    ReadOnly="true" HeaderStyle-HorizontalAlign="Center" CellStyle-HorizontalAlign="Right" Width="150px">
                                     <Settings AutoFilterCondition="Contains"></Settings>
                                     <EditFormSettings Visible="True" />
                                 </dx:GridViewDataTextColumn>
                                 <dx:GridViewDataTextColumn Caption="Jumlah Persetujuan" PropertiesTextEdit-DisplayFormatString="{0:n0}" PropertiesTextEdit-DisplayFormatInEditMode="true" 
-                                    FieldName="ApprovalNominal" Settings-AutoFilterCondition="Contains" Width="100px">
+                                    FieldName="ApprovalNominal" Settings-AutoFilterCondition="Contains" Width="150px">
                                     <Settings AutoFilterCondition="Contains"></Settings>
                                 </dx:GridViewDataTextColumn>
                                 <dx:GridViewDataDateColumn Caption="Tanggal Persetujuan" FieldName="TglApproveBiaya" Settings-AutoFilterCondition="Contains">
@@ -205,15 +234,7 @@
                                         <ValidationSettings RequiredField-IsRequired="true"></ValidationSettings>
                                     </PropertiesComboBox>
                                 </dx:GridViewDataComboBoxColumn>
-                                <dx:GridViewDataTextColumn Caption="Foto Bukti" FieldName="file_url" ReadOnly="true"
-                                    PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0"
-                                    Settings-AutoFilterCondition="Contains">
-                                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
-                                    <CellStyle HorizontalAlign="Center"></CellStyle>
-                                    <DataItemTemplate>
-                                        <a href="javascript:void(0);" onclick="showImagePopup('<%# Eval("file_url") %>')">View</a>
-                                    </DataItemTemplate>
-                                </dx:GridViewDataTextColumn>
+                                
                                 <%--<dx:GridViewDataTextColumn Caption="Foto Bukti" FieldName="file_url" ReadOnly="true"
                                     PropertiesTextEdit-ReadOnlyStyle-BackColor="#c0c0c0"
                                     Settings-AutoFilterCondition="Contains">

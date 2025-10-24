@@ -218,6 +218,7 @@ Partial Class formpenggunaanuang
                                 "<td style='width:200px'>" & dr("fNominal").ToString & ",-</td>" &
                                 "<td style='width:200px'>" & dr("aa").ToString & "</td>" &
                                 "<td style='width:250px'>" & dr("CatatanTransaksi").ToString & "</td>" &
+                                "<td style='width:100px; color:#007BFF; text-decoration:none; font-weight:bold; cursor:pointer;'><a href='javascript:void(0);' onclick=""showImagePopup('" & imgUrl.Replace("'", "\'") & "')"">View</a></td>" &
                                 "<td>"
                     If Request.QueryString("order") = "new" Then
                         tampungan &= "<a id='btnedit' runat='server' style='align:center' href='formpenggunaanuang.aspx?order=edit&VID=" & cb_vid.Value & "&notask=" & Request.QueryString("notask") & "&status=edit&ID=" & dr("ID").ToString & "' class='btn btn-success'>Edit</a> &nbsp; &nbsp; " &
@@ -332,11 +333,18 @@ Partial Class formpenggunaanuang
 
         'Dim tahunkwitansi, bulankwitansi, tanggalkwitansi As String
         'Dim valuekwitansi As System.DateTime
-        'If tglkwitansi.Value = "" Then
-        '    valuekwitansi = Date.Now
-        'Else
-        '    valuekwitansi = tglkwitansi.Value
-        'End If
+        ''If tglkwitansi.Value = "" Then
+        ''    valuekwitansi = Date.Now
+        ''Else
+        ''    valuekwitansi = tglkwitansi.Value
+        ''End If
+
+        Dim tglKwitansiSql As String = ""
+        If tglkwitansi.Value IsNot Nothing AndAlso tglkwitansi.Value.ToString() <> "" Then
+            tglKwitansiSql = Convert.ToDateTime(tglkwitansi.Value).ToString("yyyy-MM-dd")
+        Else
+            tglKwitansiSql = DateTime.Now.ToString("yyyy-MM-dd")
+        End If
 
         'tahunkwitansi = valuekwitansi.Year.ToString()
         'bulankwitansi = valuekwitansi.Month.ToString()
@@ -357,23 +365,26 @@ Partial Class formpenggunaanuang
                 Exit Sub
             End If
 
-            strsql = "insert into tr_penggunaanSPD (NoTask, VID, NamaTeknisi, JenisBiaya, Nominal, TglInputBiaya, NamaRemote, IPLAN, CatatanTransaksi, flagtime,DocNo, " & _
-                "ApprovalNominal,TglApproveBiaya,Status,CatatanApproval,userstamp) VALUES " & _
+            strsql = "insert into tr_penggunaanSPD (NoTask, VID, NamaTeknisi, JenisBiaya, Nominal, TglInputBiaya, NamaRemote, IPLAN, CatatanTransaksi, flagtime,DocNo, " &
+                "ApprovalNominal,TglApproveBiaya,Status,CatatanApproval,userstamp) VALUES " &
                     "('" & Request.QueryString("NoTask") & "', '" & cb_vid.Value & "', '" & tbldata.Rows(0).Item("NamaTeknisi") & "', '" &
-                    cbjenispengeluaran.Value & "', '" & txtnominal.Text & "', '" & tglkwitansi.Value & "', '" & txtnamaremote.Text & "', '" &
-                    txtiplan.Text & "', '" & clsg.ReplacePetik(txtcatatantransaksi.Text) & "',convert(VARCHAR(10), getdate(), 108),'" & DocNo & "', " & _
+                    cbjenispengeluaran.Value & "', '" & txtnominal.Text & "', '" & tglKwitansiSql & "', '" & txtnamaremote.Text & "', '" &
+                    txtiplan.Text & "', '" & clsg.ReplacePetik(txtcatatantransaksi.Text) & "',convert(VARCHAR(10), getdate(), 108),'" & DocNo & "', " &
                     "'" & txtnominal.Text & "',getdate(),'Approve','" & clsg.ReplacePetik(txtcatatantransaksi.Text) & "','" & Session("username") & "')"
             clsg.ExecuteNonQuery(strsql)
 
         Else
-            Dim simpantransaksi As String = "insert into tr_penggunaanSPD (NoTask, VID, NamaTeknisi, JenisBiaya, Nominal, TglInputBiaya, NamaRemote, IPLAN, CatatanTransaksi, flagtime,DocNo) VALUES " & _
+            Dim simpantransaksi As String = "insert into tr_penggunaanSPD (NoTask, VID, NamaTeknisi, JenisBiaya, Nominal, TglInputBiaya, NamaRemote, IPLAN, CatatanTransaksi, flagtime,DocNo) VALUES " &
                                         "('" & Request.QueryString("NoTask") & "', '" & Request.QueryString("VID") & "', '" & Session("username") & "', '" & cbjenispengeluaran.Value & "', '" &
-                                        txtnominal.Text & "', '" & tglkwitansi.Value & "', '" & txtnamaremote.Text & "', '" & txtiplan.Text & "', '" & clsg.ReplacePetik(txtcatatantransaksi.Text) & "', " & _
+                                        txtnominal.Text & "', '" & tglKwitansiSql & "', '" & txtnamaremote.Text & "', '" & txtiplan.Text & "', '" & clsg.ReplacePetik(txtcatatantransaksi.Text) & "', " &
                                         "convert(VARCHAR(10), getdate(), 108),'" & DocNo & "')"
             com = New SqlCommand(simpantransaksi, con)
             con.Open()
             com.ExecuteNonQuery()
             con.Close()
+
+            System.Diagnostics.Debug.WriteLine("tglKwitansiSql = " & tglKwitansiSql)
+            System.Diagnostics.Debug.WriteLine("Query = " & strsql)
         End If
         Dim insertpath As String
         If FileUpload1.HasFile Then
@@ -402,9 +413,12 @@ Partial Class formpenggunaanuang
                 clsg.ExecuteNonQuery(strsql)
             End If
         Else
-            insertpath = "Insert into TRX_FILE ( file_usercreate, file_datecreate, VID, Description, Keterangan, flagtime,DocNo) VALUES " & _
+            insertpath = "Insert into TRX_FILE ( file_usercreate, file_datecreate, VID, Description, Keterangan, flagtime,DocNo) VALUES " &
             "( '" & Session("username") & "', GETDATE(), '" & cb_vid.Value & "', '" &
              cbjenispengeluaran.Text & "', 'Penggunaan Uang SPD', convert(VARCHAR(10), getdate(), 108),'" & DocNo & "')"
+
+            System.Diagnostics.Debug.WriteLine("tglKwitansiSql = " & tglKwitansiSql)
+            System.Diagnostics.Debug.WriteLine("Query = " & strsql)
         End If
         com = New SqlCommand(insertpath, con)
         con.Open()
@@ -424,6 +438,13 @@ Partial Class formpenggunaanuang
     Protected Sub btnupdate_Click(sender As Object, e As EventArgs) Handles btnupdate.Click
         Dim Time As String = DateTime.Now.ToString("yyyyMMddhhmmss")
         Dim path As String = Server.MapPath("~/UploadFoto/")
+
+        Dim tglKwitansiUpdate As String = ""
+        If tglkwitansi.Value IsNot Nothing AndAlso tglkwitansi.Value.ToString() <> "" Then
+            tglKwitansiUpdate = Convert.ToDateTime(tglkwitansi.Value).ToString("yyyy-MM-dd")
+        Else
+            tglKwitansiUpdate = DateTime.Now.ToString("yyyy-MM-dd")
+        End If
 
         strsql = "select * from tr_penggunaanSPD where VID ='" & Request.QueryString("VID") & "' and NoTask='" & Request.QueryString("NoTask") & "'"
         tbldata = clsg.ExecuteQuery(strsql)
@@ -478,7 +499,7 @@ Partial Class formpenggunaanuang
             clsg.ExecuteNonQuery(strsql)
         Else
             Dim updatedata As String = "update tr_penggunaanSPD set JenisBiaya='" & cbjenispengeluaran.Value & "', Nominal='" & txtnominal.Text & "', TglInputBiaya='" &
-                tglkwitansi.Value & "',CatatanTransaksi='" & clsg.ReplacePetik(txtcatatantransaksi.Text) & "' where ID = '" & Request.QueryString("ID") & "' and DocNo='" & Session("DocNo") & "'"
+                tglKwitansiUpdate & "',CatatanTransaksi='" & clsg.ReplacePetik(txtcatatantransaksi.Text) & "' where ID = '" & Request.QueryString("ID") & "' and DocNo='" & Session("DocNo") & "'"
             com = New SqlCommand(updatedata, con)
             con.Open()
             com.ExecuteNonQuery()

@@ -19,6 +19,7 @@ Partial Class DetilPantauSPD
         Dim tampungan As String = Session("ID")
         dsdetilpengajuan.SelectCommand = "Select idtbl, notask, CONVERT(numeric(38, 0), jumlahpengajuan) as jumlahpengajuan, statustrf, tglpengajuan, keterangan, tgltrf, NoReferensi, CONVERT(numeric(38, 0), jumlahtrf) as jumlahtrf, notekeuangan from trDetail_permintaanSPD where NoTask = '" & tampungan & "'"
     End Sub
+
     Protected Sub gridpengajuanuang_Load(sender As Object, e As EventArgs) Handles gridpengajuanuang.Load
         'dspengajuanuang.SelectCommand = "SELECT trTask.NoTask, trTask.TanggalTask, trTask.NamaTask, tr_permintaanSPD.Provider, tr_permintaanSPD.NamaTeknisi " & _
         '                                "FROM trTask INNER JOIN tr_permintaanSPD ON trTask.NoTask = tr_permintaanSPD.NoTask"
@@ -33,9 +34,9 @@ Partial Class DetilPantauSPD
         '                                "group by NoTask, NamaTask, Provider, NamaTeknisi, total, TanggalTask, approve, IdStatusManager, IdStatusPegawai, Pagu"
 
         dspengajuanuang.SelectCommand = "SELECT NoTask, NamaTeknisi, total, NamaTask, approve, Provider, TanggalTask, IdStatusManager, IdStatusPegawai, a.totalPengajuan, " &
-                                            "SUM(TRY_CONVERT(NUMERIC(38, 0), Pagu)) AS pagu, status, SUM(TRY_CONVERT(NUMERIC(38, 0), TotalPengeluaran)) AS totalsuk, (total - approve) AS sisa " &
+                                            "SUM(TRY_CONVERT(NUMERIC(38, 0), Pagu)) AS pagu, TRY_CONVERT(NUMERIC(38, 0), estimasiBiaya) AS estimasiBiaya, status, SUM(TRY_CONVERT(NUMERIC(38, 0), TotalPengeluaran)) AS totalsuk, (total - approve) AS sisa " &
                                         "FROM ( " &
-                                            "SELECT tr_permintaanSPD.NoTask, tr_permintaanSPD.NamaTeknisi, approve, tr_permintaanSPD.Provider, total, trTask.TanggalTask, " &
+                                            "SELECT tr_permintaanSPD.NoTask, tr_permintaanSPD.NamaTeknisi, approve, tr_permintaanSPD.Provider, total, trTask.TanggalTask, trTask.estimasiBiaya, " &
                                                 "trTask.NamaTask, TotalPengeluaran, trTask.IdStatusManager, msEmployee.IdStatusPegawai, ms_Pagu.Pagu, trTask.status, a.totalPengajuan " &
                                             "From tr_permintaanSPD " &
                                             "LEFT OUTER JOIN ( " &
@@ -63,7 +64,7 @@ Partial Class DetilPantauSPD
                                             "LEFT OUTER JOIN msEmployee ON trTask.NamaTeknisi = msEmployee.Nama " &
                                             "LEFT OUTER JOIN ms_Pagu ON msEmployee.IdStatusPegawai = ms_Pagu.TypeKaryawan) a " &
                                         "WHERE a.IdStatusManager = 'Valid' " &
-                                        "GROUP BY NoTask, NamaTask, Provider, NamaTeknisi, total, TanggalTask, approve, IdStatusManager, IdStatusPegawai, status, totalPengajuan"
+                                        "GROUP BY NoTask, NamaTask, Provider, NamaTeknisi, total, TanggalTask, approve, IdStatusManager, IdStatusPegawai, status, totalPengajuan, estimasiBiaya"
     End Sub
    
     Protected Sub gv_detailpenggunaanSPD_BeforePerformDataSelect(sender As Object, e As EventArgs)

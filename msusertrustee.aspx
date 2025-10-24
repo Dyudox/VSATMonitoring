@@ -5,24 +5,59 @@
 <%@ Register Assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
-    <script>
-        function OnRowClickUserTrustee(s, e) {
+    <%--<script>
+        function OnRowClickUserTrustee(index) {
             //Unselect all rows
 
             //Select the row
 
-            //alert(values);
-            gridLevelUser.GetRowValues(gridLevelUser.GetFocusedRowIndex(), 'TrusteeID;LevelUser', OnGetRowValuesssUserTrustee);
+            alert("1" & index);
+            gridLevelUser.GetRowValues(gridLevelUser.GetFocusedRowIndex(), 'TrusteeID', OnGetRowValuesssUserTrustee);
         }
         function OnGetRowValuesssUserTrustee(values) {
+            alert("get Value=" & values);
             var status;
             var tablename;
             var checkVoice;
             var suara;
-            // document.getElementById("MainContent_callbackPanelX_txtKodeGroup_I").value = values[1];
-            document.getElementById("MainContent_callbackPanelX_txtGroupID").value = values[0];
+             document.getElementById("MainContent_callbackPanelX_txtKodeGroup_I").value = values[1];
+            //document.getElementById("MainContent_callbackPanelX_txtGroupID").value = values[0];
             //alert(values[0]);
             callbackPanelX.PerformCallback(values[0]);
+        }
+
+        function OnRowDblClick(s, e) {
+            e.processOnServer = false;
+            var index = e.visibleIndex;
+            //var key = s.GetRowKey(e.visibleIndex);
+            //alert('Here is the RowDoubleClick action in a row with the Key = ' + key);
+
+            OnRowClickUserTrustee(index);
+            //s.CollapseAllDetailRows();   // tutup semua row detail
+            //s.ExpandDetailRow(index);    // buka detail row yg diklik
+        }
+    </script>--%>
+
+    <script>
+        function OnRowClickUserTrustee(index) {
+            // Hapus seleksi semua row (kalau perlu)
+            // gridLevelUser.UnselectAllRows();
+
+            // Ambil nilai berdasarkan kolom 'TrusteeID'
+            alert("Row index: " + index);
+            gridLevelUser.GetRowValues(index, 'TrusteeID;LevelUser', OnGetRowValuesssUserTrustee);
+        }
+
+        function OnGetRowValuesssUserTrustee(values) {
+            alert("get Value = " + values);
+            document.getElementById("MainContent_callbackPanelX_checkBoxList").value = values;
+            callbackPanelX.PerformCallback(values);
+        }
+
+        function OnRowDblClick(s, e) {
+            e.processOnServer = false;
+            var index = e.visibleIndex;
+            OnRowClickUserTrustee(index);
         }
     </script>
 
@@ -116,7 +151,7 @@
                     <SettingsSearchPanel Visible="True" />
                     <SettingsEditing Mode="EditFormAndDisplayRow" />
                 </dx:ASPxGridView>--%>
-                <dx:BootstrapGridView ID="gridLevelUser" KeyFieldName="TrusteeID" runat="server"
+                <dx:BootstrapGridView ID="gridLevelUser" KeyFieldName="TrusteeID;LevelUser" runat="server"
                     DataSourceID="DsUserTrustee" ClientInstanceName="gridLevelUser" Width="100%" AutoGenerateColumns="False">
                     <SettingsPager>
                         <PageSizeItemSettings Visible="true" Items="10, 15, 20" ShowAllItem="true" />
@@ -126,10 +161,11 @@
                     <Settings ShowFilterRow="false" ShowFilterRowMenu="false" ShowVerticalScrollBar="false"
                         ShowGroupPanel="false" />
                     <SettingsBehavior ConfirmDelete="true" />
-                    <ClientSideEvents RowDblClick="function(s, e) 
+                    <ClientSideEvents RowDblClick="OnRowDblClick"/>
+                    <%--<ClientSideEvents RowDblClick="function(s, e) 
                    { 
                     OnRowClickUserTrustee(s,e); 
-                   }" />
+                   }" />--%>
                     <SettingsDataSecurity AllowDelete="True" AllowEdit="True" AllowInsert="True" />
                     <Columns>
                         <dx:BootstrapGridViewComboBoxColumn Caption="Level User" FieldName="LevelUser" VisibleIndex="1">

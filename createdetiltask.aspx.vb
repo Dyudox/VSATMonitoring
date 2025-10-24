@@ -399,9 +399,9 @@ Partial Class createdetiltask
         'If tbldata.Rows(0).Item("FlagDataInstallasi") = True Then
         '    groupinstallasi.Visible = True
         'End If
-        If tbldata.Rows(0).Item("FlagDataLokasi") = True Then
-            groupdatalokasi.Visible = True
-        End If
+        'If tbldata.Rows(0).Item("FlagDataLokasi") = True Then
+        '    groupdatalokasi.Visible = True
+        'End If
         'If tbldata.Rows(0).Item("FlagDataSurvey") = True Then
         '    groupsurvey.Visible = True
         'End If
